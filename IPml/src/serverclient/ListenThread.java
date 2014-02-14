@@ -3,31 +3,49 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-public class ListenThread extends Thread {
+public class ListenThread extends Thread
+{
 
     protected DatagramSocket socket = null;
     protected BufferedReader in = null;
-    protected boolean moreQuotes = true;
+    protected Boolean on = true;
+    protected Boolean flag_foundinterface = false;
 
-    public ListenThread() throws IOException {
-	this("ListenThread");
+    public ListenThread() throws IOException
+    {
+    	this("ListenThread");
     }
 
-    public ListenThread(String name) throws IOException {
+    public ListenThread(String name) throws IOException
+    {
         super(name);
         socket = new DatagramSocket(2425);
-
-        try {
-            in = new BufferedReader(new FileReader("one-liners.txt"));
-        } catch (FileNotFoundException e) {
-            System.err.println("Could not open quote file. Serving time instead.");
-        }
     }
 
-    public void run() {
+    public void run()
+    {
 
-        while (moreQuotes) {
-            try {
+        while (on) 
+        {
+            try
+            {
+            	Enumeration<NetworkInterface>  e=NetworkInterface.getNetworkInterfaces();
+                while(e.hasMoreElements() && flag_foundinterface==false)
+                {
+                    NetworkInterface n=(NetworkInterface) e.nextElement();
+                    if (!n.getDisplayName().equals("lo"))
+                    {
+                    	flag_foundinterface=true;// To be repositioned
+	                    Enumeration<InetAddress> ee = n.getInetAddresses();
+	                    while(ee.hasMoreElements())
+	                    {
+	                    	
+	                    	InetAddress i= (InetAddress) ee.nextElement();	                    	
+	                    	System.out.println(i.getHostAddress());
+	                    }
+                    }
+                }
+                
                 byte[] buf = new byte[256];
 
                 // receive request
@@ -41,11 +59,7 @@ public class ListenThread extends Thread {
                 
                 // figure out response
                 String dString = null;
-                if (in == null)
-                    dString = new Date().toString();
-                else
-                    dString = getNextQuote();
-
+                dString = new Date().toString();
                 buf = dString.getBytes();
 
 		// send the response to the client at "address" and "port"
@@ -53,25 +67,12 @@ public class ListenThread extends Thread {
                 int port = packet.getPort();
                 packet = new DatagramPacket(buf, buf.length, address, port);
                 socket.send(packet);
-            } catch (IOException e) {
-                e.printStackTrace();
-		moreQuotes = false;
+            } 
+            catch (IOException e)
+            {
+            	socket.close();
+               e.printStackTrace();
             }
         }
-        socket.close();
-    }
-
-    protected String getNextQuote() {
-        String returnValue = null;
-        try {
-            if ((returnValue = in.readLine()) == null) {
-                in.close();
-		moreQuotes = false;
-                returnValue = "No more quotes. Goodbye.";
-            }
-        } catch (IOException e) {
-            returnValue = "IOException occurred in server.";
-        }
-        return returnValue;
     }
 }
