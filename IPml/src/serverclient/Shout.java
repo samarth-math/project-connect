@@ -1,6 +1,10 @@
+/*This is the client file
+ * 
+ * 
+ * 
+ * 
+ */
 package serverclient;
-
-
 import java.io.*;
 import java.net.*;
 
@@ -17,8 +21,6 @@ public class Shout extends Thread {
 
             // send request
         byte[] buf = new byte[256];
-        buf = new String ("").getBytes();
-        
         InetAddress address = InetAddress.getByName(args[0]);
         DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 2425);
         socket.send(packet);
@@ -29,7 +31,7 @@ public class Shout extends Thread {
 
 	    // display response
         String received = new String(packet.getData(), 0, packet.getLength());
-        System.out.println("Quote of the Moment: " + received);
+        System.out.println(received);
     
         socket.close();
     }
