@@ -1,5 +1,6 @@
 package globalfunctions;
 import java.net.*;
+import java.util.Enumeration;
 
 import org.apache.commons.net.util.*; // Depends on apache commons-net-3.3 library
 public class IpAddress 
@@ -34,6 +35,44 @@ public class IpAddress
 			sb.append(String.format("%02X", mac[i]));		
 		}
 		return sb.toString();
+	}
+	
+	public static String current_Mac_and_IP()// returns ipadd:mac address ###Split returned string using### String [] netinfo = IpAddress.current_Mac_and_IP().split(":"); netinfo[0] = mac and netinfo[1] = ip 
+	{
+		boolean flag_foundinterface = false;
+		String mac = null;
+		String ipadd=null;
+		try 
+    	{
+			Enumeration<NetworkInterface> e = NetworkInterface.getNetworkInterfaces();
+			while(e.hasMoreElements() && flag_foundinterface==false)
+		    {
+	            NetworkInterface n=(NetworkInterface) e.nextElement();
+	            if (!n.isLoopback() && n.isUp())
+	            {
+	            	mac = new String(IpAddress.findmac(n));
+	            	Enumeration<InetAddress> ee = n.getInetAddresses();
+	                while(ee.hasMoreElements())
+	                {
+	                	InetAddress i= (InetAddress) ee.nextElement();
+	                	boolean isIPv6 = i instanceof Inet6Address;
+	                	if (!isIPv6)
+	                	{
+	                		flag_foundinterface=true;
+	                		ipadd= i.getHostAddress();
+	            			return mac+":"+ipadd;
+	                	}
+	                		
+	                }
+	            }
+		    }
+			return "You don't seem to be connected to any network or you have a non-private ip address!";
+			}
+		catch (SocketException e) 
+		{
+			return "Error";
+		}
+		
 	}
 	
 }
