@@ -1,8 +1,6 @@
 /*This is the client file
  * 
  * 
- * 
- * 
  */
 package serverclient;
 import java.io.*;
