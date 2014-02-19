@@ -12,7 +12,6 @@ public class ListenThread extends Thread
 {
 
     protected DatagramSocket socket = null;
-    protected BufferedReader in = null;
     protected Boolean on = true;
     
 
