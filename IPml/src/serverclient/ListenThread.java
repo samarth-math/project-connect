@@ -2,34 +2,30 @@
  * This is the server thread
  */
 package serverclient;
-import globalfunctions.IpAddress;
-
+//import globalfunctions.IpAddress;
+//import java.util.*;
 import java.io.*;
 import java.net.*;
-//import java.util.*;
 
 public class ListenThread extends Thread
 {
 
     protected DatagramSocket socket = null;
     protected Boolean on = true;
+    protected String macadd;
     
 
-    public ListenThread() throws IOException
+    public ListenThread(String macadd) throws IOException
     {
-    	this("ListenThread");
-    }
-
-    public ListenThread(String name) throws IOException
-    {
-        super(name);
+    	super("ListenThread");
         socket = new DatagramSocket(2425);
+        this.macadd=macadd;
     }
 
     public void run()
     {
     	
-    	String [] netinfo = IpAddress.current_Mac_and_IP().split(":");
+    	
         while (on) 
 	            {
 	                try
@@ -46,7 +42,7 @@ public class ListenThread extends Thread
 		                System.out.println("------------start of packet -------------------\n"+ addressofperson.getHostAddress() + " : " + received + "----------------End of Packet-----------------\n");
 		                
 		                // figure out response
-		                String dString = new String("id:"+netinfo[0]+System.getProperty("os.name")+InetAddress.getLocalHost().getHostName());
+		                String dString = new String("id:"+macadd+System.getProperty("os.name")+InetAddress.getLocalHost().getHostName());
 		                buf = dString.getBytes();
 		                //System.out.println(dString+"\n"+buf.length);
 		
