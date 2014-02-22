@@ -1,3 +1,7 @@
+/*
+ * This is the global functions file
+ */
+
 package globalfunctions;
 import java.net.*;
 import java.util.Enumeration;
