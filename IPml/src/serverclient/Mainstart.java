@@ -16,7 +16,7 @@ public class Mainstart {
     {
 		String [] netinfo = IpAddress.current_Mac_and_IP().split(":");
         new ListenThread(netinfo[0]).start();
-        new ShoutThread(netinfo[0],"255.255.255.255").start();
+        new ShoutThread(netinfo[0]).start();
     }
 
 }

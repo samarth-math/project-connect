@@ -19,7 +19,7 @@ public class ListenThread extends Thread
     public ListenThread(String macadd) throws IOException
     {
     	super("ListenThread");
-        socket = new DatagramSocket(2425);
+        socket = new DatagramSocket(3426);
         this.macadd=macadd;
     }
 
@@ -40,7 +40,7 @@ public class ListenThread extends Thread
 		                //print request
 		                String received = new String(packet.getData(), 0, packet.getLength());
 		                InetAddress addressofperson = packet.getAddress();
-		                System.out.println("------------start of packet -------------------\n"+ addressofperson.getHostAddress() + " : " + received + "----------------End of Packet-----------------\n");
+		                System.out.println("-Packet from ListenThread--\n"+ addressofperson.getHostAddress() + " : " + received + "----------------End of Packet-----------------\n");
 		                
 		                // figure out response
 		                String dString = new String("id:"+macadd+System.getProperty("os.name")+InetAddress.getLocalHost().getHostName());
