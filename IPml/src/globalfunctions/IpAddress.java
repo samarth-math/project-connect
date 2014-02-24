@@ -4,6 +4,7 @@
 
 package globalfunctions;
 import java.net.*;
+import java.nio.ByteBuffer;
 import java.util.Enumeration;
 
 import org.apache.commons.net.util.*; // Depends on apache commons-net-3.3 library
@@ -19,6 +20,14 @@ public class IpAddress
             result |= octet & 0xff;// Or the byte with the octet anded with the number 1 (0xff is hexadecimal for 1)
         }
         return result;
+	}
+	
+	public static InetAddress LongToip(long ip) throws UnknownHostException
+	{
+		 ByteBuffer buffer = ByteBuffer.allocate(8);
+		    buffer.putLong(ip);
+		    return InetAddress.getByAddress(buffer.array());
+		
 	}
 	
 	
