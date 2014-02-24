@@ -14,12 +14,21 @@ public class ListenThread extends Thread
     protected DatagramSocket socket = null;
     protected Boolean on = true;
     protected String macadd;
+    protected int portnumber;
     
 
+    public ListenThread(String macadd, int portnumber) throws IOException
+    {
+    	super("ListenThread");
+    	this.portnumber=portnumber;
+    	socket = new DatagramSocket(portnumber);
+        this.macadd=macadd;
+    }
     public ListenThread(String macadd) throws IOException
     {
     	super("ListenThread");
-        socket = new DatagramSocket(3426);
+    	this.portnumber=3333;
+        socket = new DatagramSocket(portnumber);
         this.macadd=macadd;
     }
 

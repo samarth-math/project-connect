@@ -7,7 +7,7 @@ import java.net.*;
 import java.nio.ByteBuffer;
 import java.util.Enumeration;
 
-import org.apache.commons.net.util.*; // Depends on apache commons-net-3.3 library
+//import org.apache.commons.net.util.*; // Depends on apache commons-net-3.3 library
 public class IpAddress 
 {
 	public static long ipToLong(InetAddress ip) //Converts IP address to a long integer in order to make comparisons
@@ -33,11 +33,11 @@ public class IpAddress
 	
  //***checks if the specified ip address falls in the specified network address
 	
-	public static boolean iprangeverify(String ipadd, String netadd) throws IllegalArgumentException // Format of netadd : xxx.xxx.xxx.xxx/xx where /xx is network mask
+	/*public static boolean iprangeverify(String ipadd, String netadd) throws IllegalArgumentException // Format of netadd : xxx.xxx.xxx.xxx/xx where /xx is network mask
 	{
 		SubnetUtils utils = new SubnetUtils(netadd);
 		return utils.getInfo().isInRange(ipadd);	
-	}
+	}*/
 	
 	public static String findmac(NetworkInterface n) throws SocketException // Gives mac address of specific network interface
 	{
