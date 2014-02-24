@@ -3,8 +3,6 @@
  * 
  */
 package serverclient;
-//import globalfunctions.IpAddress;
-//import java.util.*;
 import java.io.*;
 import java.net.*;
 

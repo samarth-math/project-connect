@@ -85,7 +85,5 @@ public class IpAddress
 		{
 			return "Error";
 		}
-		
-	}
-	
+	}	
 }

@@ -2,7 +2,6 @@
  * This is the client file
  */
 package serverclient;
-//import globalfunctions.IpAddress;
 import globalfunctions.IpAddress;
 
 import java.io.*;

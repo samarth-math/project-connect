@@ -18,5 +18,4 @@ public class Mainstart {
         new ListenThread(netinfo[0]).start();
         new ShoutThread(netinfo[0]).start();
     }
-
 }
