@@ -1,3 +1,2 @@
 abcd
 def
-ghi
