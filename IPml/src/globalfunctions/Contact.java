@@ -16,6 +16,7 @@ public class Contact {
 		this.Host = Host;
 		this.OS = OS;
 		this.username = username;
+		this.ip=ip;
 	}
 	
 	public String getid()
@@ -40,7 +41,21 @@ public class Contact {
 	}
 	public void printall()
 	{
-		System.out.print(mac+"\n"+OS+"\n"+Host+"\n"+username+"\n"+ip.getHostAddress());
+		System.out.print(mac+"\n"+OS+"\n"+Host+"\n"+username+"\n"+ip.getHostAddress()+"\n\n\n");
 	}
-
+	public String compareablestring()
+	{
+		return new String(mac+":"+OS+":"+Host+":"+"username"+":"+ip.getHostAddress());
+	}
+	public boolean equals(Contact person)//To do a deep comparison
+	{
+		if(mac.equals(person.mac))
+			return true;
+		else
+			return false;
+	}
+	public int hashCode()//to do deep hashing
+	{
+		return mac.hashCode();
+	}
 }

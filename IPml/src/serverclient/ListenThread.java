@@ -59,15 +59,23 @@ public class ListenThread extends Thread
 			                 * packdetails[3] - Operating System
 			                 * packdetails[4] - HostName
 			                 * packdetails[5] - Username*/
+
 		                	
 		                	//Save Packet
 		                	Contact person = new Contact(packdetails[2], packdetails[3], packdetails[4], packdetails[5], address);
 		                	people.add(person);
+		                    Iterator <Contact> C = people.iterator();
+		                    while(C.hasNext())
+		                	{
+		                    	Contact person1 = C.next();
+		                    	person1.printall();
+		                    }
+
 		                	
 		                	if (packdetails[1].equals("C"))// If packet came from client, send it a response
 		                   	{
 			                	// figure out response
-			                    String dString = new String("D:S:"+macadd+":"+System.getProperty("os.name")+":"+InetAddress.getLocalHost().getHostName());
+			                    String dString = new String("D:S:"+macadd+":"+System.getProperty("os.name")+":"+InetAddress.getLocalHost().getHostName()+":username");
 			                    buf = dString.getBytes();		
 				                // send the response to the client at "address" and "portnumber"
 
