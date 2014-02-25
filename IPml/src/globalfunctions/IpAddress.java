@@ -79,11 +79,11 @@ public class IpAddress
 	                }
 	            }
 		    }
-			return "You don't seem to be connected to any network or you have a non-private ip address!";
+			return "You have reached a part of the code that you were never meant to see. I'd recommend you to restart this app, or try to contact us online";
 			}
 		catch (SocketException e) 
 		{
-			return "Error";
+			return "Error creating socket";
 		}
 	}	
 }

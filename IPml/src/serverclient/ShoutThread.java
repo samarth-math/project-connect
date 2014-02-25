@@ -3,6 +3,7 @@
  */
 package serverclient;
 import globalfunctions.IpAddress;
+
 import java.io.*;
 import java.net.*;
 
@@ -79,11 +80,12 @@ public class ShoutThread extends Thread
 		} 
 		catch (UnknownHostException e) 
 		{
-			e.printStackTrace();
+			System.err.print("Unable to figure out the ip address of current machine, trying again");
 		}
-		catch (IOException e) 
-		{
-			e.printStackTrace();
-		}	       
+		catch (IOException except)
+        {
+        	System.err.print("Encountered Error while listening or sending on socket, trying again");
+        }
+     
     }
 }

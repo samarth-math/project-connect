@@ -42,7 +42,7 @@ public class ListenThread extends Thread
     	
         while (on) 
 	            {
-	                try
+        			try
 	                {        
 		                byte[] buf = new byte[256];
 		
@@ -77,11 +77,15 @@ public class ListenThread extends Thread
 		                   	}
 		                }
 		            } 
-		            catch (IOException except)
+        			catch (UnknownHostException e) 
+        			{
+        				System.err.print("Unable to figure out the ip address of current machine, trying again");
+        			}
+        			catch (IOException except)
 		            {
-		            	
-		            	System.err.print("Given port already in use by another application 2");
+		            	System.err.print("Encountered Error while listening or sending on socket, trying again");
 		            }
+
 	            }
     }
 }
