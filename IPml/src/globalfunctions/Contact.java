@@ -47,13 +47,16 @@ public class Contact {
 	{
 		return new String(mac+":"+OS+":"+Host+":"+"username"+":"+ip.getHostAddress());
 	}
-	public boolean equals(Contact person)//To do a deep comparison
-	{
-		if(mac.equals(person.mac))
-			return true;
-		else
-			return false;
-	}
+	 @Override
+	    public boolean equals(Object someone)//To do a deep comparison
+	    {
+	        final Contact person = (Contact) someone;
+	        if(mac.equals(person.mac))
+	            return true;
+	        else
+	            return false;
+	    }
+	@Override
 	public int hashCode()//to do deep hashing
 	{
 		return mac.hashCode();

@@ -42,7 +42,7 @@ public class ListenThread extends Thread
     	
         while (on) 
 	            {
-	                try
+        			try
 	                {        
 		                byte[] buf = new byte[256];
 		
@@ -64,13 +64,6 @@ public class ListenThread extends Thread
 		                	//Save Packet
 		                	Contact person = new Contact(packdetails[2], packdetails[3], packdetails[4], packdetails[5], address);
 		                	people.add(person);
-		                    Iterator <Contact> C = people.iterator();
-		                    while(C.hasNext())
-		                	{
-		                    	Contact person1 = C.next();
-		                    	person1.printall();
-		                    }
-
 		                	
 		                	if (packdetails[1].equals("C"))// If packet came from client, send it a response
 		                   	{
@@ -84,11 +77,15 @@ public class ListenThread extends Thread
 		                   	}
 		                }
 		            } 
-		            catch (IOException except)
+        			catch (UnknownHostException e) 
+        			{
+        				System.err.print("Unable to figure out the ip address of current machine, trying again");
+        			}
+        			catch (IOException except)
 		            {
-		            	
-		            	System.err.print("Given port already in use by another application 2");
+		            	System.err.print("Encountered Error while listening or sending on socket, trying again");
 		            }
+
 	            }
     }
 }

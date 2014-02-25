@@ -22,6 +22,18 @@ public class Mainstart {
 		Set <Contact> people = new HashSet <Contact>(); 
         new ListenThread(netinfo[0], people).start();
         new ShoutThread(netinfo[0]).start();
+        try {
+            Thread.sleep(1000);
+        } catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+        
+        Iterator <Contact> C = people.iterator();
+        while(C.hasNext())
+    	{
+        	Contact person = C.next();
+        	person.printall();
+        }
 
     }
 }
