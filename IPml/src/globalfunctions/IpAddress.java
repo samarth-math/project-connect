@@ -3,6 +3,10 @@
  */
 
 package globalfunctions;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.*;
 import java.nio.ByteBuffer;
 import java.util.Enumeration;
@@ -50,7 +54,50 @@ public class IpAddress
 		return sb.toString();
 	}
 	
-	public static String current_Mac_and_IP()// returns ipadd:mac address ###Split returned string using### String [] netinfo = IpAddress.current_Mac_and_IP().split(":"); netinfo[0] = mac and netinfo[1] = ip 
+	public static String IdentityMac() throws IOException //Returns the Mac address to be used as Identity
+	{
+		File path = new File(System.getProperty("user.dir"));
+		File authfile = new File(path,"auth");
+		String mac=null;
+		
+		if (authfile.exists())
+		{
+			byte buffer[]= new byte[20];
+			FileInputStream fis = new FileInputStream(authfile);
+			while(fis.read(buffer)!=-1)
+				mac=new String(buffer);
+			fis.close();
+			return mac;
+		}
+		else
+		{
+			try 
+	    	{
+				Enumeration<NetworkInterface> e = NetworkInterface.getNetworkInterfaces();
+				while(e.hasMoreElements())
+			    {
+		            NetworkInterface n=(NetworkInterface) e.nextElement();
+		            if (!n.isLoopback() && n.isUp())
+		            {
+		            	mac = new String(IpAddress.findmac(n));
+		            	FileOutputStream fos = new FileOutputStream(authfile);
+		    			fos.write(mac.getBytes());
+		    			fos.close();
+		            	return mac;
+		            }       		
+			    }
+			}
+			catch (SocketException e) 
+			{
+				System.err.print("Error Connecting to network");
+			}
+			return mac;
+		}
+		
+	}	
+
+	
+	/*public static String current_Mac_and_IP()// returns ipadd:mac address ###Split returned string using### String [] netinfo = IpAddress.current_Mac_and_IP().split(":"); netinfo[0] = mac and netinfo[1] = ip 
 	{
 		boolean flag_foundinterface = false;
 		String mac = null;
@@ -85,5 +132,5 @@ public class IpAddress
 		{
 			return "Error creating socket";
 		}
-	}	
+	}	*/
 }

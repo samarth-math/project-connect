@@ -18,10 +18,13 @@ public class Mainstart {
 	
 	public static void main(String[] args) throws IOException 
     {
-		String [] netinfo = IpAddress.current_Mac_and_IP().split(":");
+		String auth=IpAddress.IdentityMac();
+		if (auth==null)
+			throw new IOException("Network Problems detected!");
+		
 		Set <Contact> people = new HashSet <Contact>(); 
-        new ListenThread(netinfo[0], people).start();
-        new ShoutThread(netinfo[0]).start();
+        new ListenThread(auth, people).start();
+        new ShoutThread(auth).start();
         try {
             Thread.sleep(1000);
         } catch(InterruptedException ex) {

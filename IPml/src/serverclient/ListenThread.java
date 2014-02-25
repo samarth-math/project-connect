@@ -83,7 +83,8 @@ public class ListenThread extends Thread
         			}
         			catch (IOException except)
 		            {
-		            	System.err.print("Encountered Error while listening or sending on socket, trying again");
+		            	System.err.print("Encountered Error while listening or sending on socket");
+		            	
 		            }
 
 	            }
