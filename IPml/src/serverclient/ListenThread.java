@@ -1,6 +1,5 @@
 /*
  * This is the server thread
- * 
  */
 package serverclient;
 import java.io.*;

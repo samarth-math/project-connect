@@ -2,7 +2,7 @@
  * open license stuff.
  * This is the main file which will start the two threads for server and client.
  * Right now, it only starts the server thread
- * */
+*/
 
 package serverclient;
 import globalfunctions.IpAddress;

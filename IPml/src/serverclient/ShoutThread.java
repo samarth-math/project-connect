@@ -1,5 +1,6 @@
 /*
  * This is the client file
+ * 
  */
 package serverclient;
 import globalfunctions.IpAddress;
