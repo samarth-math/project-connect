@@ -1,9 +1,13 @@
 /*
  * This is the server thread
+ * 
  */
 package serverclient;
 import java.io.*;
+import java.util.*;
 import java.net.*;
+
+import globalfunctions.Contact;
 
 public class ListenThread extends Thread
 {
@@ -12,21 +16,24 @@ public class ListenThread extends Thread
     protected Boolean on = true;
     protected String macadd;
     protected int portnumber;
+    protected Set <Contact> people = null;
     
 
-    public ListenThread(String macadd, int portnumber) throws IOException
+    public ListenThread(String macadd, Set <Contact>people, int portnumber) throws IOException
     {
     	super("ListenThread");
     	this.portnumber=portnumber;
-    	socket = new DatagramSocket(portnumber);
+    	this.socket = new DatagramSocket(portnumber);
         this.macadd=macadd;
+        this.people = people;
     }
-    public ListenThread(String macadd) throws IOException
+    public ListenThread(String macadd, Set <Contact>people) throws IOException
     {
     	super("ListenThread");
     	this.portnumber=3333;
-        socket = new DatagramSocket(portnumber);
+        this.socket = new DatagramSocket(portnumber);
         this.macadd=macadd;
+        this.people = people;
     }
 
     public void run()
@@ -42,22 +49,32 @@ public class ListenThread extends Thread
 		                // receive request
 		                DatagramPacket packet = new DatagramPacket(buf, buf.length);
 		                socket.receive(packet);
-		                
-		                //print request
-		                String received = new String(packet.getData(), 0, packet.getLength());
-		                InetAddress addressofperson = packet.getAddress();
-		                System.out.println("-Packet from ListenThread--\n"+ addressofperson.getHostAddress() + " : " + received + "----------------End of Packet-----------------\n");
-		                
-		                // figure out response
-		                String dString = new String("id:"+macadd+System.getProperty("os.name")+InetAddress.getLocalHost().getHostName());
-		                buf = dString.getBytes();
-		                //System.out.println(dString+"\n"+buf.length);
-		
-		                // send the response to the client at "address" and "port"
+		                String packdetails[] = new String(packet.getData(), 0, packet.getLength()).split(":");//Important part of receiving request. Tool used to parse the request
 		                InetAddress address = packet.getAddress();
-		                int port = packet.getPort();
-		                packet = new DatagramPacket(buf, buf.length, address, port);
-		                socket.send(packet);
+		                
+		                if(packdetails[0].equals("D"))	// if it's a Detection Packet	                
+		                {/* packdetails[0] - if Detection Packet
+			                 * packdetails[1] - if sent by Server or client
+			                 * packdetails[2] - Mac Address
+			                 * packdetails[3] - Operating System
+			                 * packdetails[4] - HostName
+			                 * packdetails[5] - Username*/
+		                	
+		                	//Save Packet
+		                	Contact person = new Contact(packdetails[2], packdetails[3], packdetails[4], packdetails[5], address);
+		                	people.add(person);
+		                	
+		                	if (packdetails[1].equals("C"))// If packet came from client, send it a response
+		                   	{
+			                	// figure out response
+			                    String dString = new String("D:S:"+macadd+":"+System.getProperty("os.name")+":"+InetAddress.getLocalHost().getHostName());
+			                    buf = dString.getBytes();		
+				                // send the response to the client at "address" and "portnumber"
+
+				                packet = new DatagramPacket(buf, buf.length, address, portnumber);
+				                socket.send(packet);
+		                   	}
+		                }
 		            } 
 		            catch (IOException except)
 		            {

@@ -1,10 +1,8 @@
 /*
  * This is the client file
- * 
  */
 package serverclient;
 import globalfunctions.IpAddress;
-
 import java.io.*;
 import java.net.*;
 
@@ -62,35 +60,19 @@ public class ShoutThread extends Thread
 				for (long ip1=IpAddress.ipToLong(InetAddress.getByName(ipadd1));ip1<=IpAddress.ipToLong(InetAddress.getByName(ipadd2));ip1++)
 				{// send request
 			        byte[] buf = new byte[256];
-			        buf= new String("id:"+macadd+System.getProperty("os.name")+InetAddress.getLocalHost().getHostName()).getBytes();
+			        buf= new String("D:C"+macadd+":"+System.getProperty("os.name")+":"+InetAddress.getLocalHost().getHostName()).getBytes();
 			        InetAddress address = IpAddress.LongToip(ip1);
 			        DatagramPacket packet = new DatagramPacket(buf, buf.length, address, portnumber);
 			        socket.send(packet);
-			    
-			            // get response
-			        //packet = new DatagramPacket(buf, buf.length);
-			        //socket.receive(packet);
-			
-				    // display response
-			        //String received = new String(packet.getData(), 0, packet.getLength());
-			        //System.out.println(received);
 				}
 			}
 			else
 			{
 				   byte[] buf = new byte[256];
-			        buf= new String("id:"+macadd+System.getProperty("os.name")+InetAddress.getLocalHost().getHostName()).getBytes();
-			        InetAddress address = InetAddress.getByName(ipadd);
-			        DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 3426);
-			        socket.send(packet);
-			    
-			            // get response
-			        //packet = new DatagramPacket(buf, buf.length);
-			        //socket.receive(packet);
-			
-				    // display response
-			        //String received = new String(packet.getData(), 0, packet.getLength());
-			        //System.out.println("packet from Shoutthread " + received);
+				   buf= new String("D:C"+macadd+":"+System.getProperty("os.name")+":"+InetAddress.getLocalHost().getHostName()).getBytes();
+			       InetAddress address = InetAddress.getByName(ipadd);
+			       DatagramPacket packet = new DatagramPacket(buf, buf.length, address, portnumber);
+			       socket.send(packet);
 			}
 	        
 	        socket.close();
