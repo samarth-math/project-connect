@@ -64,13 +64,6 @@ public class ListenThread extends Thread
 		                	//Save Packet
 		                	Contact person = new Contact(packdetails[2], packdetails[3], packdetails[4], packdetails[5], address);
 		                	people.add(person);
-		                    Iterator <Contact> C = people.iterator();
-		                    while(C.hasNext())
-		                	{
-		                    	Contact person1 = C.next();
-		                    	person1.printall();
-		                    }
-
 		                	
 		                	if (packdetails[1].equals("C"))// If packet came from client, send it a response
 		                   	{
