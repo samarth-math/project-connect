@@ -15,27 +15,18 @@ public class ListenThread extends Thread
     protected DatagramSocket socket = null;
     protected Boolean on = true;
     protected String macadd;
-    protected int portnumber;
     protected HashMap <String,Contact> people = null;
     protected String user;
     
 
-    public ListenThread(String macadd, String user, HashMap <String, Contact> people, int portnumber) throws SocketException
+    public ListenThread(String macadd, String user, HashMap <String, Contact> people) throws SocketException
     {
     	super("ListenThread");
-    	this.portnumber=portnumber;
-    	this.socket = new DatagramSocket(portnumber);
+    	this.socket = new DatagramSocket(3333);
         this.macadd=macadd;
         this.people = people;
     }
-    public ListenThread(String macadd, String user, HashMap <String, Contact>people) throws SocketException
-    {
-    	super("ListenThread");
-    	this.portnumber=3333;
-        this.socket = new DatagramSocket(portnumber);
-        this.macadd=macadd;
-        this.people = people;
-    }
+
 
     public void run()
     {
@@ -73,7 +64,7 @@ public class ListenThread extends Thread
 				                    buf = dString.getBytes();		
 					                // send the response to the client at "address" and "portnumber"
 	
-					                packet = new DatagramPacket(buf, buf.length, address, portnumber);
+					                packet = new DatagramPacket(buf, buf.length, address, 3333);
 					               
 					                socket.send(packet);
 			                   	}// end of small if
