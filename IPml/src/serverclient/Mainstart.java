@@ -23,6 +23,8 @@ public class Mainstart {
 		if (auth==null)
 			throw new IOException("Network Problems detected!");
 		
+		System.out.println("My identity "+auth);
+		
 		Set <Contact> people = new HashSet <Contact>(); 
 		try{
         new ListenThread(auth, people).start();

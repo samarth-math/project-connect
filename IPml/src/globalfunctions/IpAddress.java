@@ -3,11 +3,7 @@
  */
 
 package globalfunctions;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.*;
 import java.nio.ByteBuffer;
 import java.util.Enumeration;
@@ -58,7 +54,7 @@ public class IpAddress
 	public static String IdentityMac() //Returns the Mac address to be used as Identity
 	{
 		File path = new File(System.getProperty("user.dir"));
-		File authfile = new File(path,"auth");
+		File authfile = new File(path,"auth.bin");
 		String mac=null;
 		try{
 			if (authfile.exists())
