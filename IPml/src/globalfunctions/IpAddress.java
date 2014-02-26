@@ -5,6 +5,7 @@
 package globalfunctions;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.*;
@@ -54,46 +55,56 @@ public class IpAddress
 		return sb.toString();
 	}
 	
-	public static String IdentityMac() throws IOException //Returns the Mac address to be used as Identity
+	public static String IdentityMac() //Returns the Mac address to be used as Identity
 	{
 		File path = new File(System.getProperty("user.dir"));
 		File authfile = new File(path,"auth");
 		String mac=null;
-		
-		if (authfile.exists())
-		{
-			byte buffer[]= new byte[20];
-			FileInputStream fis = new FileInputStream(authfile);
-			while(fis.read(buffer)!=-1)
-				mac=new String(buffer);
-			fis.close();
-			return mac;
-		}
-		else
-		{
-			try 
-	    	{
-				Enumeration<NetworkInterface> e = NetworkInterface.getNetworkInterfaces();
-				while(e.hasMoreElements())
-			    {
-		            NetworkInterface n=(NetworkInterface) e.nextElement();
-		            if (!n.isLoopback() && n.isUp())
-		            {
-		            	mac = new String(IpAddress.findmac(n));
-		            	FileOutputStream fos = new FileOutputStream(authfile);
-		    			fos.write(mac.getBytes());
-		    			fos.close();
-		            	return mac;
-		            }       		
-			    }
-			}
-			catch (SocketException e) 
+		try{
+			if (authfile.exists())
 			{
-				System.err.print("Error Connecting to network");
+				byte buffer[]= new byte[20];
+				FileInputStream fis = new FileInputStream(authfile);
+				while(fis.read(buffer)!=-1)
+					mac=new String(buffer);
+				fis.close();
+				return mac;
 			}
-			return mac;
-		}
-		
+			else
+			{
+				
+					Enumeration<NetworkInterface> e = NetworkInterface.getNetworkInterfaces();
+					while(e.hasMoreElements())
+				    {
+			            NetworkInterface n=(NetworkInterface) e.nextElement();
+			            if (!n.isLoopback() && n.isUp())
+			            {
+			            	mac = new String(IpAddress.findmac(n));
+			            	FileOutputStream fos = new FileOutputStream(authfile);
+			    			fos.write(mac.getBytes());
+			    			fos.close();
+			            	return mac;
+			            }       		
+				    }
+				}
+			}
+			catch(FileNotFoundException fnfe)
+			{
+				System.err.println("File not Found");
+			}
+			catch(SecurityException noperm)
+			{
+				System.err.println("No permission to read/write to file");
+			}
+			catch (SocketException soc)
+			{
+				System.err.println("Unable to find active network interface");
+			}
+			catch(IOException ioe)
+			{
+				System.err.println("Some input/output error occured");
+			}
+		return mac;
 	}	
 
 	

@@ -9,6 +9,7 @@ import globalfunctions.Contact;
 import globalfunctions.IpAddress;
 
 import java.io.*;
+import java.net.SocketException;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -16,14 +17,19 @@ import java.util.Set;
 
 public class Mainstart {
 	
-	public static void main(String[] args) throws IOException 
+	public static void main(String[] args) throws IOException
     {
 		String auth=IpAddress.IdentityMac();
 		if (auth==null)
 			throw new IOException("Network Problems detected!");
 		
 		Set <Contact> people = new HashSet <Contact>(); 
+		try{
         new ListenThread(auth, people).start();
+		}catch(SocketException ex)
+		{
+			System.err.print("Unable to initiate connection: Port maybe in use already");
+		}
         new ShoutThread(auth).start();
         try {
             Thread.sleep(1000);
