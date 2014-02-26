@@ -16,11 +16,11 @@ public class ListenThread extends Thread
     protected Boolean on = true;
     protected String macadd;
     protected int portnumber;
-    protected Set <Contact> people = null;
+    protected HashMap <String,Contact> people = null;
     protected String user;
     
 
-    public ListenThread(String macadd, String user, Set <Contact>people, int portnumber) throws SocketException
+    public ListenThread(String macadd, String user, HashMap <String, Contact> people, int portnumber) throws SocketException
     {
     	super("ListenThread");
     	this.portnumber=portnumber;
@@ -28,7 +28,7 @@ public class ListenThread extends Thread
         this.macadd=macadd;
         this.people = people;
     }
-    public ListenThread(String macadd, String user, Set <Contact>people) throws SocketException
+    public ListenThread(String macadd, String user, HashMap <String, Contact>people) throws SocketException
     {
     	super("ListenThread");
     	this.portnumber=3333;
@@ -64,7 +64,7 @@ public class ListenThread extends Thread
 			                	
 			                	//Save Packet
 			                	Contact person = new Contact(packdetails[2], packdetails[3], packdetails[4], packdetails[5], address);
-			                	people.add(person);
+			                	people.put(packdetails[2],person);
 			                	
 			                	if (packdetails[1].equals("C"))// If packet came from client, send it a response
 			                   	{
@@ -78,6 +78,10 @@ public class ListenThread extends Thread
 					                socket.send(packet);
 			                   	}// end of small if
 			                }//end of big if
+			                else
+			                {
+			                	new ReceiveMessage(packdetails, address, people);
+			                }
 		            	}//end of try
 		            	catch (UnknownHostException e) 
 		        		{

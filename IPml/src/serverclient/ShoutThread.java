@@ -13,7 +13,6 @@ public class ShoutThread extends Thread
 	protected String macadd;
 	protected String ipadd1=null;
 	protected String ipadd2=null;
-	protected int portnumber;
 	protected String user;
 	
 	public ShoutThread(String macadd,String user, String ipadd1, String ipadd2) throws SocketException
@@ -23,17 +22,6 @@ public class ShoutThread extends Thread
 		this.macadd=macadd;
 		this.ipadd1=ipadd1;
 		this.ipadd2=ipadd2;
-		this.portnumber=3333;
-		this.user = user;
-	}
-	public ShoutThread(String macadd,String user, int portnumber, String ipadd1, String ipadd2) throws SocketException
-	{
-		super("ShoutThread");
-		// get a datagram socket
-		this.macadd=macadd;
-		this.ipadd1=ipadd1;
-		this.ipadd2=ipadd2;
-		this.portnumber=portnumber;
 		this.user = user;
 	}
 	public ShoutThread(String macadd, String user) throws SocketException
@@ -41,17 +29,9 @@ public class ShoutThread extends Thread
 		super("ShoutThread");
 		// get a datagram socket
 		this.macadd=macadd;
-		this.portnumber=3333;
 		this.user = user;
 	}
-	public ShoutThread(String macadd, String user, int portnumber) throws SocketException
-	{
-		super("ShoutThread");
-		// get a datagram socket
-		this.macadd=macadd;
-		this.portnumber=portnumber;
-		this.user = user;
-	}
+
 	
 	public void run()
 	{  
@@ -65,7 +45,7 @@ public class ShoutThread extends Thread
 			        byte[] buf = new byte[256];
 			        buf= new String("D:C:"+macadd+":"+System.getProperty("os.name")+":"+InetAddress.getLocalHost().getHostName()+":"+user).getBytes();
 			        InetAddress address = IpAddress.LongToip(ip1);
-			        DatagramPacket packet = new DatagramPacket(buf, buf.length, address, portnumber);
+			        DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 3333);
 			        socket.send(packet);
 				}
 			}
@@ -74,7 +54,7 @@ public class ShoutThread extends Thread
 				   byte[] buf = new byte[256];
 				   buf= new String("D:C:"+macadd+":"+System.getProperty("os.name")+":"+InetAddress.getLocalHost().getHostName()+":"+user).getBytes();
 			       InetAddress address = InetAddress.getByName("255.255.255.255");
-			       DatagramPacket packet = new DatagramPacket(buf, buf.length, address, portnumber);
+			       DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 3333);
 			       socket.send(packet);
 			}
 	        

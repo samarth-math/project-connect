@@ -10,9 +10,7 @@ import globalfunctions.IpAddress;
 
 import java.io.*;
 import java.net.SocketException;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.HashMap;
 
 
 public class Mainstart {
@@ -24,8 +22,8 @@ public class Mainstart {
 			throw new IOException("Network Problems detected!");
 		
 		System.out.println("My identity "+auth);
-		
-		Set <Contact> people = new HashSet <Contact>(); 
+		HashMap <String,Contact> people = new HashMap <String,Contact> ();
+		//Set <Contact> people = new HashSet <Contact>(); 
 		try{
         new ListenThread(auth,"User", people).start();
 		}catch(SocketException ex)
@@ -33,18 +31,7 @@ public class Mainstart {
 			System.err.print("Unable to initiate connection: Port maybe in use already");
 		}
         new ShoutThread(auth, "User").start();
-        try {
-            Thread.sleep(1000);
-        } catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
-        
-        Iterator <Contact> C = people.iterator();
-        while(C.hasNext())
-    	{
-        	Contact person = C.next();
-        	person.printall();
-        }
+
 
     }
 }

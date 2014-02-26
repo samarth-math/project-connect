@@ -1,4 +1,5 @@
 package globalfunctions;
+import java.io.IOException;
 //import java.io.*;
 import java.net.*;
 
@@ -19,6 +20,15 @@ public class Contact {
 		this.ip=ip;
 	}
 	
+	public void SendMessage(String Message) throws SocketException, IOException
+	{
+		byte[] buf = new byte[256];
+		buf = new String("M:"+mac+":"+Message).getBytes();
+		DatagramPacket packet = new DatagramPacket(buf, buf.length, ip, 3333);
+		DatagramSocket socket = new DatagramSocket();
+		socket.send(packet);
+		socket.close();
+	}
 	public String getid()
 	{
 		return mac;
