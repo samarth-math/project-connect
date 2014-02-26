@@ -17,9 +17,10 @@ public class ListenThread extends Thread
     protected String macadd;
     protected int portnumber;
     protected Set <Contact> people = null;
+    protected String user;
     
 
-    public ListenThread(String macadd, Set <Contact>people, int portnumber) throws SocketException
+    public ListenThread(String macadd, String user, Set <Contact>people, int portnumber) throws SocketException
     {
     	super("ListenThread");
     	this.portnumber=portnumber;
@@ -27,7 +28,7 @@ public class ListenThread extends Thread
         this.macadd=macadd;
         this.people = people;
     }
-    public ListenThread(String macadd, Set <Contact>people) throws SocketException
+    public ListenThread(String macadd, String user, Set <Contact>people) throws SocketException
     {
     	super("ListenThread");
     	this.portnumber=3333;
@@ -68,7 +69,7 @@ public class ListenThread extends Thread
 			                	if (packdetails[1].equals("C"))// If packet came from client, send it a response
 			                   	{
 				                	// figure out response
-				                    String dString = new String("D:S:"+macadd+":"+System.getProperty("os.name")+":"+InetAddress.getLocalHost().getHostName()+":username");
+				                    String dString = new String("D:S:"+macadd+":"+System.getProperty("os.name")+":"+InetAddress.getLocalHost().getHostName()+":"+user);
 				                    buf = dString.getBytes();		
 					                // send the response to the client at "address" and "portnumber"
 	

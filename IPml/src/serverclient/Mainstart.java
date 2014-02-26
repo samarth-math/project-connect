@@ -27,12 +27,12 @@ public class Mainstart {
 		
 		Set <Contact> people = new HashSet <Contact>(); 
 		try{
-        new ListenThread(auth, people).start();
+        new ListenThread(auth,"User", people).start();
 		}catch(SocketException ex)
 		{
 			System.err.print("Unable to initiate connection: Port maybe in use already");
 		}
-        new ShoutThread(auth).start();
+        new ShoutThread(auth, "User").start();
         try {
             Thread.sleep(1000);
         } catch(InterruptedException ex) {
