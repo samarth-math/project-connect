@@ -59,7 +59,7 @@ public class IpAddress
 		try{
 			if (authfile.exists())
 			{
-				byte buffer[]= new byte[20];
+				byte buffer[]= new byte[12];
 				FileInputStream fis = new FileInputStream(authfile);
 				while(fis.read(buffer)!=-1)
 					mac=new String(buffer);

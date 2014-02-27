@@ -53,10 +53,6 @@ public class Contact {
 	{
 		System.out.print(mac+"\n"+OS+"\n"+Host+"\n"+username+"\n"+ip.getHostAddress()+"\n\n\n");
 	}
-	public String compareablestring()
-	{
-		return new String(mac+":"+OS+":"+Host+":"+"username"+":"+ip.getHostAddress());
-	}
 	 @Override
 	    public boolean equals(Object someone)//To do a deep comparison
 	    {

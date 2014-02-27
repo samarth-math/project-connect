@@ -25,6 +25,7 @@ public class ListenThread extends Thread
     	this.socket = new DatagramSocket(3333);
         this.macadd=macadd;
         this.people = people;
+        this.user = user;
     }
 
 
@@ -71,7 +72,8 @@ public class ListenThread extends Thread
 			                }//end of big if
 			                else
 			                {
-			                	new ReceiveMessage(packdetails, address, people);
+			                	System.out.print("Received a Message packet");
+			                	new ReceiveMessage(packdetails, address, people).start();;
 			                }
 		            	}//end of try
 		            	catch (UnknownHostException e) 

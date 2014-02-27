@@ -20,8 +20,8 @@ public class Mainstart {
 		String auth=IpAddress.IdentityMac();
 		if (auth==null)
 			throw new IOException("Network Problems detected!");
+		System.out.print(auth);
 		
-		System.out.println("My identity "+auth);
 		HashMap <String,Contact> people = new HashMap <String,Contact> ();
 		//Set <Contact> people = new HashSet <Contact>(); 
 		try{
@@ -30,8 +30,20 @@ public class Mainstart {
 		{
 			System.err.print("Unable to initiate connection: Port maybe in use already");
 		}
-        new ShoutThread(auth, "User").start();
-
-
+        new ShoutThread(auth, "Sam").start();
+        try
+        {
+        	Thread.sleep(2000);
+        }
+        catch(Exception E)
+        {
+        	System.out.print("Wokenup");
+        }
+      /*  for (String key : people.keySet()) {
+            Contact value = (Contact) people.get(key);
+            value.printall();
+        }
+        Contact person = (Contact) people.get("Enter the person's mac address");
+        person.SendMessage("Whatever you wanna write");*/
     }
 }

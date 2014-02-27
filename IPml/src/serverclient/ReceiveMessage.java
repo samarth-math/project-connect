@@ -19,6 +19,7 @@ public class ReceiveMessage extends Thread
 	
 	public void run()
 	{
+		System.out.print("... trying to display...");
 		Contact person = (Contact) people.get(packdetails[1]);
 		System.out.print(person.getusername()+": "+packdetails[2]);
 	}
