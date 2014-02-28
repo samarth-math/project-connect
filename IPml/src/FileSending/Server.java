@@ -27,7 +27,7 @@ public class Server {
 		catch (Exception e) {
 			System.out.println("Error in Server!");
 			System.out.print(e.getMessage());
-			System.out.print(e.getLocalizedMessage());
+			//System.out.print(e.getLocalizedMessage());
 		}
 	}
 }

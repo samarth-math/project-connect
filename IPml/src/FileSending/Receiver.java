@@ -11,15 +11,15 @@ public class Receiver {
 public static void receiveFile(Socket socket,String SaveAsPath) throws IOException {
 	    
 	/*  File Header  is of the format FileSize-FileName
-	 *  Here '-' whose ASCII value 45 is used as a separator
+	 *  Here '-' whose ASCII value is 45 has been used as a separator
 	 *  Line ends when newline character is read
 	 *  ASCII value of new line character is 10
 	 * */
 	 
 	    int minus = 45;
 	    int newline = 10;
-		int fileSize = 0;
-		int bytesRead=0;
+		long fileSize = 0;
+		long bytesRead=0;
 		
 		byte [] header = new byte[1];
 		String fileS = ""; //stores file size
@@ -44,35 +44,41 @@ public static void receiveFile(Socket socket,String SaveAsPath) throws IOExcepti
 		} while(header[0]!=10 && current!= -1); // Loop terminates when newline character is read or end of file is reached
 		
 		fileS.trim();
-		fileSize = Integer.parseInt(fileS);
-		byte [] bytearray = new byte [fileSize];
-		
-		System.out.println("File Name " + fileName);
-		
-		// Contents of file is read and stored in bytearray which will then be written to file location
-		bytesRead=0;
-		int currentTotal = bytesRead;
-		System.out.print("FileSize is " + fileSize + " bytes. " + "\nFile Name is " + fileName);
-		do {
-			bytesRead = is.read(bytearray,currentTotal,(bytearray.length-currentTotal));
-			if( bytesRead >=0 ) {
-				currentTotal += bytesRead;
-			}
-		} while(currentTotal<=fileSize && bytesRead > 0);
+		fileSize = Long.parseLong(fileS);
 		
 		// Creating the path where file will be saved
 		SaveAsPath = System.getProperty("user.dir") + File.separator ;
 		SaveAsPath = SaveAsPath + fileName.trim();
-		
+						
 		File file = new File(SaveAsPath);
 		if(!file.exists()) // checking if file exists
 			file.createNewFile();
 		
 		FileOutputStream fos = new FileOutputStream(SaveAsPath,false);
-		BufferedOutputStream bos = new BufferedOutputStream(fos);			
+		BufferedOutputStream bos = new BufferedOutputStream(fos); 			
 		System.out.println("Saving File in " + SaveAsPath);
 		
-		bos.write(bytearray,0,currentTotal);
+		// Contents of file is read and stored in bytearray which will then be written to file location
+		bytesRead=0;
+		int currentTotal = 0;
+		int chunkSize=1024*1024; // chunkSize bytes are read in each step
+		long leftBytes = fileSize; // Number of bytes left to be written
+		
+		byte [] bytearray = new byte [chunkSize];
+		
+		System.out.print("FileSize is " + fileSize + " bytes. " + "\nFile Name is " + fileName);
+		do {
+			if(chunkSize>leftBytes) {
+				bytesRead = is.read(bytearray,0,(int)leftBytes);
+			}
+			else {
+				bytesRead = is.read(bytearray,0,chunkSize);
+			}
+			bos.write(bytearray,0,(int)bytesRead);
+			leftBytes = leftBytes - bytesRead;
+			
+		} while(currentTotal<=fileSize && bytesRead > 0);
+				
 		bos.flush();
 		bos.close();
 		socket.close();

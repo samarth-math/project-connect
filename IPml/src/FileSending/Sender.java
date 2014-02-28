@@ -17,16 +17,12 @@ private final static int FILE_MAX_SIZE = 2147483647; // This is currently the ma
 		
 		String fileName = filePath.getFileName().toString();
 		long fSize =  Files.size(filePath);
-		int fileSize=0;
+		long fileSize=0;
+		int chunkSize = 1024*1024;
 		
-		//Checking if file size fits within Maximum Size allowed.
-		if(fSize>FILE_MAX_SIZE) {
-			//Call Appropriate Error Handling COde
-		}
-		else {
-			//If size fits type cast to integer
-			fileSize = (int) fSize;
-		}
+		//If size fits type cast to integer
+		fileSize =  fSize;
+
 		// header contains the content of file header which will be sent to receiver
 		String header = Long.toString(fileSize) + "-" + fileName +  "\n" ;
 		// Allocation of memory for file header
@@ -35,9 +31,8 @@ private final static int FILE_MAX_SIZE = 2147483647; // This is currently the ma
 		fileHeader = header.getBytes("UTF-8");
 		
 		File transferfile = new File(filePath.toString());
-		byte [] bytearray = new byte [fileSize];
+		byte [] bytearray = new byte [chunkSize];
 		FileInputStream fin = new FileInputStream(transferfile);
-		
 		BufferedInputStream bufferedinput = new BufferedInputStream(fin);
 		OutputStream os =  socket.getOutputStream();
 		
@@ -47,11 +42,25 @@ private final static int FILE_MAX_SIZE = 2147483647; // This is currently the ma
 		
 		// sending file header information to sender
 		os.write(fileHeader);
-		// buffering file content
-		bufferedinput.read(bytearray,0,bytearray.length);		
-		// sending file content to sender
-		os.write(bytearray,0,bytearray.length);
 		
+		// sending file content to sender
+		int read = 0;
+		int count = 1;
+		long leftBytes = fileSize; // number of bytes remaining to be written to socket stream
+				
+		while (leftBytes>0) {
+			count++;
+			leftBytes = leftBytes - read;
+			if(chunkSize>leftBytes) {
+				read = bufferedinput.read(bytearray,0,(int)leftBytes);
+			}
+			else {
+				read=bufferedinput.read(bytearray,0,chunkSize);
+			}
+			os.write(bytearray,0,read);
+		}
+		System.out.println("\nCount "+count);
+		os.flush();
 		bufferedinput.close();
 		os.close();
 		socket.close();

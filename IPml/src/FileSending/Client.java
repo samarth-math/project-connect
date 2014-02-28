@@ -17,7 +17,7 @@ public class Client {
 		System.out.print(socket);		
 		String FilePath;
 		// File Path which is to be sent
-		FilePath = "C:\\Users\\rish\\Desktop\\c.txt";
+		FilePath = "D:\\Movies\\theinternship.mp4";
 		Path p1 = Paths.get(FilePath);
 		Sender.sendFile(socket,p1);
 		socket.close();
