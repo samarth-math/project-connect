@@ -4,34 +4,34 @@
  */
 package serverclient;
 import java.io.*;
-import java.util.*;
 import java.net.*;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.concurrent.BlockingQueue;
 
 import globalfunctions.Contact;
 
-public class ListenThread extends Thread
+public class ListenThread implements Runnable
 {
 
     protected DatagramSocket socket = null;
     protected Boolean on = true;
-    protected String macadd;
-    protected HashMap <String,Contact> people = null;
+    protected String id;
+    protected BlockingQueue <Character> q;
     protected String user;
     
 
-    public ListenThread(String macadd, String user, HashMap <String, Contact> people) throws SocketException
+    public ListenThread(String macadd, String user) throws SocketException
     {
-    	super("ListenThread");
     	this.socket = new DatagramSocket(3333);
-        this.macadd=macadd;
-        this.people = people;
+        this.id=macadd;
         this.user = user;
     }
 
-
+    @Override
     public void run()
     {
-    	
+    	Thread.currentThread().setName("ListenThread");
     	
         while (on) 
 	            {
@@ -56,25 +56,36 @@ public class ListenThread extends Thread
 			                	
 			                	//Save Packet
 			                	Contact person = new Contact(packdetails[2], packdetails[3], packdetails[4], packdetails[5], address);
-			                	people.put(packdetails[2],person);
+			                	Mainstart.people.put(packdetails[2],person);
 			                	
 			                	if (packdetails[1].equals("C"))// If packet came from client, send it a response
 			                   	{
 				                	// figure out response
-				                    String dString = new String("D:S:"+macadd+":"+System.getProperty("os.name")+":"+InetAddress.getLocalHost().getHostName()+":"+user);
-				                    buf = dString.getBytes();		
-					                // send the response to the client at "address" and "portnumber"
-	
+				                    String PString = new String("D:S:"+id+":"+System.getProperty("os.name")+":"+InetAddress.getLocalHost().getHostName()+":"+user);
+				                    buf = PString.getBytes();		
+					                // send the response to the client
 					                packet = new DatagramPacket(buf, buf.length, address, 3333);
-					               
 					                socket.send(packet);
 			                   	}// end of small if
 			                }//end of big if
-			                else
-			                {
-			                	System.out.print("Received a Message packet");
-			                	new ReceiveMessage(packdetails, address, people).start();;
+			                else if(packdetails[0].equals("M"))// implies, Message type packet
+			                {/*packdetails[1]=mac
+			                   packdetails[2]=message
+			                   packdetails[3]=threadnumber of sending thread*/
+			                	Timestamp t =new Timestamp(new Date().getTime());
+			                	//Send Acknowledgement
+			                	String PString = new String("A:"+packdetails[3]);
+			                	buf = PString.getBytes();
+			                	packet = new DatagramPacket(buf, buf.length, address, 3333);
+			                	socket.send(packet);
+			                	ReceiveMessage RM = new ReceiveMessage(packdetails, address, t);
+			                	new Thread(RM).start();
 			                }
+			                else
+			                {/*packdetails[1]=Thread Number */
+			                	BlockingQueue<Character> q = (BlockingQueue<Character>) Mainstart.threadsync.get(packdetails[1]);
+				                q.add('y');
+				    	    }
 		            	}//end of try
 		            	catch (UnknownHostException e) 
 		        		{

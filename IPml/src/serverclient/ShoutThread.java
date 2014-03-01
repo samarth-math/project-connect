@@ -7,7 +7,7 @@ import globalfunctions.IpAddress;
 import java.io.*;
 import java.net.*;
 
-public class ShoutThread extends Thread 
+public class ShoutThread implements Runnable 
 {
 	protected DatagramSocket socket = new DatagramSocket();
 	protected String macadd;
@@ -17,7 +17,6 @@ public class ShoutThread extends Thread
 	
 	public ShoutThread(String macadd,String user, String ipadd1, String ipadd2) throws SocketException
 	{
-		super("ShoutThread");
 		// get a datagram socket
 		this.macadd=macadd;
 		this.ipadd1=ipadd1;
@@ -26,16 +25,15 @@ public class ShoutThread extends Thread
 	}
 	public ShoutThread(String macadd, String user) throws SocketException
 	{
-		super("ShoutThread");
 		// get a datagram socket
 		this.macadd=macadd;
 		this.user = user;
 	}
 
-	
+	@Override
 	public void run()
 	{  
-		
+		Thread.currentThread().setName("ShoutThread");
 		try
 		{
 			if(ipadd1!=null && ipadd2!=null)

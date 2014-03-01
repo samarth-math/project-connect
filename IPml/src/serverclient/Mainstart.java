@@ -7,43 +7,54 @@
 package serverclient;
 import globalfunctions.Contact;
 import globalfunctions.IpAddress;
-
 import java.io.*;
 import java.net.SocketException;
 import java.util.HashMap;
+import java.util.concurrent.BlockingQueue;
 
 
-public class Mainstart {
+public class Mainstart 
+{
+	public static HashMap <String,BlockingQueue<Character>> threadsync = new HashMap <String, BlockingQueue<Character>> ();
+	public static HashMap <String,Contact> people = new HashMap <String,Contact> ();
+	
+	
 	
 	public static void main(String[] args) throws IOException
     {
 		String auth=IpAddress.IdentityMac();
 		if (auth==null)
 			throw new IOException("Network Problems detected!");
-		System.out.print(auth);
-		
-		HashMap <String,Contact> people = new HashMap <String,Contact> ();
-		//Set <Contact> people = new HashSet <Contact>(); 
-		try{
-        new ListenThread(auth,"User", people).start();
-		}catch(SocketException ex)
+
+		try
+		{
+			ListenThread L =  new ListenThread(auth, "User");
+			ShoutThread S = new ShoutThread(auth, "Sam");
+			new Thread(L).start();
+			new Thread(S).start();
+			try
+	        {
+	        	Thread.sleep(3000);
+	        }
+	        catch(Exception E)
+	        {
+	        	System.out.print("Wokenup");
+	        }
+			
+	/*	   for (String key : people.keySet()) {
+	            Contact value = (Contact) people.get(key);
+	            value.printall();
+	        }*/
+			
+			Contact person = (Contact) people.get("F07BCB8001D7");
+	        SendMessage SM = new SendMessage(person, "This is the message I'm sending to you!!!");
+	        new Thread(SM).start();
+	    
+			
+		}
+	    catch(SocketException ex)
 		{
 			System.err.print("Unable to initiate connection: Port maybe in use already");
 		}
-        new ShoutThread(auth, "Sam").start();
-        try
-        {
-        	Thread.sleep(2000);
-        }
-        catch(Exception E)
-        {
-        	System.out.print("Wokenup");
-        }
-      /*  for (String key : people.keySet()) {
-            Contact value = (Contact) people.get(key);
-            value.printall();
-        }
-        Contact person = (Contact) people.get("Enter the person's mac address");
-        person.SendMessage("Whatever you wanna write");*/
     }
 }
