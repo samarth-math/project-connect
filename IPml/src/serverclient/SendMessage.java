@@ -34,7 +34,8 @@ public class SendMessage implements Runnable
 				
 				person.SendMessage(Message+":"+threadnumber);
 				if(q.poll(500, TimeUnit.MILLISECONDS)==null)
-					throw new InterruptedException();
+					System.out.println("No Confirmation Received");
+				else
 				System.out.println("Message Delivered");
 			}
 			catch(InterruptedException e)
