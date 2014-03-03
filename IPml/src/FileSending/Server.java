@@ -18,7 +18,7 @@ public class Server {
 			socket = serverSocket.accept();
 			System.out.println("Connection Accepted : " + socket);
 			
-			String SaveAs = "C:\\Users\\rish\\Desktop\\Docs";
+			String SaveAs = "";
 			Receiver.receiveFile(socket,SaveAs);
 			socket.close();
 			serverSocket.close();
@@ -27,7 +27,6 @@ public class Server {
 		catch (Exception e) {
 			System.out.println("Error in Server!");
 			System.out.print(e.getMessage());
-			//System.out.print(e.getLocalizedMessage());
 		}
 	}
 }
