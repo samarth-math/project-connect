@@ -7,7 +7,6 @@
 package serverclient;
 import globalfunctions.Contact;
 import globalfunctions.IpAddress;
-import java.io.*;
 import java.net.SocketException;
 import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
@@ -20,11 +19,15 @@ public class Mainstart
 	
 	
 	
-	public static void main(String[] args) throws IOException
+	public static void main(String[] args)
     {
 		String auth=IpAddress.IdentityMac();
 		if (auth==null)
-			throw new IOException("Network Problems detected!");
+			{
+				System.err.print("Network Problems detected!");
+				System.exit(0);
+			}
+			
 
 		try
 		{
