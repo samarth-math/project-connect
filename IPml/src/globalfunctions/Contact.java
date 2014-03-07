@@ -31,10 +31,14 @@ public class Contact {
 		if(cw!=null)
 			return cw;
 		else
-		{	
+		{
 			setWindow(new ChatWindow(this));
 			return cw;
 		}
+	}
+	public void StartChat()
+	{
+		setWindow(new ChatWindow(this));
 	}
 	public void SendMessage(String Message) throws SocketException, IOException
 	{
