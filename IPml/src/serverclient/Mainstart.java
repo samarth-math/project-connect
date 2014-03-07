@@ -57,8 +57,6 @@ public class Mainstart
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
-						//ChatWindow frame =new ChatWindow(person);
-						//person.setWindow(frame);
 						person.StartChat();
 					} catch (Exception e) {
 						e.printStackTrace();

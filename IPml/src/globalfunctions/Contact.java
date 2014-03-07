@@ -22,7 +22,7 @@ public class Contact {
 		this.username = username;
 		this.ip=ip;
 	}
-	public void setWindow(ChatWindow cw)
+	private void setWindow(ChatWindow cw)
 	{
 		this.cw=cw;
 	}
