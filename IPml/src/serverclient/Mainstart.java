@@ -7,9 +7,13 @@
 package serverclient;
 import globalfunctions.Contact;
 import globalfunctions.IpAddress;
+
+import java.awt.EventQueue;
 import java.net.SocketException;
 import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
+
+import GUIObjects.ChatWindow;
 
 
 public class Mainstart 
@@ -44,20 +48,31 @@ public class Mainstart
 	        	System.out.print("Wokenup");
 	        }
 			
-	/*	   for (String key : people.keySet()) {
+		   /*for (String key : people.keySet()) {
 	            Contact value = (Contact) people.get(key);
 	            value.printall();
 	        }*/
 			
-			Contact person = (Contact) people.get("F07BCB8001D7");
-	        SendMessage SM = new SendMessage(person, "This is the message I'm sending to you!!!");
-	        new Thread(SM).start();
+			final Contact person = (Contact) people.get("F07BCB8001D7");
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						ChatWindow frame =new ChatWindow(person);
+						person.setWindow(frame);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+	   //     SendMessage SM = new SendMessage(person, "This is the message I'm sending to you!!!");
+	     //   new Thread(SM).start();
 	    
 			
 		}
 	    catch(SocketException ex)
 		{
 			System.err.print("Unable to initiate connection: Port maybe in use already");
+			System.exit(0);
 		}
     }
 }

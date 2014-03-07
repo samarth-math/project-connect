@@ -65,6 +65,7 @@ public class ShoutThread implements Runnable
 		catch (IOException except)
         {
         	System.err.print("Network Problem : Unable to send packets!");
+        	System.exit(0);
         }
      
     }

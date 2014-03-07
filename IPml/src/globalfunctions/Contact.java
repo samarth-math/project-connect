@@ -3,13 +3,16 @@ import java.io.IOException;
 //import java.io.*;
 import java.net.*;
 
+import GUIObjects.ChatWindow;
+
 public class Contact {
 	
-	protected InetAddress ip;
-	protected String mac;
-	protected String OS;
-	protected String Host;
-	protected String username;
+	private InetAddress ip;
+	private String mac;
+	private String OS;
+	private String Host;
+	private String username;
+	private ChatWindow cw=null;
 	
 	public Contact(String mac, String OS, String Host, String username, InetAddress ip)
 	{
@@ -19,7 +22,20 @@ public class Contact {
 		this.username = username;
 		this.ip=ip;
 	}
-	
+	public void setWindow(ChatWindow cw)
+	{
+		this.cw=cw;
+	}
+	public ChatWindow getWindow()
+	{
+		if(cw!=null)
+			return cw;
+		else
+		{	
+			setWindow(new ChatWindow(this));
+			return cw;
+		}
+	}
 	public void SendMessage(String Message) throws SocketException, IOException
 	{
 		byte[] buf = new byte[256];

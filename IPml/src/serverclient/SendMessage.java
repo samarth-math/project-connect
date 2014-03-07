@@ -28,19 +28,19 @@ public class SendMessage implements Runnable
 		Mainstart.threadsync.put(threadnumber, q);
 		try
 		{
-			System.out.println(person.getusername()+":"+Message);			
+			person.getWindow().chatconsole(person.getusername()+":"+Message);
 			try
 			{
 				
 				person.SendMessage(Message+":"+threadnumber);
 				if(q.poll(500, TimeUnit.MILLISECONDS)==null)
-					System.out.println("No Confirmation Received");
+					person.getWindow().chatconsole("No Confirmation Received");
 				else
-				System.out.println("Message Delivered");
+					person.getWindow().chatconsole("Message Delivered");
 			}
 			catch(InterruptedException e)
 			{
-				System.out.println("No Confirmation Received");
+				person.getWindow().chatconsole("No Confirmation Received");
 			}
 			
 			
