@@ -16,7 +16,7 @@ public class ChatLogCreate
 	//static String jsonFilePath = "log.json";
 	final static int currentSessionNumber = 0;
 	@SuppressWarnings("unchecked")
-	public static void main(String[] args) 
+	public void logCreate()
 	{
 		// TODO Auto-generated method stub
 		int sessionNumber = 432;
@@ -34,13 +34,12 @@ public class ChatLogCreate
 		JSONArray users = new JSONArray();
 		JSONArray session = new JSONArray();
 		
-		JSONObject groupUsers = new JSONObject();
-		groupUsers.put("user1", "mathur");
-		groupUsers.put("user2", "rajat");
-		groupUsers.put("user3", "shasuck");
-		groupUsers.put("user4", "baid");
-		users.add(groupUsers);
-		mainLog.put("users", users);
+		JSONArray groupUsers = new JSONArray();
+		groupUsers.add("mathur");
+		groupUsers.add("rajat");
+		groupUsers.add("shasuck");
+		groupUsers.add("baid");
+		mainLog.put("users", groupUsers);
 		
 		sessNum.put("sessionNumber", sessionNumber);
 		
