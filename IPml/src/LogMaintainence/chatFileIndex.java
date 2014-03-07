@@ -27,11 +27,11 @@ public class chatFileIndex {
 		        {
 		        	//System.out.println(user1);
 		        	//System.out.print(""+iterator.next().get("user1"));
-		        	//if(user1.equals(""+iterator.next().get("user1"))) 
-			        //{                                                       // <--- figure out why this if condition		        		
+		        	if(user1.equals(""+iterator.next().get("user1"))) 
+			        {                                                       // <--- figure out why this if condition		        		
 		        		fileName = ""+iterator.next().get("filename");        // is screwing up
 		        		System.out.println(fileName);
-			        //}
+			        }
 			            
 		        }
 		        //System.out.println(fileName);
