@@ -58,7 +58,7 @@ public class Mainstart
 			/*this is shasak testing something------*/
 			RunInterface R = new RunInterface();
 			new Thread(R).start();
-			//---------------------------------------
+			//--------------------------------------
 			
 			/*final Contact person = (Contact) people.get("78E400ACD134");
 			EventQueue.invokeLater(new Runnable() {
