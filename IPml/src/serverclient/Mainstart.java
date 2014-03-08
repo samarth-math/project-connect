@@ -13,6 +13,8 @@ import java.net.SocketException;
 import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
 
+import Interface.RunInterface;
+
 //import GUIObjects.ChatWindow;
 
 
@@ -36,12 +38,12 @@ public class Mainstart
 		try
 		{
 			ListenThread L =  new ListenThread(auth, "User");
-			ShoutThread S = new ShoutThread(auth, "Sam", "192.168.145.102", "192.168.145.106");
+			ShoutThread S = new ShoutThread(auth, "Shasak");
 			new Thread(L).start();
 			new Thread(S).start();
 			try
 	        {
-	        	Thread.sleep(3000);
+	        	Thread.sleep(6000);
 	        }
 	        catch(Exception E)
 	        {
@@ -53,7 +55,12 @@ public class Mainstart
 	            value.printall();
 	        }*/
 			
-			final Contact person = (Contact) people.get("78E400ACD134");
+			/*this is shasak testing something------*/
+			RunInterface R = new RunInterface();
+			new Thread(R).start();
+			//---------------------------------------
+			
+			/*final Contact person = (Contact) people.get("78E400ACD134");
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
@@ -62,7 +69,7 @@ public class Mainstart
 						e.printStackTrace();
 					}
 				}
-			});
+			});*/
 	   //     SendMessage SM = new SendMessage(person, "This is the message I'm sending to you!!!");
 	     //   new Thread(SM).start();
 	    

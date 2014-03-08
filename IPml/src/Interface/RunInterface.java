@@ -1,12 +1,12 @@
 package Interface;
 import java.awt.EventQueue;
 import GUIObjects.AppWindow;
-public class RunInterface {
+public class RunInterface implements Runnable {
 
 	/**
 	 * Launch the interface
 	 */
-	public static void main(String[] args) {
+	public void run() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

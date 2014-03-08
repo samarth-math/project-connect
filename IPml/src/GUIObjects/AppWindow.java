@@ -2,8 +2,12 @@ package GUIObjects;
 
 import java.awt.Container;
 
+import globalfunctions.*;
+
 import javax.swing.BoxLayout;
 
+import serverclient.Mainstart;
+import globalfunctions.Contact;
 import GuiElements.ClickablePanel;
 
 public class AppWindow extends BasicWindow{
@@ -19,12 +23,15 @@ public class AppWindow extends BasicWindow{
 		Container c = new Container();
 		c= this.getContentPane();
 		c.setLayout(new BoxLayout(c, BoxLayout.Y_AXIS));
-		
 		this.setVisible(true);
-		c.add(new ClickablePanel());
 		
+		   for (String key : Mainstart.people.keySet()) {
+			   Contact person = (Contact) Mainstart.people.get(key);
+			   c.add(new ClickablePanel(person));
+		   }
 		
-		
+			
 	}
+	
 	
 }
