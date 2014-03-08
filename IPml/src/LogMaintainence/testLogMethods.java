@@ -4,13 +4,13 @@ public class testLogMethods {
 
 	public static void main(String args[])
 	{
-		ChatLogCreate updateLog = new ChatLogCreate();
-		updateLog.logCreate();
+		LoggingChats updateLog = new LoggingChats();
+		updateLog.logCreate("log");   // group Id supplied as argument
 		
 		System.out.println("\n\n\n");
 		
-		getChatInfo newChat = new getChatInfo();
-		newChat.writeLog("xyz");
+		//GettingChatLogs newChat = new GettingChatLogs();
+		//newChat.writeLog("log");      // group Id supplied as argument
 	}
 	
 }

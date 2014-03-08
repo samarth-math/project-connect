@@ -1,0 +1,29 @@
+
+/*           SAmple nested structure of a log file for a group chat          */
+ 
+
+{
+	"groupId":"xxa56d",
+	"users":["mathur","rajat","shasuck","baid"],
+	"groupName":"project x",
+	"currentSession":0,
+	"totalUsers":4,
+	"session":[
+				[
+					{"sessionNumber":404},
+					{"messages":[
+									{"messageText":"No he doesnt","timeStamp":"404","userName":"shasuck404"},
+									{"messageText":"No he doesnt","timeStamp":"404","userName":"shasuck404"}
+								 ]
+					 }
+				 ],
+				[
+				 	{"sessionNumber":404},
+				 	{"messages":[
+				 					{"messageText":"No he doesnt","timeStamp":"404","userName":"shasuck404"},
+				 					{"messageText":"No he doesnt","timeStamp":"404","userName":"shasuck404"}
+				 				 ]
+				 	 }
+				 ]
+			  ]
+}

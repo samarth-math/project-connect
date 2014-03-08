@@ -8,13 +8,13 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class getChatInfo extends Object{
+public class GettingChatLogs extends Object{
 	
 	public void writeLog(String groupId)
 	{
 		/* Now we need to look up for the file having logs for the groupId */
-		//String chatFileName = groupId.getChatFile();
 		String currentGroupId = groupId;
+		//String chatFileName = groupId.getChatFile();  /the next line temporarily replaces this method
 		String chatFileName = "log.json";
 		
 		JSONParser parser = new JSONParser();
