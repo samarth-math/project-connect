@@ -13,7 +13,6 @@ public class GettingChatLogs extends Object{
 	public void writeLog(String groupId)
 	{
 		/* Now we need to look up for the file having logs for the groupId */
-		String currentGroupId = groupId;
 		//String chatFileName = groupId.getChatFile();  /the next line temporarily replaces this method
 		String chatFileName = "log.json";
 		
