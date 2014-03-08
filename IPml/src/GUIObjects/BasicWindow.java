@@ -5,8 +5,14 @@
  */
 package GUIObjects;
 
-public abstract class BasicWindow 
-{
+import javax.swing.JFrame;
+
+public abstract class BasicWindow extends JFrame{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//Define Everything that you want in a basic window, whenever anyone inherits this, they get all those properties
 	//Some methods may be overwritten if they wish, and others will be rendered as defined here.
 }
