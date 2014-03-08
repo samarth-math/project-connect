@@ -36,7 +36,7 @@ public class Mainstart
 		try
 		{
 			ListenThread L =  new ListenThread(auth, "User");
-			ShoutThread S = new ShoutThread(auth, "Sam");
+			ShoutThread S = new ShoutThread(auth, "Sam", "192.168.1.4", "192.168.1.6");
 			new Thread(L).start();
 			new Thread(S).start();
 			try
@@ -53,7 +53,7 @@ public class Mainstart
 	            value.printall();
 	        }*/
 			
-			final Contact person = (Contact) people.get("F07BCB8001D7");
+			final Contact person = (Contact) people.get("68A3C4241E8F");
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {

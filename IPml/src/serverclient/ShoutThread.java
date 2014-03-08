@@ -34,6 +34,7 @@ public class ShoutThread implements Runnable
 	public void run()
 	{  
 		Thread.currentThread().setName("ShoutThread");
+		
 		try
 		{
 			if(ipadd1!=null && ipadd2!=null)

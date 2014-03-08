@@ -27,7 +27,16 @@ public class IpAddress
 	{
 		 ByteBuffer buffer = ByteBuffer.allocate(8);
 		    buffer.putLong(ip);
-		    return InetAddress.getByAddress(buffer.array());
+		    
+		  byte[] octets = new byte[4];
+		  
+		  for(int i =3; i>=0;  i--)
+		  {
+			  octets[i] |= ip & 0xff;
+			  ip >>>= 8;
+		  }
+		  
+		    return InetAddress.getByAddress(octets);
 		
 	}
 	
