@@ -20,7 +20,7 @@ public class Mainstart
 {
 	public static HashMap <String,BlockingQueue<Character>> threadsync = new HashMap <String, BlockingQueue<Character>> ();
 	public static HashMap <String,Contact> people = new HashMap <String,Contact> ();
-	public static Contact person = (Contact) people.get("F07BCB8001D7");
+	
 	public static String myid=IpAddress.IdentityMac();
 	
 	public static void main(String[] args)
@@ -53,7 +53,7 @@ public class Mainstart
 	            value.printall();
 	        }*/
 			
-			
+			final Contact person = (Contact) people.get("F07BCB8001D7");
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
