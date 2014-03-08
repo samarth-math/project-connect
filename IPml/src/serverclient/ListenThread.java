@@ -69,7 +69,7 @@ public class ListenThread implements Runnable
 			                   	}// end of small if
 			                }//end of big if
 			                else if(packdetails[0].equals("M"))// implies, Message type packet
-			                {/*packdetails[1]=mac
+			                {/*packdetails[1]=mac of person received from
 			                   packdetails[2]=message
 			                   packdetails[3]=threadnumber of sending thread*/
 			                	Timestamp t =new Timestamp(new Date().getTime());

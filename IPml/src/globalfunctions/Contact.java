@@ -40,10 +40,10 @@ public class Contact {
 	{
 		setWindow(new ChatWindow(this));
 	}
-	public void SendMessage(String Message) throws SocketException, IOException
+	public void SendMessage(String Message, String senderid) throws SocketException, IOException
 	{
 		byte[] buf = new byte[256];
-		buf = new String("M:"+mac+":"+Message).getBytes();
+		buf = new String("M:"+senderid+":"+Message).getBytes();
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, ip, 3333);
 		DatagramSocket socket = new DatagramSocket();
 		socket.send(packet);

@@ -32,7 +32,7 @@ public class SendMessage implements Runnable
 			try
 			{
 				
-				person.SendMessage(Message+":"+threadnumber);
+				person.SendMessage(Message+":"+threadnumber, Mainstart.myid);
 				if(q.poll(500, TimeUnit.MILLISECONDS)==null)
 					person.getWindow().chatconsole("No Confirmation Received");
 				else
