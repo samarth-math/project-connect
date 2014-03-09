@@ -9,23 +9,25 @@ import java.net.*;
 
 public class ShoutThread implements Runnable 
 {
-	protected DatagramSocket socket = new DatagramSocket();
+	protected DatagramSocket socket;
 	protected String macadd;
 	protected String ipadd1=null;
 	protected String ipadd2=null;
 	protected String user;
 	
-	public ShoutThread(String macadd,String user, String ipadd1, String ipadd2) throws SocketException
+	public ShoutThread(String macadd,String user, String ipadd1, String ipadd2)
 	{
 		// get a datagram socket
+		this.socket = Mainstart.socket;
 		this.macadd=macadd;
 		this.ipadd1=ipadd1;
 		this.ipadd2=ipadd2;
 		this.user = user;
 	}
-	public ShoutThread(String macadd, String user) throws SocketException
+	public ShoutThread(String macadd, String user)
 	{
 		// get a datagram socket
+		this.socket = Mainstart.socket;
 		this.macadd=macadd;
 		this.user = user;
 	}
@@ -34,7 +36,6 @@ public class ShoutThread implements Runnable
 	public void run()
 	{  
 		Thread.currentThread().setName("ShoutThread");
-		
 		try
 		{
 			if(ipadd1!=null && ipadd2!=null)

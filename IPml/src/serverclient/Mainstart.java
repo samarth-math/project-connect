@@ -9,11 +9,12 @@ import globalfunctions.Contact;
 import globalfunctions.IpAddress;
 
 import java.awt.EventQueue;
+import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
 
-import Interface.RunInterface;
+import FileSending.Server;
 
 //import GUIObjects.ChatWindow;
 
@@ -22,11 +23,18 @@ public class Mainstart
 {
 	public static HashMap <String,BlockingQueue<Character>> threadsync = new HashMap <String, BlockingQueue<Character>> ();
 	public static HashMap <String,Contact> people = new HashMap <String,Contact> ();
-	
 	public static String myid=IpAddress.IdentityMac();
+	public static DatagramSocket socket;
+	
 	
 	public static void main(String[] args)
     {
+		try {
+			socket = new DatagramSocket(3333);
+		} catch (SocketException e) {
+			System.err.print("Unable to initiate connection: Port maybe in use already");
+			System.exit(0);
+		}
 		String auth=IpAddress.IdentityMac();
 		if (auth==null)
 			{
@@ -35,10 +43,9 @@ public class Mainstart
 			}
 			
 
-		try
-		{
+	
 			ListenThread L =  new ListenThread(auth, "User");
-			ShoutThread S = new ShoutThread(auth, "Shasak");
+			ShoutThread S = new ShoutThread(auth, "Sam");
 			new Thread(L).start();
 			new Thread(S).start();
 			try
@@ -54,13 +61,8 @@ public class Mainstart
 	            Contact value = (Contact) people.get(key);
 	            value.printall();
 	        }*/
-			
-			/*this is shasak testing something------*/
-			RunInterface R = new RunInterface();
-			new Thread(R).start();
-			//--------------------------------------
-			
-			/*final Contact person = (Contact) people.get("78E400ACD134");
+			//new Thread(new Server()).start();
+			final Contact person = (Contact) people.get("78E400ACD134");
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
@@ -69,16 +71,8 @@ public class Mainstart
 						e.printStackTrace();
 					}
 				}
-			});*/
+			});
 	   //     SendMessage SM = new SendMessage(person, "This is the message I'm sending to you!!!");
 	     //   new Thread(SM).start();
-	    
-			
-		}
-	    catch(SocketException ex)
-		{
-			System.err.print("Unable to initiate connection: Port maybe in use already");
-			System.exit(0);
-		}
     }
 }

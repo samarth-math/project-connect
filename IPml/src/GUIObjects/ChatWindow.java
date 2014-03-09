@@ -27,7 +27,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class ChatWindow extends JFrame
+public class ChatWindow extends BasicWindow
 {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;	
