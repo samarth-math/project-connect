@@ -45,7 +45,7 @@ public class Mainstart
 
 	
 			ListenThread L =  new ListenThread(auth, "User");
-			ShoutThread S = new ShoutThread(auth, "Sam");
+			ShoutThread S = new ShoutThread(auth, "Sam", "172.22.30.19", "172.22.30.21");
 			new Thread(L).start();
 			new Thread(S).start();
 			try

@@ -22,7 +22,7 @@ public class ListenThread implements Runnable
 
     public ListenThread(String macadd, String user)
     {
-    	this.socket=socket;
+    	this.socket=Mainstart.socket;
         this.id=macadd;
         this.user = user;
     }
