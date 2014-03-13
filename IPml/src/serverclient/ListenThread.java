@@ -13,16 +13,17 @@ import globalfunctions.Contact;
 
 public class ListenThread implements Runnable
 {
-	private DatagramSocket socket;
+
+    protected DatagramSocket socket = null;
     protected Boolean on = true;
     protected String id;
     protected BlockingQueue <Character> q;
     protected String user;
     
 
-    public ListenThread(String macadd, String user)
+    public ListenThread(String macadd, String user) throws SocketException
     {
-    	this.socket=Mainstart.socket;
+    	this.socket = new DatagramSocket(3333);
         this.id=macadd;
         this.user = user;
     }
@@ -40,11 +41,10 @@ public class ListenThread implements Runnable
 				            // receive request
 				            DatagramPacket packet = new DatagramPacket(buf, buf.length);
 				            socket.receive(packet);
-					        
+
 				            String packdetails[] = new String(packet.getData(), 0, packet.getLength()).split(":");//Important part of receiving request. Tool used to parse the request
 			                InetAddress address = packet.getAddress();
-			                int port = packet.getPort();
-			                
+
 			                if(packdetails[0].equals("D"))	// if it's a Detection Packet	                
 			                {/* packdetails[0] - if Detection Packet
 				                 * packdetails[1] - if sent by Server or client
@@ -52,19 +52,19 @@ public class ListenThread implements Runnable
 				                 * packdetails[3] - Operating System
 				                 * packdetails[4] - HostName
 				                 * packdetails[5] - Username*/
-	
-			                	
+
+
 			                	//Save Packet
-			                	Contact person = new Contact(packdetails[2], packdetails[3], packdetails[4], packdetails[5], address, port);
+			                	Contact person = new Contact(packdetails[2], packdetails[3], packdetails[4], packdetails[5], address);
 			                	Mainstart.people.put(packdetails[2],person);
-			                	
+
 			                	if (packdetails[1].equals("C"))// If packet came from client, send it a response
 			                   	{
 				                	// figure out response
 				                    String PString = new String("D:S:"+id+":"+System.getProperty("os.name")+":"+InetAddress.getLocalHost().getHostName()+":"+user);
 				                    buf = PString.getBytes();		
-					                // send the response to the client at "address" and "port"
-					                packet = new DatagramPacket(buf, buf.length, address, port);
+					                // send the response to the client
+					                packet = new DatagramPacket(buf, buf.length, address, 3333);
 					                socket.send(packet);
 			                   	}// end of small if
 			                }//end of big if
@@ -76,12 +76,12 @@ public class ListenThread implements Runnable
 			                	//Send Acknowledgement
 			                	String PString = new String("A:"+packdetails[3]);
 			                	buf = PString.getBytes();
-			                	packet = new DatagramPacket(buf, buf.length, address, port);
+			                	packet = new DatagramPacket(buf, buf.length, address, 3333);
 			                	socket.send(packet);
 			                	ReceiveMessage RM = new ReceiveMessage(packdetails, address, t);
 			                	new Thread(RM).start();
 			                }
-			                else// Catching Acknowledgement
+			                else
 			                {/*packdetails[1]=Thread Number */
 			                	BlockingQueue<Character> q = (BlockingQueue<Character>) Mainstart.threadsync.get(packdetails[1]);
 				                q.add('y');

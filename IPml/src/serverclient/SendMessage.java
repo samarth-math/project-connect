@@ -11,17 +11,17 @@ public class SendMessage implements Runnable
 	protected String Message = null;
 	protected String threadnumber;
 	protected BlockingQueue<Character> q;
-	
+
 	public SendMessage(Contact person, String Message)
 	{
 		this.person=person;
 		this.Message= Message;
-		
+
 	}
 	@Override
 	public void run()
 	{
-		
+
 		Thread.currentThread().setName("SendMessage");
 		this.threadnumber=Long.toString(Thread.currentThread().getId());
 		q=new ArrayBlockingQueue<Character>(1);
@@ -31,7 +31,7 @@ public class SendMessage implements Runnable
 			person.getWindow().chatconsole(person.getusername()+":"+Message);
 			try
 			{
-				
+
 				person.SendMessage(Message+":"+threadnumber, Mainstart.myid);
 				if(q.poll(500, TimeUnit.MILLISECONDS)==null)
 					person.getWindow().chatconsole("No Confirmation Received");
@@ -42,8 +42,8 @@ public class SendMessage implements Runnable
 			{
 				person.getWindow().chatconsole("No Confirmation Received");
 			}
-			
-			
+
+
 		}
 		catch(IOException e)
 		{

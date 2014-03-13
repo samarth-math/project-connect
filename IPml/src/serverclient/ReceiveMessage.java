@@ -11,7 +11,7 @@ public class ReceiveMessage implements Runnable
 	//InetAddress ip = null;
 	HashMap <String, Contact> people = null;
 	Timestamp t = null;
-	
+
 	public ReceiveMessage(String [] packdetails, InetAddress ip, Timestamp t)
 	{
 		this.packdetails= packdetails;

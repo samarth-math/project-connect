@@ -3,27 +3,24 @@ import java.io.IOException;
 //import java.io.*;
 import java.net.*;
 
-import serverclient.Mainstart;
 import GUIObjects.ChatWindow;
 
 public class Contact {
-	
+
 	private InetAddress ip;
-	private int port;
 	private String mac;
 	private String OS;
 	private String Host;
 	private String username;
 	private ChatWindow cw=null;
-	
-	public Contact(String mac, String OS, String Host, String username, InetAddress ip, int port)
+
+	public Contact(String mac, String OS, String Host, String username, InetAddress ip)
 	{
 		this.mac = mac;
 		this.Host = Host;
 		this.OS = OS;
 		this.username = username;
 		this.ip=ip;
-		this.port=port;
 	}
 	private void setWindow(ChatWindow cw)
 	{
@@ -47,9 +44,10 @@ public class Contact {
 	{
 		byte[] buf = new byte[256];
 		buf = new String("M:"+senderid+":"+Message).getBytes();
-		DatagramPacket packet = new DatagramPacket(buf, buf.length, ip, port);
-		DatagramSocket socket = Mainstart.socket;
+		DatagramPacket packet = new DatagramPacket(buf, buf.length, ip, 3333);
+		DatagramSocket socket = new DatagramSocket();
 		socket.send(packet);
+		socket.close();
 	}
 	public String getid()
 	{
