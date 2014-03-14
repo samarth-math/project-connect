@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
 
 import FileSending.Server;
+import GUIObjects.AppWindow;
 
 //import GUIObjects.ChatWindow;
 
@@ -67,12 +68,21 @@ public class Mainstart
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
+						AppWindow mainWindow = new AppWindow();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});/*
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
 						person.StartChat();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
-			});
+			});*/
 	   //     SendMessage SM = new SendMessage(person, "This is the message I'm sending to you!!!");
 	     //   new Thread(SM).start();
     }

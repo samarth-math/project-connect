@@ -38,31 +38,26 @@ public class ChatWindow extends BasicWindow
 	public ChatWindow(Contact person)
 	{
 		this.person=person;
+		setTitle("Chat with "+ person.getusername());
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setSize(650,500);
+		setLocationRelativeTo(null);
 		createwindow();
 	}
 	
 	private void createwindow()
 	{
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());// For making it look native in windows
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		
-		setTitle("Chat with "+ person.getusername());
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(650,500);
-		setLocationRelativeTo(null);
 	
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);	
 		
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{22,603,20, 5};
-		gbl_contentPane.rowHeights = new int[]{40, 410, 50};
-		gbl_contentPane.columnWeights = new double[]{1.0, 1.0};
-		gbl_contentPane.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWidths = new int[]{5,620,20, 5};
+		gbl_contentPane.rowHeights = new int[]{5, 440, 50};
+		gbl_contentPane.columnWeights = new double[]{0, 1.0, 0, 0};
+		gbl_contentPane.rowWeights = new double[]{0, 1.0, 0};
 		contentPane.setLayout(gbl_contentPane);
 		
 		history = new JTextArea();
@@ -93,7 +88,6 @@ public class ChatWindow extends BasicWindow
 			}
 		});
 		GridBagConstraints gbc_txtMessage = new GridBagConstraints();
-		gbc_txtMessage.insets = new Insets(0, 0, 0, 5);
 		gbc_txtMessage.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtMessage.gridx = 1;
 		gbc_txtMessage.gridy = 2;
