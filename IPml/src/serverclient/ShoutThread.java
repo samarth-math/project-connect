@@ -9,23 +9,25 @@ import java.net.*;
 
 public class ShoutThread implements Runnable 
 {
-	protected DatagramSocket socket = new DatagramSocket();
+	protected DatagramSocket socket;
 	protected String macadd;
 	protected String ipadd1=null;
 	protected String ipadd2=null;
 	protected String user;
-
-	public ShoutThread(String macadd,String user, String ipadd1, String ipadd2) throws SocketException
+	
+	public ShoutThread(String macadd,String user, String ipadd1, String ipadd2)
 	{
 		// get a datagram socket
 		this.macadd=macadd;
 		this.ipadd1=ipadd1;
 		this.ipadd2=ipadd2;
 		this.user = user;
+		this.socket= Mainstart.socket;
 	}
-	public ShoutThread(String macadd, String user) throws SocketException
+	public ShoutThread(String macadd, String user)
 	{
 		// get a datagram socket
+		this.socket = Mainstart.socket;
 		this.macadd=macadd;
 		this.user = user;
 	}
@@ -34,7 +36,6 @@ public class ShoutThread implements Runnable
 	public void run()
 	{  
 		Thread.currentThread().setName("ShoutThread");
-
 		try
 		{
 			if(ipadd1!=null && ipadd2!=null)
@@ -45,7 +46,11 @@ public class ShoutThread implements Runnable
 			        buf= new String("D:C:"+macadd+":"+System.getProperty("os.name")+":"+InetAddress.getLocalHost().getHostName()+":"+user).getBytes();
 			        InetAddress address = IpAddress.LongToip(ip1);
 			        DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 3333);
-			        socket.send(packet);
+                	//synchronized(socket)
+                	//{
+                		socket.send(packet);
+                	//}
+
 				}
 			}
 			else
@@ -54,10 +59,12 @@ public class ShoutThread implements Runnable
 				   buf= new String("D:C:"+macadd+":"+System.getProperty("os.name")+":"+InetAddress.getLocalHost().getHostName()+":"+user).getBytes();
 			       InetAddress address = InetAddress.getByName("255.255.255.255");
 			       DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 3333);
-			       socket.send(packet);
-			}
+               	//synchronized(socket)
+               	//{
+               		socket.send(packet);
+               	//}
 
-	        socket.close();
+			}
 		} 
 		catch (UnknownHostException e) 
 		{
@@ -69,5 +76,5 @@ public class ShoutThread implements Runnable
         	System.exit(0);
         }
      
-	}
+    }
 }
