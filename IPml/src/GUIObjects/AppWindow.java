@@ -1,11 +1,6 @@
 package GUIObjects;
 
-import java.awt.Container;
-
-import globalfunctions.*;
-
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
@@ -13,14 +8,10 @@ import serverclient.Mainstart;
 import globalfunctions.Contact;
 import GuiElements.ClickablePanel;
 
-import java.awt.BorderLayout;
-
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import java.awt.GridBagLayout;
-
-import javax.swing.JPanel;
 
 import java.awt.GridBagConstraints;
 
@@ -40,7 +31,7 @@ public class AppWindow extends BasicWindow
 		createAppWindow();
 	}
 	
-	public void createAppWindow()
+	private void createAppWindow()
 	{
 
 		

@@ -14,10 +14,7 @@ import java.awt.event.MouseEvent;
 
 
 public class ClickablePanel extends JPanel{
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private JLabel username = new JLabel();//this holds the username
 	
@@ -28,6 +25,7 @@ public class ClickablePanel extends JPanel{
 		setPreferredSize(new Dimension(250,50));
 		setBackground(Color.WHITE);
 		setLayout(null);
+		
 		final Contact person=sperson;
 		//panel properties end here
 		

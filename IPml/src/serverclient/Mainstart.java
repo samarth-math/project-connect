@@ -7,14 +7,11 @@
 package serverclient;
 import globalfunctions.Contact;
 import globalfunctions.IpAddress;
-
 import java.awt.EventQueue;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
-
-import FileSending.Server;
 import GUIObjects.AppWindow;
 
 //import GUIObjects.ChatWindow;
@@ -24,7 +21,8 @@ public class Mainstart
 {
 	public static HashMap <String,BlockingQueue<Character>> threadsync = new HashMap <String, BlockingQueue<Character>> ();
 	public static HashMap <String,Contact> people = new HashMap <String,Contact> ();
-	public static String myid=IpAddress.IdentityMac();
+	public static String myid;
+	public static String myusername;
 	public static DatagramSocket socket;
 	
 	
@@ -36,22 +34,23 @@ public class Mainstart
 			System.err.print("Unable to initiate connection: Port maybe in use already");
 			System.exit(0);
 		}
-		String auth=IpAddress.IdentityMac();
-		if (auth==null)
+		myid=IpAddress.IdentityMac();
+		myusername = IpAddress.getUserName();
+		if (myid==null)
 			{
 				System.err.print("Network Problems detected!");
 				System.exit(0);
 			}
 			
-			ShoutThread S = new ShoutThread(auth, "Sam");//, "172.22.30.19", "172.22.30.21");
-			ListenThread L =  new ListenThread(auth, "User");
+			ShoutThread S = new ShoutThread(myid, myusername);//, "172.22.30.19", "172.22.30.21");
+			ListenThread L =  new ListenThread(myid, myusername);
 			
 			
 			new Thread(L).start();
 			new Thread(S).start();
 			try
 	        {
-	        	Thread.sleep(6000);
+	        	Thread.sleep(3000);
 	        }
 	        catch(Exception E)
 	        {
@@ -64,10 +63,11 @@ public class Mainstart
 	        }*/
 		   //System.out.print("Supposedly printed everything in the hashmap");
 			//new Thread(new Server()).start();
-			final Contact person = (Contact) people.get("F07BCB8001D7");
+			//final Contact person = (Contact) people.get("F07BCB8001D7");
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
+						//UsernameWindow login = new UsernameWindow();
 						AppWindow mainWindow = new AppWindow();
 					} catch (Exception e) {
 						e.printStackTrace();
