@@ -13,17 +13,16 @@ import globalfunctions.Contact;
 
 public class ListenThread implements Runnable
 {
-
-    protected DatagramSocket socket = null;
+	private DatagramSocket socket;
     protected Boolean on = true;
     protected String id;
     protected BlockingQueue <Character> q;
     protected String user;
     
 
-    public ListenThread(String macadd, String user) throws SocketException
+    public ListenThread(String macadd, String user)
     {
-    	this.socket = new DatagramSocket(3333);
+    	this.socket=Mainstart.socket;
         this.id=macadd;
         this.user = user;
     }
@@ -40,10 +39,16 @@ public class ListenThread implements Runnable
 		            try{
 				            // receive request
 				            DatagramPacket packet = new DatagramPacket(buf, buf.length);
-				            socket.receive(packet);
+				            try {
+								socket.receive(packet);
+							} catch (IOException except)
+			                {
+			                	except.getStackTrace();
+			                }
 					        
 				            String packdetails[] = new String(packet.getData(), 0, packet.getLength()).split(":");//Important part of receiving request. Tool used to parse the request
 			                InetAddress address = packet.getAddress();
+			                int port = packet.getPort();
 			                
 			                if(packdetails[0].equals("D"))	// if it's a Detection Packet	                
 			                {/* packdetails[0] - if Detection Packet
@@ -55,7 +60,7 @@ public class ListenThread implements Runnable
 	
 			                	
 			                	//Save Packet
-			                	Contact person = new Contact(packdetails[2], packdetails[3], packdetails[4], packdetails[5], address);
+			                	Contact person = new Contact(packdetails[2], packdetails[3], packdetails[4], packdetails[5], address, port);
 			                	Mainstart.people.put(packdetails[2],person);
 			                	
 			                	if (packdetails[1].equals("C"))// If packet came from client, send it a response
@@ -63,9 +68,17 @@ public class ListenThread implements Runnable
 				                	// figure out response
 				                    String PString = new String("D:S:"+id+":"+System.getProperty("os.name")+":"+InetAddress.getLocalHost().getHostName()+":"+user);
 				                    buf = PString.getBytes();		
-					                // send the response to the client
-					                packet = new DatagramPacket(buf, buf.length, address, 3333);
-					                socket.send(packet);
+					                // send the response to the client at "address" and "port"
+					                packet = new DatagramPacket(buf, buf.length, address, port);
+					                try {
+					                	//synchronized(socket)
+					                	//{
+					                		socket.send(packet);
+					                	//}
+									} catch (IOException except)
+					                {
+					                	System.err.print("Network Problem : Unable to send packets to client!");
+					                }
 			                   	}// end of small if
 			                }//end of big if
 			                else if(packdetails[0].equals("M"))// implies, Message type packet
@@ -76,12 +89,21 @@ public class ListenThread implements Runnable
 			                	//Send Acknowledgement
 			                	String PString = new String("A:"+packdetails[3]);
 			                	buf = PString.getBytes();
-			                	packet = new DatagramPacket(buf, buf.length, address, 3333);
-			                	socket.send(packet);
+			                	packet = new DatagramPacket(buf, buf.length, address, port);
+			                	try {
+				                	//synchronized(socket)
+				                	//{
+				                		socket.send(packet);
+				                	//}
+
+								} catch (IOException except)
+				                {
+				                	System.err.print("Network Problem : Unable to send packets!");
+				                }
 			                	ReceiveMessage RM = new ReceiveMessage(packdetails, address, t);
 			                	new Thread(RM).start();
 			                }
-			                else
+			                else if (packdetails[0].equals("A"))// Catching Acknowledgement
 			                {/*packdetails[1]=Thread Number */
 			                	BlockingQueue<Character> q = (BlockingQueue<Character>) Mainstart.threadsync.get(packdetails[1]);
 				                q.add('y');
@@ -91,10 +113,6 @@ public class ListenThread implements Runnable
 		        		{
 		        			System.err.print("Unable to find IP of current machine");
 		        		}
-		        		catch (IOException except)
-		                {
-		                	System.err.print("Network Problem : Unable to send packets!");
-		                }
 	            }//end of while
     	}//end of run
 }//end of class

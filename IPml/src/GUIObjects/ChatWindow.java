@@ -15,7 +15,6 @@ import java.awt.Insets;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -27,7 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class ChatWindow extends JFrame
+public class ChatWindow extends BasicWindow
 {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;	
@@ -38,31 +37,26 @@ public class ChatWindow extends JFrame
 	public ChatWindow(Contact person)
 	{
 		this.person=person;
+		setTitle("Chat with "+ person.getusername());
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setSize(650,500);
+		setLocationRelativeTo(null);
 		createwindow();
 	}
 	
 	private void createwindow()
 	{
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());// For making it look native in windows
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		
-		setTitle("Chat with "+ person.getusername());
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(650,500);
-		setLocationRelativeTo(null);
 	
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);	
 		
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{22,603,20, 5};
-		gbl_contentPane.rowHeights = new int[]{40, 410, 50};
-		gbl_contentPane.columnWeights = new double[]{1.0, 1.0};
-		gbl_contentPane.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWidths = new int[]{5,620,20, 5};
+		gbl_contentPane.rowHeights = new int[]{5, 440, 50};
+		gbl_contentPane.columnWeights = new double[]{0, 1.0, 0, 0};
+		gbl_contentPane.rowWeights = new double[]{0, 1.0, 0};
 		contentPane.setLayout(gbl_contentPane);
 		
 		history = new JTextArea();
@@ -93,7 +87,6 @@ public class ChatWindow extends JFrame
 			}
 		});
 		GridBagConstraints gbc_txtMessage = new GridBagConstraints();
-		gbc_txtMessage.insets = new Insets(0, 0, 0, 5);
 		gbc_txtMessage.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtMessage.gridx = 1;
 		gbc_txtMessage.gridy = 2;

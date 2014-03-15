@@ -7,6 +7,7 @@ import java.io.*;
 import java.net.*;
 import java.nio.ByteBuffer;
 import java.util.Enumeration;
+import GUIObjects.UsernameWindow;
 
 //import org.apache.commons.net.util.*; // Depends on apache commons-net-3.3 library
 public class IpAddress 
@@ -111,6 +112,48 @@ public class IpAddress
 			}
 		return mac;
 	}	
+	
+	public static String getUserName()
+	{
+		String username = null;
+		File path = new File(System.getProperty("user.dir"));
+		File namefile = new File(path,"username");
+		try
+		{
+				if (namefile.exists())
+				{
+					byte buffer[]= new byte[20];
+					FileInputStream fis = new FileInputStream(namefile);
+					while(fis.read(buffer)!=-1)
+						username=new String(buffer).trim();
+					fis.close();
+					return username;
+					
+				}
+				else
+				{
+					UsernameWindow login = new UsernameWindow();
+					
+					while(username==null)
+						username = login.getusername();
+					
+					FileOutputStream fos = new FileOutputStream(namefile);
+	    			fos.write(username.getBytes());
+	    			fos.close();
+					return username;
+
+				}
+		}
+		catch(FileNotFoundException f)
+		{
+			return null;
+		}
+		catch(IOException io)
+		{
+			return null;
+		}
+		
+	}
 
 	
 	/*public static String current_Mac_and_IP()// returns ipadd:mac address ###Split returned string using### String [] netinfo = IpAddress.current_Mac_and_IP().split(":"); netinfo[0] = mac and netinfo[1] = ip 

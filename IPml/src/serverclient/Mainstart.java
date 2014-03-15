@@ -7,13 +7,12 @@
 package serverclient;
 import globalfunctions.Contact;
 import globalfunctions.IpAddress;
-
 import java.awt.EventQueue;
+import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
-
-import Interface.RunInterface;
+import GUIObjects.AppWindow;
 
 //import GUIObjects.ChatWindow;
 
@@ -22,28 +21,36 @@ public class Mainstart
 {
 	public static HashMap <String,BlockingQueue<Character>> threadsync = new HashMap <String, BlockingQueue<Character>> ();
 	public static HashMap <String,Contact> people = new HashMap <String,Contact> ();
+	public static String myid;
+	public static String myusername;
+	public static DatagramSocket socket;
 	
-	public static String myid=IpAddress.IdentityMac();
 	
 	public static void main(String[] args)
     {
-		String auth=IpAddress.IdentityMac();
-		if (auth==null)
+		try {
+			socket = new DatagramSocket(3333);
+		} catch (SocketException e) {
+			System.err.print("Unable to initiate connection: Port maybe in use already");
+			System.exit(0);
+		}
+		myid=IpAddress.IdentityMac();
+		myusername = IpAddress.getUserName();
+		if (myid==null)
 			{
 				System.err.print("Network Problems detected!");
 				System.exit(0);
 			}
 			
-
-		try
-		{
-			ListenThread L =  new ListenThread(auth, "User");
-			ShoutThread S = new ShoutThread(auth, "Shasak");
+			ShoutThread S = new ShoutThread(myid, myusername);//, "172.22.30.19", "172.22.30.21");
+			ListenThread L =  new ListenThread(myid, myusername);
+			
+			
 			new Thread(L).start();
 			new Thread(S).start();
 			try
 	        {
-	        	Thread.sleep(6000);
+	        	Thread.sleep(3000);
 	        }
 	        catch(Exception E)
 	        {
@@ -54,13 +61,19 @@ public class Mainstart
 	            Contact value = (Contact) people.get(key);
 	            value.printall();
 	        }*/
-			
-			/*this is shasak testing something------*/
-			RunInterface R = new RunInterface();
-			new Thread(R).start();
-			//--------------------------------------
-			
-			/*final Contact person = (Contact) people.get("78E400ACD134");
+		   //System.out.print("Supposedly printed everything in the hashmap");
+			//new Thread(new Server()).start();
+			//final Contact person = (Contact) people.get("F07BCB8001D7");
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						//UsernameWindow login = new UsernameWindow();
+						AppWindow mainWindow = new AppWindow();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});/*
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
@@ -72,13 +85,5 @@ public class Mainstart
 			});*/
 	   //     SendMessage SM = new SendMessage(person, "This is the message I'm sending to you!!!");
 	     //   new Thread(SM).start();
-	    
-			
-		}
-	    catch(SocketException ex)
-		{
-			System.err.print("Unable to initiate connection: Port maybe in use already");
-			System.exit(0);
-		}
     }
 }

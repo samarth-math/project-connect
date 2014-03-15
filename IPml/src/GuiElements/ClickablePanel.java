@@ -14,31 +14,30 @@ import java.awt.event.MouseEvent;
 
 
 public class ClickablePanel extends JPanel{
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private JLabel username = new JLabel();//this holds the username
 	
-	 public ClickablePanel(Contact person){
+	 public ClickablePanel(Contact sperson){
 		
 		//set all properties of the panel here
-		this.setMaximumSize(new Dimension(30000,50));
-		this.setPreferredSize(new Dimension(300,50));
-		this.setBackground(Color.WHITE);
-		this.setLayout(null);
+		setMaximumSize(new Dimension(30000,50));
+		setPreferredSize(new Dimension(250,50));
+		setBackground(Color.WHITE);
+		setLayout(null);
+		
+		final Contact person=sperson;
 		//panel properties end here
 		
 		//panel event handling here
-		//addMouseListener(new MouseAdapter() {
-			//@Override
-			//public void mouseClicked(MouseEvent e) {
-				//TODO 
-			//}
-		//});
-		
-		
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount()==2)
+				person.StartChat();
+			}
+		});
+
 		/*components in the panel*/
 		
 			//username labels 
