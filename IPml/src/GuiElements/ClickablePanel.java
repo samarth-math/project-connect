@@ -43,7 +43,7 @@ public class ClickablePanel extends JPanel{
 			//username labels 
 			this.username.setAlignmentX(Component.CENTER_ALIGNMENT);
 			this.username.setBounds(115, 12, 70, 26);
-			this.username.setText(person.getHostname());
+			this.username.setText(person.getusername());
 			this.add(username);
 			
 			//TODO user image labels

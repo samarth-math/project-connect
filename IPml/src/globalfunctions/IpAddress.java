@@ -7,7 +7,9 @@ import java.io.*;
 import java.net.*;
 import java.nio.ByteBuffer;
 import java.util.Enumeration;
-import GUIObjects.UsernameWindow;
+
+import javax.swing.JOptionPane;
+import GUIObjects.usernameDialog;
 
 //import org.apache.commons.net.util.*; // Depends on apache commons-net-3.3 library
 public class IpAddress 
@@ -132,16 +134,12 @@ public class IpAddress
 				}
 				else
 				{
-					UsernameWindow login = new UsernameWindow();
-					
-					while(username==null)
-						username = login.getusername();
-					
+					usernameDialog user = new usernameDialog();
+					username = user.getusername();
 					FileOutputStream fos = new FileOutputStream(namefile);
 	    			fos.write(username.getBytes());
 	    			fos.close();
 					return username;
-
 				}
 		}
 		catch(FileNotFoundException f)
