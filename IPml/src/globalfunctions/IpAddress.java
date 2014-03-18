@@ -7,8 +7,6 @@ import java.io.*;
 import java.net.*;
 import java.nio.ByteBuffer;
 import java.util.Enumeration;
-
-import javax.swing.JOptionPane;
 import GUIObjects.usernameDialog;
 
 //import org.apache.commons.net.util.*; // Depends on apache commons-net-3.3 library

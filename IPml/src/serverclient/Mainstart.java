@@ -14,9 +14,6 @@ import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
 import GUIObjects.AppWindow;
 
-//import GUIObjects.ChatWindow;
-
-
 public class Mainstart 
 {
 	public static HashMap <String,BlockingQueue<Character>> threadsync = new HashMap <String, BlockingQueue<Character>> ();
@@ -42,8 +39,8 @@ public class Mainstart
 				System.exit(0);
 			}
 			
-			ShoutThread S = new ShoutThread(myid, myusername);//, "172.22.30.19", "172.22.30.21");
-			ListenThread L =  new ListenThread(myid, myusername);
+			ShoutThread S = new ShoutThread();//, "172.22.30.19", "172.22.30.21");
+			ListenThread L =  new ListenThread();
 			
 			
 			new Thread(L).start();
@@ -68,6 +65,7 @@ public class Mainstart
 				public void run() {
 					try {
 						//UsernameWindow login = new UsernameWindow();
+						@SuppressWarnings("unused")
 						AppWindow mainWindow = new AppWindow();
 					} catch (Exception e) {
 						e.printStackTrace();
