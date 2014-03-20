@@ -1,4 +1,6 @@
-package FileSending;
+package fileSending;
+
+
 
 import java.io.*;
 import java.net.*;
@@ -28,13 +30,14 @@ public class Client implements Runnable {
 	public void run() {
 		
 		try {
+			System.out.println("Initiating connection.. ");
 			socket = new Socket(ipAddress,portNumber);
 			System.out.println(socket);		
 			String FilePath;
 			// File Path which is to be sent
-			FilePath = "D:\\Articles";
+			FilePath = "D:\\Movies\\RightHereRightNow.mp4";
 			path = Paths.get(FilePath);
-			System.out.println("Calling Multicast...");
+			//System.out.println("Calling Multicast...");
 			//MulticastClient.multicast(socket, path);
 			Sender.send(socket,path);
 			socket.close();
@@ -47,7 +50,7 @@ public class Client implements Runnable {
 	public static void main(String args[])  {
 		Socket s = null;
 		Path file = null;
-		int pNumber = 16000;
+		int pNumber = 3333;
 		String ip = "127.0.0.1";
 		Client obj = new Client(s,file,ip,pNumber);
 		(new Thread(obj)).start();

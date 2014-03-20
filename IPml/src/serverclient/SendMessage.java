@@ -28,7 +28,7 @@ public class SendMessage implements Runnable
 		Mainstart.threadsync.put(threadnumber, q);
 		try
 		{
-			person.getWindow().chatconsole(person.getusername()+":"+Message);
+			person.getWindow().chatconsole(Mainstart.myusername+":"+Message);
 			try
 			{
 				

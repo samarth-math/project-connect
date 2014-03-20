@@ -15,21 +15,21 @@ public class ShoutThread implements Runnable
 	protected String ipadd2=null;
 	protected String user;
 	
-	public ShoutThread(String macadd,String user, String ipadd1, String ipadd2)
+	public ShoutThread(String ipadd1, String ipadd2)
 	{
 		// get a datagram socket
-		this.macadd=macadd;
+		this.macadd=Mainstart.myid;
 		this.ipadd1=ipadd1;
 		this.ipadd2=ipadd2;
-		this.user = user;
+		this.user = Mainstart.myusername;
 		this.socket= Mainstart.socket;
 	}
-	public ShoutThread(String macadd, String user)
+	public ShoutThread()
 	{
 		// get a datagram socket
 		this.socket = Mainstart.socket;
-		this.macadd=macadd;
-		this.user = user;
+		this.macadd=Mainstart.myid;
+		this.user = Mainstart.myusername;;
 	}
 
 	@Override

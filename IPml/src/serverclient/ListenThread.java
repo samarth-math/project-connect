@@ -14,17 +14,16 @@ import globalfunctions.Contact;
 public class ListenThread implements Runnable
 {
 	private DatagramSocket socket;
-    protected Boolean on = true;
     protected String id;
     protected BlockingQueue <Character> q;
     protected String user;
     
 
-    public ListenThread(String macadd, String user)
+    public ListenThread()
     {
     	this.socket=Mainstart.socket;
-        this.id=macadd;
-        this.user = user;
+        this.id=Mainstart.myid;
+        this.user = Mainstart.myusername;
     }
 
     @Override
@@ -32,7 +31,7 @@ public class ListenThread implements Runnable
     {
     	Thread.currentThread().setName("ListenThread");
     	
-        while (on) 
+        while (true) 
 	            {
         			
         			byte[] buf = new byte[256];
