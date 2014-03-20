@@ -31,7 +31,7 @@ public class FileTransferPanel extends JPanel{
 		setLayout(gridBagLayout);
 		setBorder(new LineBorder(new Color(255, 255, 0), 3));
 		
-		//the filename label
+		//the filename label is here
 		JLabel lbl_fileName = new JLabel(filename);
 		GridBagConstraints gbc_lbl_fileName = new GridBagConstraints();
 		gbc_lbl_fileName.anchor = GridBagConstraints.WEST;
