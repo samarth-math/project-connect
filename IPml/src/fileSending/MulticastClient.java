@@ -64,7 +64,7 @@ public class MulticastClient extends Sender implements Runnable  {
 	
 		Path file = null;
 		int pNumber = 16000;
-		String ip = "127.0.0.1";
+		String ip = "172.22.30.20";
 		MulticastClient obj = new MulticastClient(file,ip,pNumber);
 		(new Thread(obj)).start();
 	}
