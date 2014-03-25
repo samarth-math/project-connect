@@ -17,10 +17,13 @@ import javax.swing.Box;
 public class ChatWindowPanelSender extends JPanel{
 	
 	private JLabel lbl_cnfrmMessage;
+	private JTextPane textpn_chatText;
+	private JLabel lbl_chatTimeStamp;
+	
 	
 	public ChatWindowPanelSender(String inputText, String timeStamp) {
 		
-		//panel properties yeah
+		//set panel properties 
 		setBackground(Color.WHITE);
 		setBorder(new LineBorder(Color.GREEN));
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -28,11 +31,12 @@ public class ChatWindowPanelSender extends JPanel{
 		gridBagLayout.columnWeights = new double[]{2.0};
 		setLayout(gridBagLayout);
 		
-		//text pane
-		JTextPane textpn_chatText = new JTextPane();
-		//textpn_chatText.setBorder(new LineBorder(Color.GRAY, 2));
+		//create text-pane
+		textpn_chatText = new JTextPane();
 		textpn_chatText.setText(inputText);
 		textpn_chatText.setEditable(false);
+		
+		//add text-pane to panel
 		GridBagConstraints gbc_textpn_chatText = new GridBagConstraints();
 		gbc_textpn_chatText.insets = new Insets(0, 0, 5, 0);
 		gbc_textpn_chatText.fill = GridBagConstraints.BOTH;
@@ -42,11 +46,13 @@ public class ChatWindowPanelSender extends JPanel{
 		
 		
 		
-		//time-stamp label
-		JLabel lbl_chatTimeStamp = new JLabel(timeStamp);
+		//create time-stamp label
+		lbl_chatTimeStamp = new JLabel(timeStamp);
 		lbl_chatTimeStamp.setBorder(null);
 		lbl_chatTimeStamp.setBackground(Color.WHITE);
 		lbl_chatTimeStamp.setFont(new Font("Ubuntu Light", Font.PLAIN, 10));
+		
+		//add time-stamp label
 		GridBagConstraints gbc_lbl_chatTimeStamp = new GridBagConstraints();
 		gbc_lbl_chatTimeStamp.insets = new Insets(0, 0, 5, 0);
 		gbc_lbl_chatTimeStamp.anchor = GridBagConstraints.EAST;
@@ -59,9 +65,11 @@ public class ChatWindowPanelSender extends JPanel{
 	}
 	
 	
-	//call this function on the panel when the acknowledgment is received 
+	
+	//call this method on the panel when the acknowledgment is received 
 	
 	void showMsg(String msg){ 
+		
 		lbl_cnfrmMessage=new JLabel(msg);
 		lbl_cnfrmMessage.setBorder(null);
 		lbl_cnfrmMessage.setBackground(Color.WHITE);
