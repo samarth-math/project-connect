@@ -52,7 +52,7 @@ public class ChatWindowPanelReceiver extends JPanel{
 		gbc_lbl_chatTimeStamp.anchor = GridBagConstraints.EAST;
 		gbc_lbl_chatTimeStamp.gridx = 0;
 		gbc_lbl_chatTimeStamp.gridy = 1;
-		add(lbl_chatTimeStamp, gbc_lbl_chatTimeStamp);
+		add(lbl_chatTimeStamp, gbc_lbl_chatTimeStamp);//useless comment
 		
 	}
 }

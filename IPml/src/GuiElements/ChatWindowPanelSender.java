@@ -70,7 +70,7 @@ public class ChatWindowPanelSender extends JPanel{
 		gbc_lbl_cnfrmMessage.anchor = GridBagConstraints.SOUTHEAST;
 		gbc_lbl_cnfrmMessage.gridx = 0;
 		gbc_lbl_cnfrmMessage.gridy = 2;
-		add(lbl_cnfrmMessage, gbc_lbl_cnfrmMessage);
+		add(lbl_cnfrmMessage, gbc_lbl_cnfrmMessage);//another useless comment
 		
 	}
 }

@@ -126,7 +126,7 @@ public class ChatWindow extends BasicWindow
 	
 	}
 	
-	public void chatconsole(String M)
+	public void chatconsole(String M)//use this
 	{
 		history.append(M+"\n\r");
 		history.setCaretPosition(history.getDocument().getLength());
