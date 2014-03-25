@@ -20,7 +20,7 @@ public class ChatWindowPanelSender extends JPanel{
 	
 	public ChatWindowPanelSender(String inputText, String timeStamp) {
 		
-		//panel properties
+		//panel properties yeah
 		setBackground(Color.WHITE);
 		setBorder(new LineBorder(Color.GREEN));
 		GridBagLayout gridBagLayout = new GridBagLayout();
