@@ -17,6 +17,7 @@ public class ClickablePanel extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 	private JLabel username = new JLabel();//this holds the username
+	private String html; //use html in tool tip
 	
 	 public ClickablePanel(Contact sperson){
 		
@@ -25,6 +26,14 @@ public class ClickablePanel extends JPanel{
 		setPreferredSize(new Dimension(250,50));
 		setBackground(Color.WHITE);
 		setLayout(null);
+		
+//		html=	"<html><body>"+
+//				"<div>This is a tool tip</div>"+
+//				"<a href=\"http://www.google.co.in\" >click me</a>"+
+//				"</body></html>";
+//		this.setToolTipText(html);
+//		
+		
 		
 		final Contact person=sperson;
 		//panel properties end here
@@ -50,4 +59,6 @@ public class ClickablePanel extends JPanel{
 			
 			//TODO options button
 	}
+	
+	 
 }
