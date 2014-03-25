@@ -21,16 +21,16 @@ public class Client implements Runnable {
 	public void run() {
 		
 		try {
-			Socket socket;
-			Path path;
+			
 			System.out.println("Initiating connection... " + ipAddress + " " + portNumber);
-			socket = new Socket(ipAddress,portNumber);
+			Socket socket = new Socket(ipAddress,portNumber);
 			System.out.println("Socket is "  + socket);		
 			String FilePath;
 			// File Path which is to be sent
 			FilePath = "D:\\Movies\\RightHereRightNow.mp4";
 			OutputStream os=null;
-			path = Paths.get(FilePath);
+			Path path = Paths.get(FilePath);
+			
 			Sender obj = new Sender(os);
 			obj.send(socket,path);
 			socket.close();

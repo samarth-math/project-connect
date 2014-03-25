@@ -18,12 +18,14 @@ public class FileWalker {
         for ( File f : list ) {
             if ( f.isDirectory() ) {
                 Path p = Paths.get(f.getAbsoluteFile().toString());
-            	Sender.sendFile(socket, p);
+                Sender obj = new Sender();
+            	obj.sendFile(socket, p);
                 walk( f.getAbsolutePath(), socket );
             }
             else {
             	Path p = Paths.get(f.getAbsoluteFile().toString());
-            	Sender.sendFile(socket, p);
+            	Sender obj = new Sender();
+            	obj.sendFile(socket, p);
             }
         }
     }

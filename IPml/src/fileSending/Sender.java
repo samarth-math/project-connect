@@ -13,12 +13,14 @@ import java.nio.file.Path;
 
 public class Sender  {
 	
-	static OutputStream os;
+	 OutputStream os;
 	
 	public Sender(OutputStream os) {
 		this.os = os;
 	}
-	
+	public Sender() {
+		
+	}
 	public void send(Socket socket,Path filePath) throws IOException {
 		if( isFile(filePath.toString()) )
 			sendFile(socket,filePath);
@@ -31,7 +33,7 @@ public class Sender  {
 			os.close();
 	}
 
-	public static void sendFile(Socket socket,Path filePath) throws IOException {
+	public void sendFile(Socket socket,Path filePath) throws IOException {
 		
 		String fileName = filePath.getFileName().toString();
 		long fSize =  Files.size(filePath);
@@ -112,13 +114,13 @@ public class Sender  {
 		System.out.println("File Transfer Complete...");
 	}
 
-	public static void sendFolder(final Socket socket, String FilePath) throws IOException  {
+	public  void sendFolder(final Socket socket, String FilePath) throws IOException  {
 		 FileWalker fw = new FileWalker();
 	        fw.walk(FilePath,socket);
 			socket.close();
 	}
 	
-	public static boolean isPathValid(String filePath) {
+	public  boolean isPathValid(String filePath) {
 		
 		if(new File(filePath).exists())
 			return true;
@@ -126,13 +128,13 @@ public class Sender  {
 			return false;
 	}
 	
-	public static boolean isDirectory(String filePath) {
+	public  boolean isDirectory(String filePath) {
 		if(new File(filePath).isDirectory())
 			return true;
 		else
 			return false;
 	}
-	public static boolean isFile(String filePath) {
+	public  boolean isFile(String filePath) {
 		if(new File(filePath).isFile())
 			return true;
 		else

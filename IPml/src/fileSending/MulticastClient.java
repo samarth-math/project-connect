@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class MulticastClient  implements Runnable  {
+public class MulticastClient implements Runnable  {
 	private DatagramSocket multicastSocket;
 	private Path filePath;
 	int portNumber;
@@ -60,7 +60,7 @@ public class MulticastClient  implements Runnable  {
 
 	
     
-    public static String getHeader(Path filePath) throws IOException  {
+    public  String getHeader(Path filePath) throws IOException  {
     	String fileName = filePath.getFileName().toString();
 		long fSize =  Files.size(filePath);
 		long fileSize= fSize;
@@ -71,16 +71,16 @@ public class MulticastClient  implements Runnable  {
 		boolean flag=false;
 		char pathType= ' ';
 		
-		flag = Sender.isPathValid(filePath.toString());
+		flag = isPathValid(filePath.toString());
 		if(flag==false) {
 			Sender.displayError("Path Not Valid");
 		}
-		flag = Sender.isFile(filePath.toString());
+		flag = isFile(filePath.toString());
 		if(flag==true) {
 			pathType = 'f';
 		}
 		if(flag==false) {
-			flag = Sender.isDirectory(filePath.toString());
+			flag = isDirectory(filePath.toString());
 			if(flag==true) {
 				pathType = 'd';
 			}
@@ -102,4 +102,28 @@ public class MulticastClient  implements Runnable  {
 		return header;
 		
     }
+public  boolean isPathValid(String filePath) {
+		
+		if(new File(filePath).exists())
+			return true;
+		else
+			return false;
+	}
+	
+	public  boolean isDirectory(String filePath) {
+		if(new File(filePath).isDirectory())
+			return true;
+		else
+			return false;
+	}
+	public  boolean isFile(String filePath) {
+		if(new File(filePath).isFile())
+			return true;
+		else
+			return false;
+	}
+	public static void displayError(String errorMessage)  {
+		System.err.println(errorMessage);
+		System.exit(1);
+	}
 }
