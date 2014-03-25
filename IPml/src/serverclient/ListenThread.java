@@ -5,25 +5,17 @@
 package serverclient;
 import java.io.*;
 import java.net.*;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.concurrent.BlockingQueue;
-
-import globalfunctions.Contact;
 
 public class ListenThread implements Runnable
 {
 	private DatagramSocket socket;
-    protected String id;
-    protected BlockingQueue <Character> q;
-    protected String user;
-    
+	private BlockingQueue<DatagramPacket> Q;
 
-    public ListenThread()
+    public ListenThread(BlockingQueue<DatagramPacket> Q)
     {
     	this.socket=Mainstart.socket;
-        this.id=Mainstart.myid;
-        this.user = Mainstart.myusername;
+    	this.Q=Q;
     }
 
     @Override
@@ -33,85 +25,18 @@ public class ListenThread implements Runnable
     	
         while (true) 
 	            {
-        			
-        			byte[] buf = new byte[256];
-		            try{
-				            // receive request
-				            DatagramPacket packet = new DatagramPacket(buf, buf.length);
-				            try {
-								socket.receive(packet);
-							} catch (IOException except)
-			                {
-			                	except.getStackTrace();
-			                }
-					        
-				            String packdetails[] = new String(packet.getData(), 0, packet.getLength()).split(":");//Important part of receiving request. Tool used to parse the request
-			                InetAddress address = packet.getAddress();
-			                int port = packet.getPort();
-			                
-			                if(packdetails[0].equals("D"))	// if it's a Detection Packet	                
-			                {/* packdetails[0] - if Detection Packet
-				                 * packdetails[1] - if sent by Server or client
-				                 * packdetails[2] - Mac Address
-				                 * packdetails[3] - Operating System
-				                 * packdetails[4] - HostName
-				                 * packdetails[5] - Username*/
-	
-			                	
-			                	//Save Packet
-			                	Contact person = new Contact(packdetails[2], packdetails[3], packdetails[4], packdetails[5], address, port);
-			                	Mainstart.people.put(packdetails[2],person);
-			                	
-			                	if (packdetails[1].equals("C"))// If packet came from client, send it a response
-			                   	{
-				                	// figure out response
-				                    String PString = new String("D:S:"+id+":"+System.getProperty("os.name")+":"+InetAddress.getLocalHost().getHostName()+":"+user);
-				                    buf = PString.getBytes();		
-					                // send the response to the client at "address" and "port"
-					                packet = new DatagramPacket(buf, buf.length, address, port);
-					                try {
-					                	//synchronized(socket)
-					                	//{
-					                		socket.send(packet);
-					                	//}
-									} catch (IOException except)
-					                {
-					                	System.err.print("Network Problem : Unable to send packets to client!");
-					                }
-			                   	}// end of small if
-			                }//end of big if
-			                else if(packdetails[0].equals("M"))// implies, Message type packet
-			                {/*packdetails[1]=mac of person received from
-			                   packdetails[2]=message
-			                   packdetails[3]=threadnumber of sending thread*/
-			                	Timestamp t =new Timestamp(new Date().getTime());
-			                	//Send Acknowledgement
-			                	String PString = new String("A:"+packdetails[3]);
-			                	buf = PString.getBytes();
-			                	packet = new DatagramPacket(buf, buf.length, address, port);
-			                	try {
-				                	//synchronized(socket)
-				                	//{
-				                		socket.send(packet);
-				                	//}
-
-								} catch (IOException except)
-				                {
-				                	System.err.print("Network Problem : Unable to send packets!");
-				                }
-			                	ReceiveMessage RM = new ReceiveMessage(packdetails, address, t);
-			                	new Thread(RM).start();
-			                }
-			                else if (packdetails[0].equals("A"))// Catching Acknowledgement
-			                {/*packdetails[1]=Thread Number */
-			                	BlockingQueue<Character> q = (BlockingQueue<Character>) Mainstart.threadsync.get(packdetails[1]);
-				                q.add('y');
-				    	    }
-		            	}//end of try
-		            	catch (UnknownHostException e) 
-		        		{
-		        			System.err.print("Unable to find IP of current machine");
-		        		}
-	            }//end of while
-    	}//end of run
+        			byte[] buf = new byte[1024];
+        			DatagramPacket packet = new DatagramPacket(buf, buf.length);
+        			// receive request
+		            try {
+						socket.receive(packet);
+						Q.put(packet);
+					} catch (IOException except)
+	                {
+	                	except.getStackTrace();
+	                } catch (InterruptedException e) {
+						System.err.println("ListenThread Interrupted");
+					}
+            }//end of while
+	}//end of run
 }//end of class
