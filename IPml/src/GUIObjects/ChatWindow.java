@@ -13,11 +13,14 @@ import javax.swing.JPanel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JComponent;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
-import javax.swing.JTextField;
 
 import serverclient.SendMessage;
 
@@ -26,11 +29,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.ScrollPaneConstants;
+
 public class ChatWindow extends BasicWindow
 {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;	
-	private JTextField txtMessage;
+	private JTextArea txtMessage;
 	private JTextArea history;
 	private Contact person;
 	
@@ -46,70 +51,75 @@ public class ChatWindow extends BasicWindow
 	
 	private void createwindow()
 	{
-		
-	
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);	
 		
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{5,620,20, 5};
+		gbl_contentPane.columnWidths = new int[]{5,640, 5};
 		gbl_contentPane.rowHeights = new int[]{5, 440, 50};
-		gbl_contentPane.columnWeights = new double[]{0, 1.0, 0, 0};
+		gbl_contentPane.columnWeights = new double[]{0, 1.0, 0};
 		gbl_contentPane.rowWeights = new double[]{0, 1.0, 0};
 		contentPane.setLayout(gbl_contentPane);
 		
 		history = new JTextArea();
+		history.setLineWrap(true);
+		history.setWrapStyleWord(true);
 		history.setEditable(false);
-		JScrollPane scroll = new JScrollPane(history);
+		JScrollPane scroll1 = new JScrollPane(history);
+		scroll1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		GridBagConstraints scrollConstraints = new GridBagConstraints();
-		scrollConstraints.insets = new Insets(0, 0, 5, 5);
 		scrollConstraints.fill = GridBagConstraints.BOTH;
-		scrollConstraints.gridwidth=2;
 		scrollConstraints.gridx = 1;
 		scrollConstraints.gridy = 1;
-		contentPane.add(scroll, scrollConstraints);
+		contentPane.add(scroll1, scrollConstraints);
 		
-		txtMessage = new JTextField();
-		txtMessage.addKeyListener(new KeyAdapter() {
+		txtMessage = new JTextArea();
+		txtMessage.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke("ENTER"), "SendMessage");
+		txtMessage.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke("shift ENTER"), "NewLine");
+		txtMessage.getActionMap().put("NewLine", new AbstractAction(){
+			private static final long serialVersionUID = 1L;
+
 			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode()== KeyEvent.VK_ENTER)
-				{
-					String message = txtMessage.getText();
-					if(!message.equals(""))
-					{
-						SendMessage SM = new SendMessage(person, message);
-						new Thread(SM).start();
-						txtMessage.setText("");
-					}
-				}
+			public void actionPerformed(ActionEvent e)
+			{
+				txtMessage.append("\n\r");
+				txtMessage.setCaretPosition(txtMessage.getDocument().getLength());
 			}
 		});
-		GridBagConstraints gbc_txtMessage = new GridBagConstraints();
-		gbc_txtMessage.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtMessage.gridx = 1;
-		gbc_txtMessage.gridy = 2;
-		contentPane.add(txtMessage, gbc_txtMessage);
-		txtMessage.setColumns(10);
+		txtMessage.getActionMap().put("SendMessage", new AbstractAction(){
 		
-		JButton btnSend = new JButton("Send");
-		btnSend.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
 				String message = txtMessage.getText();
 				if(!message.equals(""))
 				{
+					if (message.length()>1003)
+						{
+							String message1 = message.substring(0, 1003);
+							SendMessage SM = new SendMessage(person, message1);
+							new Thread(SM).start();
+							message = message.substring(1003);
+						}
 					SendMessage SM = new SendMessage(person, message);
 					new Thread(SM).start();
 					txtMessage.setText("");
 				}
+
 			}
-		});
-		GridBagConstraints gbc_btnSend = new GridBagConstraints();
-		gbc_btnSend.insets = new Insets(0, 0, 0, 5);
-		gbc_btnSend.gridx = 2;
-		gbc_btnSend.gridy = 2;
-		contentPane.add(btnSend, gbc_btnSend);
+		}
+);
+		JScrollPane scroll2 = new JScrollPane(txtMessage);
+		GridBagConstraints gbc_txtMessage = new GridBagConstraints();
+		gbc_txtMessage.fill = GridBagConstraints.BOTH;
+		gbc_txtMessage.gridx = 1;
+		gbc_txtMessage.gridy = 2;
+		contentPane.add(scroll2, gbc_txtMessage);
+		txtMessage.setColumns(10);
+		
 		
 		setVisible(true);
 		txtMessage.requestFocusInWindow();
@@ -119,6 +129,13 @@ public class ChatWindow extends BasicWindow
 	public void chatconsole(String M)
 	{
 		history.append(M+"\n\r");
+		history.setCaretPosition(history.getDocument().getLength());
+	}
+	
+	public void chatconsole(JPanel M)
+	{
+		history.append(M+"\n\r");
+		
 		history.setCaretPosition(history.getDocument().getLength());
 	}
 }

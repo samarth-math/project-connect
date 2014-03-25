@@ -7,11 +7,15 @@
 package serverclient;
 import globalfunctions.Contact;
 import globalfunctions.IpAddress;
+
 import java.awt.EventQueue;
+import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.HashMap;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+
 import GUIObjects.AppWindow;
 
 public class Mainstart 
@@ -21,10 +25,12 @@ public class Mainstart
 	public static String myid;
 	public static String myusername;
 	public static DatagramSocket socket;
+	public static BlockingQueue<DatagramPacket> Q;
 	
 	
 	public static void main(String[] args)
     {
+		Q = new ArrayBlockingQueue<DatagramPacket>(15);
 		try {
 			socket = new DatagramSocket(3333);
 		} catch (SocketException e) {
@@ -39,10 +45,11 @@ public class Mainstart
 				System.exit(0);
 			}
 			
-			ShoutThread S = new ShoutThread();//, "172.22.30.19", "172.22.30.21");
-			ListenThread L =  new ListenThread();
+			PacketSorterThread PS = new PacketSorterThread(Q);
+			ShoutThread S = new ShoutThread();//"172.22.30.19", "172.22.30.21");
+			ListenThread L =  new ListenThread(Q);
 			
-			
+			new Thread (PS).start();
 			new Thread(L).start();
 			new Thread(S).start();
 			try
