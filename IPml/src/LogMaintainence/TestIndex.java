@@ -5,9 +5,9 @@ public class TestIndex {
 	public static void main(String args[])
 	{ 
 		chatFileIndex ind = new chatFileIndex();
-		ind.createGroupEntry("yobitchdawg");
-		ind.displayAllGroupChatFiles();
-	
+		//ind.createGroupEntry("foobar");
+		//ind.displayAllGroupChatFiles();
+		ind.getGroups();
 	}
 }
  
