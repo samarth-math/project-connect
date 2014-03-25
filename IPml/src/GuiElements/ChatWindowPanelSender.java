@@ -24,15 +24,18 @@ public class ChatWindowPanelSender extends JPanel{
 	public ChatWindowPanelSender(String inputText, String timeStamp) {
 		
 		//set panel properties 
-		setBackground(Color.WHITE);
+		setMaximumSize(new Dimension(3000,70));
+		setPreferredSize(new Dimension(280,70));
+		setBackground(new Color(102, 255, 153));
 		setBorder(new LineBorder(Color.GREEN));
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.rowWeights = new double[]{2.0, 0.0, 0.0};
+		gridBagLayout.rowWeights = new double[]{2.0, 0.0};
 		gridBagLayout.columnWeights = new double[]{2.0};
 		setLayout(gridBagLayout);
 		
 		//create text-pane
 		textpn_chatText = new JTextPane();
+		textpn_chatText.setBackground(new Color(102, 255, 153));
 		textpn_chatText.setText(inputText);
 		textpn_chatText.setEditable(false);
 		
@@ -68,7 +71,7 @@ public class ChatWindowPanelSender extends JPanel{
 	
 	//call this method on the panel when the acknowledgment is received 
 	
-	void showMsg(String msg){ 
+	public void showMsg(String msg){ 
 		
 		lbl_cnfrmMessage=new JLabel(msg);
 		lbl_cnfrmMessage.setBorder(null);
@@ -79,6 +82,7 @@ public class ChatWindowPanelSender extends JPanel{
 		gbc_lbl_cnfrmMessage.gridx = 0;
 		gbc_lbl_cnfrmMessage.gridy = 2;
 		add(lbl_cnfrmMessage, gbc_lbl_cnfrmMessage);//another useless comment
+		validate();
 		
 	}
 }

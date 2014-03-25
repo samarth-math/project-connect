@@ -1,13 +1,19 @@
 package GuiElements;
 
 import javax.swing.JPanel;
+
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
 import javax.swing.JTextPane;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.border.LineBorder;
+
 import java.awt.Color;
 
 
@@ -21,7 +27,9 @@ public class ChatWindowPanelReceiver extends JPanel{
 	public ChatWindowPanelReceiver(String inputText, String timeStamp) {
 		
 		//panel properties 
-		setBackground(Color.WHITE);
+		setMaximumSize(new Dimension(3000,70));
+		setPreferredSize(new Dimension(280,70));
+		setBackground(new Color(255, 255, 102));
 		setBorder(new LineBorder(Color.RED));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.rowWeights = new double[]{2.0, 0.0};
@@ -30,6 +38,7 @@ public class ChatWindowPanelReceiver extends JPanel{
 		
 		//create text pane
 		textpn_chatText = new JTextPane();
+		textpn_chatText.setBackground(new Color(255, 255, 0));
 		textpn_chatText.setBorder(null);
 		textpn_chatText.setText(inputText);
 		textpn_chatText.setEditable(false);

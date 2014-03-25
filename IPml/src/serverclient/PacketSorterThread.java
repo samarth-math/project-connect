@@ -91,7 +91,6 @@ public class PacketSorterThread implements Runnable {
 	        	Timestamp t =new Timestamp(new Date().getTime());
 	        	//Send Acknowledgment
 	        	String PString = new String("A:"+packdetails[3]);
-	        	System.out.println("Length of packdetails " + packdetails.length +" values "+packdetails[3]);
 	        	buf = PString.getBytes();
 	        	packet = new DatagramPacket(buf, buf.length, address, port);
 	        	try 

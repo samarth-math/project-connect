@@ -1,9 +1,13 @@
 package serverclient;
 
 import globalfunctions.Contact;
+
 import java.sql.Timestamp;
 import java.net.InetAddress;
 import java.util.HashMap;
+
+import GuiElements.ChatWindowPanelReceiver;
+import GuiElements.ChatWindowPanelSender;
 
 public class ReceiveMessage implements Runnable 
 {
@@ -25,6 +29,7 @@ public class ReceiveMessage implements Runnable
         packdetails[3]=threadnumber of sending thread*/
 		Thread.currentThread().setName("ReceiveMessageThread");
 		Contact person = (Contact) Mainstart.people.get(packdetails[1]);
-		person.getWindow().chatconsole(String.format("%1$TD %1$TT", t)+person.getusername()+": "+packdetails[2]);
+		ChatWindowPanelReceiver MessagePane = new ChatWindowPanelReceiver(new String(person.getusername()+":"+packdetails[2]), "tsdfhjskdf");
+		person.getWindow().chatconsole(MessagePane);
 	}
 }

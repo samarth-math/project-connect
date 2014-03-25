@@ -15,6 +15,7 @@ import java.awt.Insets;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.Box;
 import javax.swing.JComponent;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -31,12 +32,15 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.ScrollPaneConstants;
 
+import GuiElements.ChatWindowPanelReceiver;
+import GuiElements.ChatWindowPanelSender;
+
 public class ChatWindow extends BasicWindow
 {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;	
 	private JTextArea txtMessage;
-	private JTextArea history;
+	private Box history = Box.createVerticalBox();
 	private Contact person;
 	
 	public ChatWindow(Contact person)
@@ -62,10 +66,11 @@ public class ChatWindow extends BasicWindow
 		gbl_contentPane.rowWeights = new double[]{0, 1.0, 0};
 		contentPane.setLayout(gbl_contentPane);
 		
-		history = new JTextArea();
+		
+		/*history = new JTextArea();
 		history.setLineWrap(true);
 		history.setWrapStyleWord(true);
-		history.setEditable(false);
+		history.setEditable(false);*/
 		JScrollPane scroll1 = new JScrollPane(history);
 		scroll1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		GridBagConstraints scrollConstraints = new GridBagConstraints();
@@ -73,6 +78,7 @@ public class ChatWindow extends BasicWindow
 		scrollConstraints.gridx = 1;
 		scrollConstraints.gridy = 1;
 		contentPane.add(scroll1, scrollConstraints);
+
 		
 		txtMessage = new JTextArea();
 		txtMessage.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke("ENTER"), "SendMessage");
@@ -95,9 +101,9 @@ public class ChatWindow extends BasicWindow
 			public void actionPerformed(ActionEvent e)
 			{
 				String message = txtMessage.getText();
-				if(!message.equals(""))
+				if(!message.equals(""))// if it's empty
 				{
-					if (message.length()>1003)
+					if (message.length()>1003)// Splitting Large texts into multiple messages
 						{
 							String message1 = message.substring(0, 1003);
 							SendMessage SM = new SendMessage(person, message1);
@@ -119,25 +125,29 @@ public class ChatWindow extends BasicWindow
 		gbc_txtMessage.gridy = 2;
 		contentPane.add(scroll2, gbc_txtMessage);
 		txtMessage.setColumns(10);
-		
+			
 		
 		setVisible(true);
 		txtMessage.requestFocusInWindow();
-	
 	}
 	
-	public void chatconsole(String M)//use this
+	/*public void chatconsole(String M)//use this
 	{
-		history.append(M+"\n\r");
-		history.setCaretPosition(history.getDocument().getLength());
-	}
 	
-	public void chatconsole(JPanel M)
-	{
 		history.append(M+"\n\r");
-		
 		history.setCaretPosition(history.getDocument().getLength());
+	}*/
+	
+	public void chatconsole(ChatWindowPanelSender M)
+	{
+		history.add(M);
+		validate();
+		//history.setCaretPosition(history.getDocument().getLength());
+	}
+	public void chatconsole(ChatWindowPanelReceiver M)
+	{
+		history.add(M);
+		validate();
+		//history.setCaretPosition(history.getDocument().getLength());
 	}
 }
-/*SendMessage SM = new SendMessage(person, "This is the message I'm sending to you!!!");
-new Thread(SM).start();*/

@@ -2,6 +2,8 @@ package serverclient;
 
 import java.io.IOException;
 import java.util.concurrent.*;
+
+import GuiElements.ChatWindowPanelSender;
 import globalfunctions.Contact;
 //import java.lang.ThreadGroup;
 
@@ -22,31 +24,31 @@ public class SendMessage implements Runnable
 	{
 		Thread.currentThread().setName("SendMessage");
 		threadnumber=Long.toString(Thread.currentThread().getId());
-		System.out.println("Threadnumber:"+threadnumber);
 		q=new ArrayBlockingQueue<Character>(1);
 		Mainstart.threadsync.put(threadnumber, q);
 		try
 		{
-			person.getWindow().chatconsole(Mainstart.myusername+":"+Message);
+			ChatWindowPanelSender MessagePane = new ChatWindowPanelSender(new String(Mainstart.myusername+":"+Message), "timestamp");
+			person.getWindow().chatconsole(MessagePane);
 			try
 			{
 				
 				person.SendMessage(Message+":"+threadnumber, Mainstart.myid);
 				if(q.poll(500, TimeUnit.MILLISECONDS)==null)
 				{
-					person.getWindow().chatconsole("No Confirmation Received");
+					MessagePane.showMsg("No Confirmation Received");
 					Mainstart.threadsync.remove(threadnumber);
 				}
 				
 				else
 				{
-					person.getWindow().chatconsole("Message Delivered");
+					MessagePane.showMsg("Message Delivered");
 					Mainstart.threadsync.remove(threadnumber);
 				}
 			}
 			catch(InterruptedException e)
 			{
-				person.getWindow().chatconsole("No Confirmation Received Interrupted");
+				MessagePane.showMsg("Message Delivered");
 			}		
 		}
 		catch(IOException e)

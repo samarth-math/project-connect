@@ -46,7 +46,7 @@ public class Contact {
 	{
 		byte[] buf = new byte[1024];
 		buf = new String("M:"+senderid+":"+Message).getBytes();
-		System.out.println(new String(buf, "UTF8"));
+		
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, ip, port);
 		DatagramSocket socket = Mainstart.socket;
    		socket.send(packet);
