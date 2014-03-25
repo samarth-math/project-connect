@@ -99,7 +99,7 @@ public class chatFileIndex {
 	}
 			
 	
-	
+	 
 			/*  The next method returns a hashmap pf the form <groupId, groupName>
 			 *     to the user of the class
 			 * 
