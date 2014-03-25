@@ -2,6 +2,7 @@ package globalfunctions;
 import java.io.IOException;
 //import java.io.*;
 import java.net.*;
+import java.nio.file.Path;
 
 import serverclient.Mainstart;
 import GUIObjects.ChatWindow;
@@ -47,6 +48,25 @@ public class Contact {
 		byte[] buf = new byte[1024];
 		buf = new String("M:"+senderid+":"+Message).getBytes();
 		
+		DatagramPacket packet = new DatagramPacket(buf, buf.length, ip, port);
+		DatagramSocket socket = Mainstart.socket;
+   		socket.send(packet);
+	}
+	
+	public void SendFile(String header, String senderid) throws SocketException, IOException
+	{
+		byte[] buf = new byte[1024];
+		buf = new String("S:"+senderid+":"+header).getBytes();
+		System.out.println("Send File " + new String(buf,"UTF8"));
+		DatagramPacket packet = new DatagramPacket(buf, buf.length, ip, port);
+		DatagramSocket socket = Mainstart.socket;
+   		socket.send(packet);
+	}
+	public void SendReceiveFile(String filePath, String senderid) throws SocketException, IOException
+	{
+		byte[] buf = new byte[1024];
+		buf = new String("R:"+senderid+":"+filePath).getBytes();
+		System.out.println("SendReceiveFile "+new String(buf,"UTF8") + " IP " + ip + " port " + port);
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, ip, port);
 		DatagramSocket socket = Mainstart.socket;
    		socket.send(packet);

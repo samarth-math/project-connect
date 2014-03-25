@@ -31,6 +31,7 @@ public class ListenThread implements Runnable
 		            try {
 						socket.receive(packet);
 						Q.put(packet);
+						System.out.println("Listen Thread " + new String(packet.getData(), 0, packet.getLength()));
 					} catch (IOException except)
 	                {
 	                	except.getStackTrace();

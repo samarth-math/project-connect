@@ -17,6 +17,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
@@ -34,6 +35,12 @@ import javax.swing.ScrollPaneConstants;
 
 import GuiElements.ChatWindowPanelReceiver;
 import GuiElements.ChatWindowPanelSender;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class ChatWindow extends BasicWindow
 {
@@ -60,7 +67,7 @@ public class ChatWindow extends BasicWindow
 		setContentPane(contentPane);	
 		
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{5,640, 5};
+		gbl_contentPane.columnWidths = new int[]{5,620,20, 5};
 		gbl_contentPane.rowHeights = new int[]{5, 440, 50};
 		gbl_contentPane.columnWeights = new double[]{0, 1.0, 0};
 		gbl_contentPane.rowWeights = new double[]{0, 1.0, 0};
@@ -74,7 +81,9 @@ public class ChatWindow extends BasicWindow
 		JScrollPane scroll1 = new JScrollPane(history);
 		scroll1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		GridBagConstraints scrollConstraints = new GridBagConstraints();
+		scrollConstraints.insets = new Insets(0, 0, 5, 5);
 		scrollConstraints.fill = GridBagConstraints.BOTH;
+		scrollConstraints.gridwidth=2;
 		scrollConstraints.gridx = 1;
 		scrollConstraints.gridy = 1;
 		contentPane.add(scroll1, scrollConstraints);
@@ -120,11 +129,40 @@ public class ChatWindow extends BasicWindow
 );
 		JScrollPane scroll2 = new JScrollPane(txtMessage);
 		GridBagConstraints gbc_txtMessage = new GridBagConstraints();
+		gbc_txtMessage.insets = new Insets(0, 0, 0, 5);
 		gbc_txtMessage.fill = GridBagConstraints.BOTH;
 		gbc_txtMessage.gridx = 1;
 		gbc_txtMessage.gridy = 2;
 		contentPane.add(scroll2, gbc_txtMessage);
 		txtMessage.setColumns(10);
+		
+		JButton btnFile = new JButton("File");
+		
+		btnFile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fc = new JFileChooser();
+				int returnVal = fc.showOpenDialog(getParent());
+
+		        if (returnVal == JFileChooser.APPROVE_OPTION) {
+		            File file = fc.getSelectedFile();
+		            String fileP= file.getAbsolutePath();
+		            Path filePath = Paths.get(fileP);
+		            System.out.println("File Path " + filePath);
+		            SendMessage SM = new SendMessage(person, filePath);
+					new Thread(SM).start();
+		           // fileSending.MulticastClient obj = new fileSending.MulticastClient(filePath,"255.255.255.255",3333);
+		            //This is where a real application would open the file.
+		           // log.append("Opening: " + file.getName() + "." + newline);
+		        } else {
+		            //log.append("Open command cancelled by user." + newline);
+		        }
+			}
+		});
+		GridBagConstraints gbc_btnFile = new GridBagConstraints();
+		gbc_btnFile.insets = new Insets(0, 0, 0, 5);
+		gbc_btnFile.gridx = 2;
+		gbc_btnFile.gridy = 2;
+		contentPane.add(btnFile, gbc_btnFile);
 			
 		
 		setVisible(true);
@@ -136,15 +174,9 @@ public class ChatWindow extends BasicWindow
 	
 		history.append(M+"\n\r");
 		history.setCaretPosition(history.getDocument().getLength());
-	}*/
-	
-	public void chatconsole(ChatWindowPanelSender M)
-	{
-		history.add(M);
-		validate();
-		//history.setCaretPosition(history.getDocument().getLength());
 	}
-	public void chatconsole(ChatWindowPanelReceiver M)
+	*/
+	public void chatconsole(JPanel M)
 	{
 		history.add(M);
 		validate();

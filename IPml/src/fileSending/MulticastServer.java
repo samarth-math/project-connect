@@ -63,8 +63,8 @@ public class MulticastServer implements Runnable{
 		    }
 		    else if(status=='R'){
 		    	System.out.println("You need to send the file");
-		    	Client obj = new Client(ipAddress,6666);
-				(new Thread(obj)).start();
+		    //	Client obj = new Client(ipAddress,6666);
+			//	(new Thread(obj)).start();
 		    }
 		}
 		

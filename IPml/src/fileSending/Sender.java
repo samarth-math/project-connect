@@ -120,7 +120,7 @@ public class Sender  {
 			socket.close();
 	}
 	
-	public  boolean isPathValid(String filePath) {
+	public boolean isPathValid(String filePath) {
 		
 		if(new File(filePath).exists())
 			return true;

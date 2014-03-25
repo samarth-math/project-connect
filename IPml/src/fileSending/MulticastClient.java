@@ -7,6 +7,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
+import serverclient.Mainstart;
+
 public class MulticastClient implements Runnable  {
 	private DatagramSocket multicastSocket;
 	private Path filePath;
@@ -36,8 +38,8 @@ public class MulticastClient implements Runnable  {
 			 filePath = Paths.get(FilePath);
 	    	 String header = getHeader(filePath);
 	    	 	    	 
-			 buf= new String("F:S:"+header).getBytes();
-		     InetAddress address = InetAddress.getByName("255.255.255.255");
+			 buf= new String("F:S:"+ Mainstart.myid + ":" +header).getBytes();
+		     InetAddress address = InetAddress.getByName(ipAddress);
 		     for(int i=0;i<buf.length;i++) {
 		    	 System.out.print((char)buf[i]);
 		     }
@@ -60,7 +62,7 @@ public class MulticastClient implements Runnable  {
 
 	
     
-    public  String getHeader(Path filePath) throws IOException  {
+    public String getHeader(Path filePath) throws IOException  {
     	String fileName = filePath.getFileName().toString();
 		long fSize =  Files.size(filePath);
 		long fileSize= fSize;

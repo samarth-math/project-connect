@@ -1,5 +1,6 @@
 package serverclient;
 
+import fileSending.Client;
 import globalfunctions.Contact;
 
 import java.io.IOException;
@@ -54,7 +55,7 @@ public class PacketSorterThread implements Runnable {
 	        String packdetails[] = new String(packet.getData(), 0, packet.getLength()).split(":");//Important part of receiving request. Tool used to parse the request
 	        InetAddress address = packet.getAddress();
 	        int port = packet.getPort();
-	        
+	        System.out.println("Packet Sort " + packdetails[0]);
 	        if(packdetails[0].equals("D"))	// if it's a Detection Packet	                
 	        {/* packdetails[0] - if Detection Packet
 	             * packdetails[1] - if sent by Server or client
@@ -102,6 +103,34 @@ public class PacketSorterThread implements Runnable {
 	            }
 	        	ReceiveMessage RM = new ReceiveMessage(packdetails, address, t);
 	        	new Thread(RM).start();
+	        }
+	        else if(packdetails[0].equals("S"))// implies, SendFile  type packet
+	        {/*packdetails[1]=mac of person received from
+	           packdetails[2]=file header
+	           packdetails[3]=threadnumber of sending thread*/
+	        	Timestamp t =new Timestamp(new Date().getTime());
+	        	//Send Acknowledgment
+	        	String PString = new String("A:"+packdetails[3]);
+	        	buf = PString.getBytes();
+	        	packet = new DatagramPacket(buf, buf.length, address, port);
+	        	try 
+	        	{
+	            		socket.send(packet);
+				} catch (IOException except)
+	            {
+	            	System.err.print("Network Problem : Unable to send packets!");
+	            }
+	        	ReceiveMessage RM = new ReceiveMessage(packdetails, address, t);
+	        	new Thread(RM).start();
+	        }
+	        else if(packdetails[0].equals("R"))// implies, Message type packet
+	        {/*packdetails[1]=mac of person received from
+	           packdetails[2]=file path
+	          */
+	        	System.out.println("I am calling Client :) ");
+	        	Client obj = new Client(address.getHostAddress(),6666,packdetails[2]);
+					(new Thread(obj)).start();
+	        	
 	        }
 	        else if (packdetails[0].equals("A"))// Catching Acknowledgement
 	        {/*packdetails[1]=Thread Number */
