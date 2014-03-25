@@ -12,39 +12,27 @@ import java.net.UnknownHostException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class MulticastServer  implements Runnable{
+public class MulticastServer implements Runnable{
 	
-	//DatagramSocket multicastSocket;
-	//Socket socket = null;
-	
-	/*public MulticastServer() {
-		
-		try {
-			this.multicastSocket = new multicastSocket(16000);
-			//this.socket = serverSocket.accept();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}*/
 	
 	public void run() {
 		DatagramSocket multicastSocket=null;
 		try {
 			multicastSocket = new DatagramSocket(3333);
 		} catch (SocketException e1) {
-			// TODO Auto-generated catch block
+			e1.getMessage();
 			e1.printStackTrace();
 		}
+		
 	while(true) {
 		try{
-			byte [] buf = new byte[30]	;
-			String ipAddress="";
-
 			
+			byte [] buf = new byte[30]	;
+			String ipAddress;
 			DatagramPacket packet = new DatagramPacket(buf, buf.length);
 			multicastSocket.receive(packet);
-			ipAddress = packet.getAddress().getHostAddress();
+		
+			ipAddress = new String(packet.getAddress().getHostAddress());
 			System.out.println("IP address... " + ipAddress);
 
 			boolean flag = false;
@@ -70,19 +58,12 @@ public class MulticastServer  implements Runnable{
 						filePath = filePath + (char)buf[i];
 					}
 				}
-							
-				String SaveAs = "";
-				requestFile(fileType,filePath,ipAddress);
-				//Receiver.receiveFile(socket,SaveAs);
 				
+				requestFile(fileType,filePath,ipAddress);				
 		    }
 		    else if(status=='R'){
-		    	System.out.println("You need to receive the file");
-		    	Socket s = null;
-				Path file = null;
-				int pNumber = 3333;
-				String ip = ipAddress;
-		    	Client obj = new Client(s,file,ip,pNumber);
+		    	System.out.println("You need to send the file");
+		    	Client obj = new Client(ipAddress,6666);
 				(new Thread(obj)).start();
 		    }
 		}
@@ -100,8 +81,6 @@ public class MulticastServer  implements Runnable{
 		
 		 
     	 byte[] buf = new byte[256];
- 
-    	 
     	 System.out.println("file path: " + filePath);
     	 
 		 buf= new String(fileType+":R-"+filePath).getBytes();
@@ -127,9 +106,7 @@ public class MulticastServer  implements Runnable{
 			e.printStackTrace();
 		}
 	}
-	private static void getPath() {
-		
-	}
+	
 	public static void main(String args[])  {
 		
 		new Thread(new MulticastServer()).start();

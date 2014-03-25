@@ -12,10 +12,14 @@ import java.nio.file.Path;
 
 
 public class Sender  {
-
-	private static OutputStream os;
 	
-	public static void send(Socket socket,Path filePath) throws IOException {
+	static OutputStream os;
+	
+	public Sender(OutputStream os) {
+		this.os = os;
+	}
+	
+	public void send(Socket socket,Path filePath) throws IOException {
 		if( isFile(filePath.toString()) )
 			sendFile(socket,filePath);
 		else{

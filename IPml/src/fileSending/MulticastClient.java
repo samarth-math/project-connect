@@ -7,11 +7,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class MulticastClient extends Sender implements Runnable  {
+public class MulticastClient  implements Runnable  {
 	private DatagramSocket multicastSocket;
 	private Path filePath;
 	int portNumber;
-	String ipAddress;
+	static String ipAddress;
 	
  public MulticastClient(Path filePath,String ip, int pNumber) {
 	 this.multicastSocket = null;
@@ -35,9 +35,7 @@ public class MulticastClient extends Sender implements Runnable  {
 	    	 String FilePath = "D:\\Articles";
 			 filePath = Paths.get(FilePath);
 	    	 String header = getHeader(filePath);
-	    	 
-	    	 //System.out.println("header: " + header);
-	    	 
+	    	 	    	 
 			 buf= new String("F:S:"+header).getBytes();
 		     InetAddress address = InetAddress.getByName("255.255.255.255");
 		     for(int i=0;i<buf.length;i++) {
@@ -45,15 +43,6 @@ public class MulticastClient extends Sender implements Runnable  {
 		     }
 		     DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 3333);
 		     multicastSocket.send(packet);
-		     
-			/*String FilePath;
-			// File Path which is to be sent
-			FilePath = "D:\\Articles";
-			path = Paths.get(FilePath);
-			System.out.println("Calling Multicast...");
-			//MulticastClient.multicast(socket, path);
-			Sender.send(socket,path);
-			socket.close();*/
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -64,7 +53,7 @@ public class MulticastClient extends Sender implements Runnable  {
 	
 		Path file = null;
 		int pNumber = 16000;
-		String ip = "172.22.30.20";
+		String ip = ipAddress;
 		MulticastClient obj = new MulticastClient(file,ip,pNumber);
 		(new Thread(obj)).start();
 	}
@@ -82,16 +71,16 @@ public class MulticastClient extends Sender implements Runnable  {
 		boolean flag=false;
 		char pathType= ' ';
 		
-		flag = isPathValid(filePath.toString());
+		flag = Sender.isPathValid(filePath.toString());
 		if(flag==false) {
-			displayError("Path Not Valid");
+			Sender.displayError("Path Not Valid");
 		}
-		flag = isFile(filePath.toString());
+		flag = Sender.isFile(filePath.toString());
 		if(flag==true) {
 			pathType = 'f';
 		}
 		if(flag==false) {
-			flag = isDirectory(filePath.toString());
+			flag = Sender.isDirectory(filePath.toString());
 			if(flag==true) {
 				pathType = 'd';
 			}
