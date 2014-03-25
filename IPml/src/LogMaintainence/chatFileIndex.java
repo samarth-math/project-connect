@@ -2,75 +2,86 @@ package LogMaintainence;
 
 import java.io.*;
 import java.util.Iterator;
+import java.util.Date;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.json.simple.parser.JSONParser;
 
 public class chatFileIndex {
 	
-    protected static String findChatLogName(String user1, String user2, String user3, String user4)
+	protected static String createGroupEntry(String groupMakerId) 
 	{
-		String fileName=null;
+		File path = new File(System.getProperty("user.dir"));
+		File jsonFilePath = new File(path,""+"index.json");
 		
-		JSONParser parser = new JSONParser();
-		 
-		try {
-	 
-				Object obj = parser.parse(new FileReader("index.json"));
-	 
-				JSONArray response = (JSONArray)obj;
-				
-				Iterator<JSONObject> iterator = response.iterator();
-		        while (iterator.hasNext()) 
-		        {
-		        	//System.out.println(user1);
-		        	//System.out.print(""+iterator.next().get("user1"));
-		        	if(user1.equals(""+iterator.next().get("user1"))) 
-			        {                                                       // <--- figure out why this if condition		        		
-		        		fileName = ""+iterator.next().get("filename");        // is screwing up
-		        		System.out.println(fileName);
-			        }
-			            
-		        }
-		        //System.out.println(fileName);
-		        
-				/*if(response.get("user1")==user1)
-				{
-				fileName=""+response.get("filename");
-				System.out.println(fileName);
-				
-				}*/
-				
-				//System.out.println(""+jsonObject.get("session")+"\n");
-				// loop array
-				//JSONObject chat = (JSONObject) jsonObject.get("chat");
-				//System.out.println(""+chat.get("userName")+"<"+chat.get("timeStamp")+"> "+chat.get("message"));
+		String gId = null;
+		try
+		{ 
+			JSONParser parser = new JSONParser();                                     // parsing index
+			Object obj = parser.parse(new FileReader("index.json"));                  //   file here
+			JSONObject indexInfo = (JSONObject)obj;	
 			
-			}
-	 
-			catch (FileNotFoundException e) 
-			{
-				e.printStackTrace();
-			} 
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			} 
-			catch (ParseException e) 
-			{
-				e.printStackTrace();
-			}
-		return fileName;
+			JSONArray files = (JSONArray)indexInfo.get("files");
+			Date date= new Date();
+			String date1= ""+date.getTime();
+			gId = groupMakerId+date1;
+				
+			files.add(""+gId+".json");
+			
+			indexInfo.put("files", files);
+			
+			jsonFilePath.createNewFile();
+			FileWriter jsonFileWriter = new FileWriter(jsonFilePath);				
+			jsonFileWriter.write(indexInfo.toJSONString());
+			jsonFileWriter.flush();
+			jsonFileWriter.close();
+			
+			//System.out.println(indexInfo);  //checking
+			
+		}
+		catch (ParseException e) 
+		{
+			e.printStackTrace();
+		}	
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		} 
+		return gId;
 	}
 	
-	public static void main(String args[])
+	protected static void displayAllGroupChatFiles() 
 	{
-		String u1 = null,u2 = null,u3 = null,u4 = null;
 		
-		u1="rajat";
+		try
+		{
+			JSONParser parser = new JSONParser();                                     // parsing index
+			Object obj = parser.parse(new FileReader("index.json"));                  //   file here
+			JSONObject indexInfo = (JSONObject)obj;	
+			
+			JSONArray files = (JSONArray)indexInfo.get("files");
+			
+			System.out.println("Group-chat Files:");
+			Iterator<JSONArray> fileNameIterator = files.iterator();
+			while (fileNameIterator.hasNext()) 
+			{        
+					System.out.println(fileNameIterator.next());        
+			}	
+		}
+		catch (ParseException e) 
+		{
+			e.printStackTrace();
+		}	
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		} 
 		
-		findChatLogName(u1, u2, u3, u4);
 	}
+			
+	
+	
 }
