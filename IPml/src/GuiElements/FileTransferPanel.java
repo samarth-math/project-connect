@@ -1,29 +1,46 @@
 package GuiElements;
 
+import fileSending.Server;
+import globalfunctions.Contact;
+
 import javax.swing.JPanel;
+
 import java.awt.GridBagLayout;
+
 import javax.swing.JLabel;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
+
 import java.awt.Color;
+
 import javax.swing.border.MatteBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
+
+import serverclient.Mainstart;
+
 import java.awt.Font;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 /*
  * this panel is for accepting or rejecting the incoming file
  * */
+import java.io.IOException;
+import java.net.SocketException;
+import java.nio.file.Path;
 
 public class FileTransferPanel extends JPanel{
 	
-	public FileTransferPanel(String filename) {
+	public FileTransferPanel(final Contact person, final Path filepath) {
 		
-		
+		String filename = filepath.getFileName().toString();
 		//wrapper panel 
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{320, 50,50};
@@ -45,6 +62,19 @@ public class FileTransferPanel extends JPanel{
 		
 		//the accept button
 		JButton btn_accept = new JButton("Accept");
+		btn_accept.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new Thread(new Server(6666)).start();
+				try {
+					person.SendReceiveFile(filepath.toString().trim(),Mainstart.myid);
+				} catch (SocketException exc) {
+					// Do stuff
+					
+				} catch (IOException exc) {
+					// Do stuff
+				}
+			}
+		});
 		GridBagConstraints gbc_btn_accept = new GridBagConstraints();
 		gbc_btn_accept.insets = new Insets(0, 0, 0, 5);
 		gbc_btn_accept.gridx = 1;

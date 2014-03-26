@@ -9,6 +9,8 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 
 import GuiElements.ChatWindowPanelReceiver;
@@ -40,8 +42,12 @@ public class ReceiveMessage implements Runnable
 			person.getWindow().chatconsole(MessagePane);
 		}
 		else if(packdetails[0].equals("S")) {
+			String fileP = getFilePath(packdetails[3]);
+			Path filepath = Paths.get(fileP);
+			
+			System.out.println("Packet is " + packdetails[3] + "FIle path is " + fileP);
 			boolean flag=false;
-			FileTransferPanel ftPane = new FileTransferPanel(packdetails[2]);
+			FileTransferPanel ftPane = new FileTransferPanel(person,filepath);
 			person.getWindow().chatconsole(ftPane);
 			String header = packdetails[3];
 			String filePath = "";
@@ -56,16 +62,6 @@ public class ReceiveMessage implements Runnable
 				}
 			}
 		
-			try {
-				person.SendReceiveFile(filePath.trim(),Mainstart.myid);
-			} catch (SocketException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			//requestFile(fileType,filePath,person.getip().getHostAddress());		
 		}
 		
 	}
@@ -97,5 +93,13 @@ public class ReceiveMessage implements Runnable
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	private String getFilePath(String filePath) {
+		int i=0;
+		while(filePath.charAt(i)!='-') {
+			i++;
+		}
+		i++;
+		return filePath.substring(i,filePath.length());
 	}
 }
