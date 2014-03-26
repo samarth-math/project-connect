@@ -46,7 +46,7 @@ public class SendMessage implements Runnable
 				try
 				{
 					
-					person.SendMessage(Message+":"+threadnumber, Mainstart.myid);
+					person.SendMessage(threadnumber+"|"+Message, Mainstart.myid);
 					if(q.poll(500, TimeUnit.MILLISECONDS)==null)
 					{
 						MessagePane.showMsg("No Confirmation Received");
@@ -72,7 +72,7 @@ public class SendMessage implements Runnable
 					try
 					{
 						
-						person.SendFile(header+":"+threadnumber, Mainstart.myid);
+						person.SendFile(threadnumber+"|"+header, Mainstart.myid);
 						if(q.poll(500, TimeUnit.MILLISECONDS)==null)
 						{
 							ftPane.showMsg("No Confirmation Received");

@@ -31,19 +31,19 @@ public class ReceiveMessage implements Runnable
 	@Override
 	public void run()
 	{/*packdetails[1]=mac
-        packdetails[2]=message/file
-        packdetails[3]=threadnumber of sending thread*/
+        packdetails[2]=threadnumber of sending thread
+        packdetails[3]=message/fileheader */
 		Thread.currentThread().setName("ReceiveMessageThread");
 		Contact person = (Contact) Mainstart.people.get(packdetails[1]);
 		if(packdetails[0].equals("M")) {
-			ChatWindowPanelReceiver MessagePane = new ChatWindowPanelReceiver(new String(person.getusername()+":"+packdetails[2]), "tsdfhjskdf");
+			ChatWindowPanelReceiver MessagePane = new ChatWindowPanelReceiver(new String(person.getusername()+":"+packdetails[3]), "tsdfhjskdf");
 			person.getWindow().chatconsole(MessagePane);
 		}
 		else if(packdetails[0].equals("S")) {
 			boolean flag=false;
 			FileTransferPanel ftPane = new FileTransferPanel(packdetails[2]);
 			person.getWindow().chatconsole(ftPane);
-			String header = packdetails[2]+":"+packdetails[3];
+			String header = packdetails[3];
 			String filePath = "";
 			System.out.println("Header " + header);
 			char fileType = header.charAt(0);

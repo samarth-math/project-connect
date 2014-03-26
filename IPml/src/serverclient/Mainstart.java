@@ -26,7 +26,7 @@ public class Mainstart
 	public static String myusername;
 	public static DatagramSocket socket;
 	public static BlockingQueue<DatagramPacket> Q;
-	
+	public static AppWindow mainWindow;
 	
 	public static void main(String[] args)
     {
@@ -45,21 +45,35 @@ public class Mainstart
 				System.exit(0);
 			}
 			
-			PacketSorterThread PS = new PacketSorterThread(Q);
-			ShoutThread S = new ShoutThread();//"172.22.30.19", "172.22.30.21");
-			ListenThread L =  new ListenThread(Q);
+
 			
-			new Thread (PS).start();
-			new Thread(L).start();
-			new Thread(S).start();
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						//UsernameWindow login = new UsernameWindow();
+						mainWindow = new AppWindow();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+			
 			try
 	        {
-	        	Thread.sleep(3000);
+	        	Thread.sleep(400);
 	        }
 	        catch(Exception E)
 	        {
 	        	System.out.print("Wokenup");
 	        }
+			PacketSorterThread PS = new PacketSorterThread(Q);
+			ShoutThread S = new ShoutThread();//"172.22.30.19", "172.22.30.21");
+			ListenThread L =  new ListenThread(Q);
+						
+			new Thread (PS).start();
+			new Thread(L).start();
+			new Thread(S).start();
+		
 			
 		   /*for (String key : people.keySet()) {
 	            Contact value = (Contact) people.get(key);
@@ -68,17 +82,7 @@ public class Mainstart
 		   //System.out.print("Supposedly printed everything in the hashmap");
 			//new Thread(new Server()).start();
 			//final Contact person = (Contact) people.get("F07BCB8001D7");
-			EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						//UsernameWindow login = new UsernameWindow();
-						@SuppressWarnings("unused")
-						AppWindow mainWindow = new AppWindow();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});/*
+/*
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {

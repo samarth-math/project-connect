@@ -52,10 +52,10 @@ public class PacketSorterThread implements Runnable {
 	{
         try{
 	
-	        String packdetails[] = new String(packet.getData(), 0, packet.getLength()).split(":");//Important part of receiving request. Tool used to parse the request
+	        String packdetails[] = new String(packet.getData(), 0, packet.getLength()).split("\\|");//Important part of receiving request. Tool used to parse the request
 	        InetAddress address = packet.getAddress();
 	        int port = packet.getPort();
-	        System.out.println("Packet Sort " + packdetails[0]);
+	        
 	        if(packdetails[0].equals("D"))	// if it's a Detection Packet	                
 	        {/* packdetails[0] - if Detection Packet
 	             * packdetails[1] - if sent by Server or client
@@ -67,12 +67,18 @@ public class PacketSorterThread implements Runnable {
 	        	
 	        	//Save Packet
 	        	Contact person = new Contact(packdetails[2], packdetails[3], packdetails[4], packdetails[5], address, port);
-	        	Mainstart.people.put(packdetails[2],person);
+	        	person.printall();
+	        	Contact person1 = Mainstart.people.put(packdetails[2],person);
+	        	
+	        	if (person1==null)
+	        	{
+	        		Mainstart.mainWindow.addnewperson(person);	        		
+	        	}
 	        	
 	        	if (packdetails[1].equals("C"))// If packet came from client, send it a response
 	           	{
 	            	// figure out response
-	                String PString = new String("D:S:"+id+":"+System.getProperty("os.name")+":"+InetAddress.getLocalHost().getHostName()+":"+user);
+	                String PString = new String("D|S|"+id+"|"+System.getProperty("os.name")+"|"+InetAddress.getLocalHost().getHostName()+"|"+user);
 	                buf = PString.getBytes();		
 	                // send the response to the client at "address" and "port"
 	                packet = new DatagramPacket(buf, buf.length, address, port);
@@ -87,11 +93,11 @@ public class PacketSorterThread implements Runnable {
 	        }//end of big if
 	        else if(packdetails[0].equals("M"))// implies, Message type packet
 	        {/*packdetails[1]=mac of person received from
-	           packdetails[2]=message
-	           packdetails[3]=threadnumber of sending thread*/
+	           packdetails[2]=threadnumber of sending thread
+	           packdetails[3]=message*/
 	        	Timestamp t =new Timestamp(new Date().getTime());
 	        	//Send Acknowledgment
-	        	String PString = new String("A:"+packdetails[3]);
+	        	String PString = new String("A|"+packdetails[2]);
 	        	buf = PString.getBytes();
 	        	packet = new DatagramPacket(buf, buf.length, address, port);
 	        	try 
@@ -110,7 +116,7 @@ public class PacketSorterThread implements Runnable {
 	           packdetails[3]=threadnumber of sending thread*/
 	        	Timestamp t =new Timestamp(new Date().getTime());
 	        	//Send Acknowledgment
-	        	String PString = new String("A:"+packdetails[3]);
+	        	String PString = new String("A|"+packdetails[2]);
 	        	buf = PString.getBytes();
 	        	packet = new DatagramPacket(buf, buf.length, address, port);
 	        	try 
