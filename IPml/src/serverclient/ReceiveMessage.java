@@ -43,9 +43,10 @@ public class ReceiveMessage implements Runnable
 		}
 		else if(packdetails[0].equals("S")) {
 			String fileP = getFilePath(packdetails[3]);
-			Path filepath = Paths.get(fileP);
-			
 			System.out.println("Packet is " + packdetails[3] + "FIle path is " + fileP);
+			Path filepath = Paths.get(fileP.trim());
+			
+			
 			boolean flag=false;
 			FileTransferPanel ftPane = new FileTransferPanel(person,filepath);
 			person.getWindow().chatconsole(ftPane);
