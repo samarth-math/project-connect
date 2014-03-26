@@ -98,7 +98,7 @@ public class ChatWindow extends BasicWindow
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				txtMessage.append("\n\r");
+				txtMessage.append("\n");
 				txtMessage.setCaretPosition(txtMessage.getDocument().getLength());
 			}
 		});
@@ -180,6 +180,5 @@ public class ChatWindow extends BasicWindow
 	{
 		history.add(M);
 		validate();
-		//history.setCaretPosition(history.getDocument().getLength());
 	}
 }

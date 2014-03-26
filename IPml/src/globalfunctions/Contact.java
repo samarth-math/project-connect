@@ -28,6 +28,7 @@ public class Contact {
 	private void setWindow(ChatWindow cw)
 	{
 		this.cw=cw;
+		System.out.println("Chat Window is : "+this.cw);
 	}
 	public ChatWindow getWindow()
 	{
@@ -35,13 +36,16 @@ public class Contact {
 			return cw;
 		else
 		{
-			setWindow(new ChatWindow(this));
+			System.out.println("Calling else");
+			cw = new ChatWindow(this);
 			return cw;
 		}
 	}
 	public void StartChat()
 	{
-		setWindow(new ChatWindow(this));
+		this.cw = new ChatWindow(this);
+		//setWindow(new ChatWindow(this));
+		
 	}
 	public void SendMessage(String Message, String senderid) throws SocketException, IOException
 	{

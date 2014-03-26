@@ -67,13 +67,14 @@ public class PacketSorterThread implements Runnable {
 	        	
 	        	//Save Packet
 	        	Contact person = new Contact(packdetails[2], packdetails[3], packdetails[4], packdetails[5], address, port);
-	        	person.printall();
-	        	Contact person1 = Mainstart.people.put(packdetails[2],person);
-	        	
+	        	//person.printall();
+	        	Contact person1 = Mainstart.people.get(packdetails[2]);
 	        	if (person1==null)
 	        	{
-	        		Mainstart.mainWindow.addnewperson(person);	        		
+	        		Mainstart.people.put(packdetails[2], person);
+	        		Mainstart.mainWindow.addnewperson(Mainstart.people.get(packdetails[2]));
 	        	}
+	     
 	        	
 	        	if (packdetails[1].equals("C"))// If packet came from client, send it a response
 	           	{

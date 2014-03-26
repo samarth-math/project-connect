@@ -26,10 +26,13 @@ public class Mainstart
 	public static String myusername;
 	public static DatagramSocket socket;
 	public static BlockingQueue<DatagramPacket> Q;
-	public static AppWindow mainWindow;
+	public static AppWindow mainWindow=new AppWindow();
 	
 	public static void main(String[] args)
     {
+		
+		String nst = new String("This stuff here\n\r and this stuff here");
+		System.out.println(nst);
 		Q = new ArrayBlockingQueue<DatagramPacket>(15);
 		try {
 			socket = new DatagramSocket(3333);
@@ -44,20 +47,7 @@ public class Mainstart
 				System.err.print("Network Problems detected!");
 				System.exit(0);
 			}
-			
 
-			
-			EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						//UsernameWindow login = new UsernameWindow();
-						mainWindow = new AppWindow();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
-			
 			try
 	        {
 	        	Thread.sleep(400);
@@ -74,7 +64,20 @@ public class Mainstart
 			new Thread(L).start();
 			new Thread(S).start();
 		
-			
+			try
+	        {
+	        	Thread.sleep(3000);
+	        }
+	        catch(Exception E)
+	        {
+	        	System.out.print("Wokenup");
+	        }
+			for (String key : Mainstart.people.keySet()) 
+			{
+				Contact person = (Contact) Mainstart.people.get(key);
+				System.out.println("Hashmap");
+				person.printall();
+			}
 		   /*for (String key : people.keySet()) {
 	            Contact value = (Contact) people.get(key);
 	            value.printall();
