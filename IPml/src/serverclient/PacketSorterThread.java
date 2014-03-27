@@ -113,8 +113,8 @@ public class PacketSorterThread implements Runnable {
 	        }
 	        else if(packdetails[0].equals("S"))// implies, SendFile  type packet
 	        {/*packdetails[1]=mac of person received from
-	           packdetails[2]=file header
-	           packdetails[3]=threadnumber of sending thread*/
+	           packdetails[2]=threadnumber of sending thread
+	           packdetails[3]=file header*/
 	        	Timestamp t =new Timestamp(new Date().getTime());
 	        	//Send Acknowledgment
 	        	String PString = new String("A|"+packdetails[2]);
@@ -134,7 +134,8 @@ public class PacketSorterThread implements Runnable {
 	        {/*packdetails[1]=mac of person received from
 	           packdetails[2]=file path
 	          */
-	        	System.out.println("I am calling Client :) ");
+	        	
+	        	System.out.println("I am calling Client :) "+ packdetails[2]);
 	        	Client obj = new Client(address.getHostAddress(),6666,packdetails[2]);
 					(new Thread(obj)).start();
 	        	

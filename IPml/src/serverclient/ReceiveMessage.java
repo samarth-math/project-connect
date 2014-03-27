@@ -43,8 +43,9 @@ public class ReceiveMessage implements Runnable
 		}
 		else if(packdetails[0].equals("S")) {
 			String fileP = getFilePath(packdetails[3]);
-			System.out.println("Packet is " + packdetails[3] + "FIle path is " + fileP);
+			System.out.println("Packet is " + packdetails[3] + "FIle path is inside S of ReceiveMessage" + fileP);
 			Path filepath = Paths.get(fileP.trim());
+			System.out.println("FIle path is inside S of ReceiveMessage" + filepath.toString());
 			
 			
 			boolean flag=false;

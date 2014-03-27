@@ -43,7 +43,7 @@ public class Contact {
 	}
 	public void StartChat()
 	{
-		this.cw = new ChatWindow(this);
+		this.cw = getWindow();
 		//setWindow(new ChatWindow(this));
 		
 	}
