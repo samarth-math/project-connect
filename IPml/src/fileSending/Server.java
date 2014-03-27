@@ -34,7 +34,7 @@ public class Server implements Runnable{
 		
 		catch (Exception e) {
 			System.out.println("Error in Server!");
-			System.out.print(e.getMessage());
+			System.out.println(e.getMessage());
 		}
 	}
 	public static void main(String args[])  {

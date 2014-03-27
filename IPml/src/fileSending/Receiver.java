@@ -75,7 +75,7 @@ public class Receiver {
 			entry=true;
 		}
 		else {
-			String f[] = filePath.split("[\\\\]");
+			String f[] = filePath.split(File.separator);
 			fileName =  f[f.length-1];
 		}
 
@@ -90,8 +90,9 @@ public class Receiver {
 		
 		// Creating the path where file will be saved
 		SaveAsPath = System.getProperty("user.dir") + File.separator ;
+		System.out.println("Debugging inside Receiver.java SaveAsPath..." + SaveAsPath);
 		SaveAsPath = SaveAsPath + fileName.trim();
-		
+		System.out.println("Debugging inside Receiver.java SaveAsPath..." + SaveAsPath);
 		
 		File file = new File(SaveAsPath) ;
 		boolean status = false;
@@ -141,12 +142,13 @@ public class Receiver {
 	}
 
 	private static void splitPath(String filePath) {
-		 rootPath = filePath.split("[\\\\]");
+		 //rootPath = filePath.split("[\\\\]");
+		 rootPath = filePath.split(File.separator);
 	}
 	
 	private static boolean checkPath (String filePath) {
 		System.out.println("Inside checkPath " + filePath);
-		String splitPath[] = filePath.split("[\\\\]");
+		String splitPath[] = filePath.split(File.separator);
 		if(rootPath.length==splitPath.length)
 			return true;
 		else
@@ -154,7 +156,8 @@ public class Receiver {
 	}
 	private static String relativePath(String filePath) {
 		
-		String relativePath[] = filePath.split("[\\\\]");
+		//String relativePath[] = filePath.split("[\\\\]");
+		String relativePath[] = filePath.split(File.separator);
 		String relativeLocation = "";
 		int index = rootPath.length-1;
 		while( (index < relativePath.length) ) {

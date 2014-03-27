@@ -40,7 +40,7 @@ public class Sender  {
 		long fileSize= fSize;
 		int chunkSize = 1024*1024;
 
-		System.out.println("\nFile Size is " + fileSize + " file path " + fileName);
+		System.out.println("Inside Server.java... File Size is " + fileSize + " file Name " + fileName + "FIle path " + filePath.toString());
 		
 		boolean flag=false;
 		char pathType= ' ';
@@ -76,7 +76,7 @@ public class Sender  {
 		System.out.print("Sending file with file header: ");
 		for(int i=0;i<fileHeader.length;i++)
 			System.out.print("" + (char) fileHeader[i]);
-		
+		System.out.println("Debugging Insider Server.java ");
 		os =  socket.getOutputStream();
 		if(pathType=='d') {
 			os.write(fileHeader);
@@ -109,7 +109,7 @@ public class Sender  {
 	
 		os.flush();
 		bufferedinput.close();
-		//os.close();
+		os.close();
 		
 		System.out.println("File Transfer Complete...");
 	}
