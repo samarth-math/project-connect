@@ -46,25 +46,17 @@ public class ShoutThread implements Runnable
 			        buf= new String("D|C|"+macadd+"|"+System.getProperty("os.name")+"|"+InetAddress.getLocalHost().getHostName()+"|"+user).getBytes();
 			        InetAddress address = IpAddress.LongToip(ip1);
 			        DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 3333);
-                	//synchronized(socket)
-                	//{
-                		socket.send(packet);
-                	//}
-
+			        socket.send(packet);
 				}
 			}
 			else
 			{
-				   byte[] buf = new byte[256];
-				   buf= new String("D|C|"+macadd+"|"+System.getProperty("os.name")+"|"+InetAddress.getLocalHost().getHostName()+"|"+user).getBytes();
-			       InetAddress address = InetAddress.getByName("255.255.255.255");
-			       DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 3333);
-               	//synchronized(socket)
-               	//{
-               		socket.send(packet);
-               	//}
-
-			}
+			   byte[] buf = new byte[256];
+			   buf= new String("D|C|"+macadd+"|"+System.getProperty("os.name")+"|"+InetAddress.getLocalHost().getHostName()+"|"+user).getBytes();
+		       InetAddress address = InetAddress.getByName("255.255.255.255");
+		       DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 3333);
+		       socket.send(packet);
+             }
 		} 
 		catch (UnknownHostException e) 
 		{

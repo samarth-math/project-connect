@@ -1,5 +1,7 @@
 package fileSending;
 
+import globalfunctions.FileTransfer;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,7 +24,7 @@ public class Sender  {
 		
 	}
 	public void send(Socket socket,Path filePath) throws IOException {
-		if( isFile(filePath.toString()) )
+		if( FileTransfer.isFile(filePath.toString()) )
 			sendFile(socket,filePath);
 		else{
 			sendFile(socket,filePath);
@@ -45,16 +47,16 @@ public class Sender  {
 		boolean flag=false;
 		char pathType= ' ';
 		
-		flag = isPathValid(filePath.toString());
+		flag = FileTransfer.isPathValid(filePath.toString());
 		if(flag==false) {
 			displayError("Path Not Valid");
 		}
-		flag = isFile(filePath.toString());
+		flag = FileTransfer.isFile(filePath.toString());
 		if(flag==true) {
 			pathType = 'f';
 		}
 		if(flag==false) {
-			flag = isDirectory(filePath.toString());
+			flag = FileTransfer.isDirectory(filePath.toString());
 			if(flag==true) {
 				pathType = 'd';
 			}
@@ -73,10 +75,9 @@ public class Sender  {
 		// Creation of file header
 		fileHeader = header.getBytes("UTF-8");
 		
-		System.out.print("Sending file with file header: ");
 		for(int i=0;i<fileHeader.length;i++)
 			System.out.print("" + (char) fileHeader[i]);
-		System.out.println("Debugging Insider Server.java ");
+		
 		os =  socket.getOutputStream();
 		if(pathType=='d') {
 			os.write(fileHeader);
@@ -120,26 +121,7 @@ public class Sender  {
 			socket.close();
 	}
 	
-	public boolean isPathValid(String filePath) {
-		
-		if(new File(filePath).exists())
-			return true;
-		else
-			return false;
-	}
-	
-	public  boolean isDirectory(String filePath) {
-		if(new File(filePath).isDirectory())
-			return true;
-		else
-			return false;
-	}
-	public  boolean isFile(String filePath) {
-		if(new File(filePath).isFile())
-			return true;
-		else
-			return false;
-	}
+
 	public static void displayError(String errorMessage)  {
 		System.err.println(errorMessage);
 		System.exit(1);

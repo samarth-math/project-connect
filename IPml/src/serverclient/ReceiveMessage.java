@@ -7,14 +7,11 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
-
 import GuiElements.ChatWindowPanelReceiver;
-import GuiElements.ChatWindowPanelSender;
 import GuiElements.FileTransferPanel;
 
 public class ReceiveMessage implements Runnable 
@@ -54,7 +51,6 @@ public class ReceiveMessage implements Runnable
 			String header = packdetails[3];
 			String filePath = "";
 			System.out.println("Header " + header);
-			char fileType = header.charAt(0);
 			for(int i=0;i<header.length();i++) {
 				if(header.charAt(i)=='-') {
 				   flag = true;

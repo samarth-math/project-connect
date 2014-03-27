@@ -7,8 +7,6 @@
 package serverclient;
 import globalfunctions.Contact;
 import globalfunctions.IpAddress;
-
-import java.awt.EventQueue;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
@@ -78,24 +76,6 @@ public class Mainstart
 				System.out.println("Hashmap");
 				person.printall();
 			}
-		   /*for (String key : people.keySet()) {
-	            Contact value = (Contact) people.get(key);
-	            value.printall();
-	        }*/
-		   //System.out.print("Supposedly printed everything in the hashmap");
-			//new Thread(new Server()).start();
-			//final Contact person = (Contact) people.get("F07BCB8001D7");
-/*
-			EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						person.StartChat();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});*/
-	   //     SendMessage SM = new SendMessage(person, "This is the message I'm sending to you!!!");
-	     //   new Thread(SM).start();
+
     }
 }

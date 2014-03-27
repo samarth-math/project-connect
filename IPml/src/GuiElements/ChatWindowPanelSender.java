@@ -2,7 +2,6 @@ package GuiElements;
 
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
-import javax.swing.JTextArea;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Dimension;
@@ -11,11 +10,10 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
-import java.awt.Component;
-import javax.swing.Box;
 
 public class ChatWindowPanelSender extends JPanel{
 	
+	private static final long serialVersionUID = 1L;
 	private JLabel lbl_cnfrmMessage;
 	private JTextPane textpn_chatText;
 	private JLabel lbl_chatTimeStamp;
@@ -63,12 +61,10 @@ public class ChatWindowPanelSender extends JPanel{
 		gbc_lbl_chatTimeStamp.gridy = 1;
 		add(lbl_chatTimeStamp, gbc_lbl_chatTimeStamp);
 		
-		//showMsg("message received"); //here is an example of how you should call it!
-		
-	}
+}
 	
 	
-	
+	//showMsg("message received"); //here is an example of how you should call it!	
 	//call this method on the panel when the acknowledgment is received 
 	
 	public void showMsg(String msg){ 

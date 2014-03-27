@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -22,15 +21,8 @@ import javax.swing.JButton;
 import serverclient.SendMessage;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import javax.swing.ScrollPaneConstants;
-import GuiElements.ChatWindowPanelReceiver;
-import GuiElements.ChatWindowPanelSender;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.io.File;
 import java.nio.file.Path;
@@ -151,11 +143,8 @@ public class ChatWindow extends BasicWindow
 		            System.out.println("File Path " + filePath);
 		            SendMessage SM = new SendMessage(person, filePath);
 					new Thread(SM).start();
-		           // fileSending.MulticastClient obj = new fileSending.MulticastClient(filePath,"255.255.255.255",3333);
-		            //This is where a real application would open the file.
-		           // log.append("Opening: " + file.getName() + "." + newline);
 		        } else {
-		            //log.append("Open command cancelled by user." + newline);
+/*************************** //What to do if the person closes the file chooser****/
 		        }
 			}
 		});
@@ -169,7 +158,6 @@ public class ChatWindow extends BasicWindow
 		setVisible(true);
 		txtMessage.requestFocusInWindow();
 	}
-	
 	/*public void chatconsole(String M)//use this
 	{
 	

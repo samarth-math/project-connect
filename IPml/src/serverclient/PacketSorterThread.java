@@ -16,7 +16,6 @@ public class PacketSorterThread implements Runnable {
 	private BlockingQueue<DatagramPacket> BQ;
 	private DatagramSocket socket;
     private String id;
-    //protected BlockingQueue <Character> q;
     private String user;
     private byte[] buf;
 	

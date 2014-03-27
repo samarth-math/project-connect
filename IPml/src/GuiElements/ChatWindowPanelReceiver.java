@@ -19,7 +19,7 @@ import java.awt.Color;
 
 public class ChatWindowPanelReceiver extends JPanel{
 	
-	
+	private static final long serialVersionUID = 1L;
 	private JTextPane textpn_chatText;
 	private JLabel lbl_chatTimeStamp;
 	

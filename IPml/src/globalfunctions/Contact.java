@@ -1,9 +1,6 @@
 package globalfunctions;
 import java.io.IOException;
-//import java.io.*;
 import java.net.*;
-import java.nio.file.Path;
-
 import serverclient.Mainstart;
 import GUIObjects.ChatWindow;
 
@@ -24,11 +21,6 @@ public class Contact {
 		this.username = username;
 		this.ip=ip;
 		this.port=port;
-	}
-	private void setWindow(ChatWindow cw)
-	{
-		this.cw=cw;
-		System.out.println("Chat Window is : "+this.cw);
 	}
 	public ChatWindow getWindow()
 	{

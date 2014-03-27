@@ -1,43 +1,32 @@
 package GuiElements;
 
+/*
+ * this panel is for accepting or rejecting the incoming file
+ * */
 import fileSending.Server;
 import globalfunctions.Contact;
-
 import javax.swing.JPanel;
-
 import java.awt.GridBagLayout;
-
 import javax.swing.JLabel;
-
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
-
 import java.awt.Color;
-
-import javax.swing.border.MatteBorder;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
-import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
-
 import serverclient.Mainstart;
-
 import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-/*
- * this panel is for accepting or rejecting the incoming file
- * */
 import java.io.IOException;
 import java.net.SocketException;
 import java.nio.file.Path;
 
 public class FileTransferPanel extends JPanel{
 	
+	private static final long serialVersionUID = 1L;
+
 	public FileTransferPanel(final Contact person, final Path filepath) {
 		
 		String filename = filepath.getFileName().toString();

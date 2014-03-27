@@ -152,7 +152,8 @@ public class IpAddress
 	}
 
 	
-	/*public static String current_Mac_and_IP()// returns ipadd:mac address ###Split returned string using### String [] netinfo = IpAddress.current_Mac_and_IP().split(":"); netinfo[0] = mac and netinfo[1] = ip 
+	/*
+	public static String current_Mac_and_IP()// returns ipadd:mac address ###Split returned string using### String [] netinfo = IpAddress.current_Mac_and_IP().split(":"); netinfo[0] = mac and netinfo[1] = ip 
 	{
 		boolean flag_foundinterface = false;
 		String mac = null;
@@ -187,5 +188,6 @@ public class IpAddress
 		{
 			return "Error creating socket";
 		}
-	}	*/
+	}	
+	*/
 }

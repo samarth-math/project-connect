@@ -1,16 +1,13 @@
 package serverclient;
 
-import java.io.File;
+
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.*;
-
 import GuiElements.ChatWindowPanelSender;
-import GuiElements.FileTransferPanel;
-import fileSending.Sender;
+import GuiElements.FileTransferPanelS;
 import globalfunctions.Contact;
-//import java.lang.ThreadGroup;
+import globalfunctions.FileTransfer;
 
 public class SendMessage implements Runnable
 {
@@ -65,9 +62,9 @@ public class SendMessage implements Runnable
 				}		
 			}
 				else {
-					header = getHeader(filePath);
+					header = FileTransfer.getHeader(filePath);
 					
-					ChatWindowPanelSender ftPane = new ChatWindowPanelSender(filePath.getFileName().toString(),"timestamp");
+					FileTransferPanelS ftPane = new FileTransferPanelS(filePath.getFileName().toString());
 					person.getWindow().chatconsole(ftPane);
 					try
 					{
@@ -98,64 +95,4 @@ public class SendMessage implements Runnable
 		}
 	}
 
-	public String getHeader(Path filePath) throws IOException  {
-	    	String fileName = filePath.getFileName().toString();
-			long fSize =  Files.size(filePath);
-			long fileSize= fSize;
-			int chunkSize = 1024*1024;
-
-			System.out.println("\nFile Size is " + fileSize + " file path " + fileName);
-			
-			boolean flag=false;
-			char pathType= ' ';
-			
-			flag = isPathValid(filePath.toString());
-			if(flag==false) {
-				Sender.displayError("Path Not Valid");
-			}
-			flag = isFile(filePath.toString());
-			if(flag==true) {
-				pathType = 'f';
-			}
-			if(flag==false) {
-				flag = isDirectory(filePath.toString());
-				if(flag==true) {
-					pathType = 'd';
-				}
-			}
-			System.out.println("Path type " + pathType);
-			
-			/* File Header is of the format 
-			 * [f/d]*[file/directory Size]-[file/directory path][newline character]
-			 * f represents a file
-			 * d represents a directory
-			 * */
-					
-			// header contains the content of file header which will be sent to receiver
-			String header = pathType + "*" + Long.toString(fileSize) + "-" + filePath +  "\n" ;
-			byte [] fileHeader  = new byte[header.length()*2];
-			// Creation of file header
-			fileHeader = header.getBytes("UTF-8");
-			
-			return header;
-			
-	    }
-	public  boolean isPathValid(String filePath) {
-			
-			if(new File(filePath).exists())
-				return true;
-			else
-				return false;
-		}
-	public  boolean isDirectory(String filePath) {
-			if(new File(filePath).isDirectory())
-				return true;
-			else
-				return false;
-		}
-	public  boolean isFile(String filePath) {
-			if(new File(filePath).isFile())
-				return true;
-			else
-				return false;
-		}}
+}

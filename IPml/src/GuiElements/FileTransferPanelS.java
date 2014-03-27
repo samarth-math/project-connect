@@ -13,6 +13,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 public class FileTransferPanelS extends JPanel{
+
+	private static final long serialVersionUID = 1L;
 	//wrapper panel 
 	private JLabel lbl_fileName;
 	private TitledBorder t = new TitledBorder(new LineBorder(new Color(192, 192, 192)), null,TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(128, 128, 128));
