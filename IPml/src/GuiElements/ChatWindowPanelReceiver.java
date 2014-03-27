@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.Rectangle;
 
 import javax.swing.JTextPane;
 import javax.swing.JLabel;
@@ -64,6 +65,5 @@ public class ChatWindowPanelReceiver extends JPanel{
 		gbc_lbl_chatTimeStamp.gridx = 0;
 		gbc_lbl_chatTimeStamp.gridy = 1;
 		add(lbl_chatTimeStamp, gbc_lbl_chatTimeStamp);
-		
 	}
 }

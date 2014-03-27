@@ -35,6 +35,7 @@ public class Contact {
 	}
 	public void setWindowNull()
 	{
+		System.out.println("I set cw to null");
 		cw = null;
 	}
 	public void StartChat()

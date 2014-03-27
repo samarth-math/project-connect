@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import fileSending.Sender;
 
 public class FileTransfer {
 	public static String getHeader(Path filePath) throws IOException  {
@@ -20,7 +19,7 @@ public class FileTransfer {
 		
 		flag = isPathValid(filePath.toString());
 		if(flag==false) {
-			Sender.displayError("Path Not Valid");
+			System.err.println("Some Error");
 		}
 		flag = isFile(filePath.toString());
 		if(flag==true) {

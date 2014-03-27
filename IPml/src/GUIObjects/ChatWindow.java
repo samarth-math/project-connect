@@ -5,24 +5,34 @@ package GUIObjects;
 import globalfunctions.Contact;
 
 import javax.swing.JFrame;
+
 import java.awt.GridBagLayout;
+
 import javax.swing.JPanel;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.Rectangle;
+
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
+
 import serverclient.SendMessage;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
+
 import javax.swing.ScrollPaneConstants;
+
 import java.awt.event.WindowAdapter;
 import java.io.File;
 import java.nio.file.Path;
@@ -50,7 +60,8 @@ public class ChatWindow extends BasicWindow
 	{
 		this.addWindowListener(new WindowAdapter() {
 			  @Override
-			  public void windowClosed(WindowEvent e) {
+			  public void windowClosing(WindowEvent e) {
+				System.out.println("I set the cw to null");
 			    person.setWindowNull();
 			  }
 			});
@@ -79,8 +90,8 @@ public class ChatWindow extends BasicWindow
 		scrollConstraints.gridx = 1;
 		scrollConstraints.gridy = 1;
 		contentPane.add(scroll1, scrollConstraints);
-
-	
+		JScrollBar vsbar = scroll1.getVerticalScrollBar();
+		vsbar.setUnitIncrement(16);
 		
 		txtMessage = new JTextArea();
 		txtMessage.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke("ENTER"), "SendMessage");
@@ -169,5 +180,9 @@ public class ChatWindow extends BasicWindow
 	{
 		history.add(M);
 		validate();
+		int height = (int)history.getPreferredSize().getHeight();
+        Rectangle rect = new Rectangle(0,height,10,10);
+        history.scrollRectToVisible(rect);
+		
 	}
 }

@@ -60,7 +60,7 @@ public class ChatWindowPanelSender extends JPanel{
 		gbc_lbl_chatTimeStamp.gridx = 0;
 		gbc_lbl_chatTimeStamp.gridy = 1;
 		add(lbl_chatTimeStamp, gbc_lbl_chatTimeStamp);
-		
+		scrollRectToVisible(null);
 }
 	
 	
