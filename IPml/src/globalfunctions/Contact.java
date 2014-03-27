@@ -41,6 +41,10 @@ public class Contact {
 			return cw;
 		}
 	}
+	public void setWindowNull()
+	{
+		cw = null;
+	}
 	public void StartChat()
 	{
 		this.cw = getWindow();
