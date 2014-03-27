@@ -5,6 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -15,14 +18,15 @@ import org.json.simple.JSONObject;
 
 public class LoggingChats
 {
+	Date date= new Date();
 	
 	@SuppressWarnings("unchecked")
-	public void logCreate(String log)
+	public void logCreate(String userId, String userName, String userMessage)
 	{
 		
 		File path = new File(System.getProperty("user.dir"));
-		File jsonFilePath = new File(path,""+log+".json");
-		String fileName = ""+log+".json";
+		File jsonFilePath = new File(path,""+userId+".json");
+		String fileName = userId+".json";
 		
 		//System.out.println(path);                                    //check file path
 		
@@ -33,42 +37,97 @@ public class LoggingChats
 				JSONParser parser = new JSONParser();
 				Object obj = parser.parse(new FileReader(fileName));
 				JSONObject logInfo = (JSONObject)obj;
+				
+				JSONArray newSession = (JSONArray)logInfo.get("session");
+				
+				long lineCount = (long)logInfo.get("lineCount");
+				lineCount++;
+				logInfo.put("lineCount", lineCount);
+				
 				long newSessionValue = (long)logInfo.get("lastUpdatedSession");
 				System.out.println(newSessionValue);                    //print check
-				newSessionValue++;
+				
+				boolean sessionChange = false;
+				if(lineCount%5 == 0)
+				{
+					newSessionValue++;
+					sessionChange = true;
+				}
 				System.out.println(newSessionValue);                    //print check
 				logInfo.put("lastUpdatedSession", newSessionValue);  
 				
 				//JSONObject mainLog = new JSONObject();
 				
-				JSONObject sessNum = new JSONObject();
-				JSONObject messageTuple = new JSONObject();
-				JSONArray messageArray = new JSONArray();
+				JSONArray chat = (JSONArray) logInfo.get("session");
 				JSONObject messageObject = new JSONObject();
-				JSONArray session = new JSONArray();
-				JSONArray chat = new JSONArray();
+				messageObject.put("timeStamp", ""+date.getTime());
+				messageObject.put("userName", userName);
+				messageObject.put("messageText", userMessage);
 				
-				sessNum.put("sessionNumber", newSessionValue);
+				if(sessionChange)
+				{
+					JSONObject sessNum = new JSONObject();
+					JSONObject messageTuple = new JSONObject();
+					JSONArray messageArray = new JSONArray();
+					JSONArray innerSessionArray = new JSONArray() ;
 					
-				messageTuple.put("timeStamp", ""+newSessionValue);
-				messageTuple.put("userName", "shasuck"+newSessionValue);
-				messageTuple.put("messageText", "No he doesnt");
-				messageArray.add(messageTuple);
 					
-				messageObject.put("messages", messageArray);
-				chat.add(sessNum);
-				chat.add(messageObject);	
 					
-				session.add(chat);
+					messageArray.add(messageObject);
+					messageTuple.put("messages", messageArray);
+					
+					sessNum.put("sessionNumber", newSessionValue);
+				// next session to be updated is the conditionally increased (above) value of newSessionValue
+					innerSessionArray.add(sessNum);
+					innerSessionArray.add(messageTuple);
+				//sessNum.put("sessionNumber", newSessionValue);
+					chat.add(innerSessionArray);
 				
-				logInfo.put("session", session);
+				}
+				//messageArray.add(messageObject);
+				//--------------------------------------------------------------------------------------
+				//messageObject.put("messages", messageArray);
+				else
+				{
+					JSONObject msgs = new JSONObject();
+						
+					JSONArray oldMessageArray = new JSONArray();
+					
+					JSONArray newSessionArray = new JSONArray();
+					JSONObject newSessionNumber = new JSONObject();
+					JSONArray tempSession = null;
+					
+					Iterator<JSONArray> sIter = chat.iterator(); 
+					boolean found=false;
+					while(sIter.hasNext())
+					{
+						tempSession = (JSONArray) sIter.next();
+						JSONObject sessionItem =  (JSONObject) tempSession.get(0);
+						if((long)sessionItem.get("sessionNumber")==newSessionValue)
+						{ 
+							found=true;
+							System.out.println(found);
+							msgs = (JSONObject)tempSession.get(1);
+							oldMessageArray = (JSONArray) msgs.get("messages");
+							oldMessageArray.add(messageObject);
+							
+						}
+						
+					}
+					chat.add(tempSession);
+				}
+				//
+				//chat.add(msgs);	
+			
 				
-				System.out.println(logInfo.get("lastUpdatedSession"));   // print check
+				//System.out.println(logInfo.get("lastUpdatedSession"));   // print check
 				jsonFilePath.createNewFile();
 				FileWriter jsonFileWriter = new FileWriter(jsonFilePath);				
 				jsonFileWriter.write(logInfo.toJSONString());
 				jsonFileWriter.flush();
 				jsonFileWriter.close();
+				
+				lineCount++;
 			}
 			catch (FileNotFoundException e) 
 			{
@@ -81,7 +140,7 @@ public class LoggingChats
 			catch (ParseException e) 
 			{
 				e.printStackTrace();
-			}	
+			} 	
 		}
 		
 		
@@ -93,10 +152,11 @@ public class LoggingChats
 				FileWriter jsonFileWriter = new FileWriter(jsonFilePath);
 				
 				JSONObject emainLog = new JSONObject();
-				emainLog.put("totalUsers", 4);
-				//mainLog.put("lastUpdatedSession", 0);
-				emainLog.put("groupId", "xxa56d");
-				emainLog.put("groupName", "project x");
+				emainLog.put("totalUsers", 1);
+				emainLog.put("lastUpdatedSession", 0);
+				emainLog.put("groupId", userId);
+				emainLog.put("groupName", userName);
+				emainLog.put("lineCount", 1);
 				
 				JSONObject esessNum = new JSONObject();
 				JSONObject emessageTuple = new JSONObject();
@@ -107,20 +167,20 @@ public class LoggingChats
 				JSONArray esession = new JSONArray();
 				
 				JSONArray egroupUsers = new JSONArray();
-				egroupUsers.add("mathur");
-				egroupUsers.add("rajat");
-				egroupUsers.add("shasuck");
-				egroupUsers.add("baid");
+				egroupUsers.add(userName);
+				//egroupUsers.add("rajat");
+				//egroupUsers.add("shasuck");
+				//egroupUsers.add("baid");
 				emainLog.put("users", egroupUsers);
 				
 				
 				JSONArray echat = new JSONArray();
-				esessNum.put("sessionNumber", 404);
+				esessNum.put("sessionNumber", 1);
 					
 					
-				emessageTuple.put("timeStamp", ""+404);
-				emessageTuple.put("userName", "shasuck"+404);
-				emessageTuple.put("messageText", "No he doesnt");
+				emessageTuple.put("timeStamp", ""+date.getTime());
+				emessageTuple.put("userName", userName);
+				emessageTuple.put("messageText", userMessage);
 				emessageArray.add(emessageTuple);
 					
 					
@@ -131,11 +191,12 @@ public class LoggingChats
 				esession.add(echat);
 				
 				emainLog.put("session", esession);
-				emainLog.put("lastUpdatedSession", 0);
+				emainLog.put("lastUpdatedSession", 1);
 				
 				jsonFileWriter.write(emainLog.toJSONString());
 				jsonFileWriter.flush();
 				jsonFileWriter.close();
+				
 			}
 			catch (IOException e) 
 			{

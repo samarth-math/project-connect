@@ -10,11 +10,10 @@ import org.json.simple.parser.ParseException;
 
 public class GettingChatLogs extends Object{
 	
-	public void writeLog(String groupId)
+	@SuppressWarnings("unchecked")
+	public void writeLog(String userId)
 	{
-		/* Now we need to look up for the file having logs for the groupId */
-		//String chatFileName = groupId.getChatFile();  /the next line temporarily replaces this method
-		String chatFileName = "log.json";
+		String chatFileName = userId+".json";                  // file name based on userId
 		
 		JSONParser parser = new JSONParser();
 		 
@@ -22,23 +21,24 @@ public class GettingChatLogs extends Object{
 				Object obj = parser.parse(new FileReader(chatFileName));
 				JSONObject logInfo = (JSONObject)obj;	
 				
-				      																	//  printing out info
-				System.out.println("groupId : "+logInfo.get("groupId")+"\n");            // from the chat file
-				System.out.println("groupName : "+logInfo.get("groupName")+"\n");        //  being read
-				System.out.println("currentSession : "+logInfo.get("currentSession")+"\n");
-				System.out.println("totalUsers : "+logInfo.get("totalUsers")+"\n");
-				System.out.println("users : ");
-				Iterator<JSONArray> userIterator = ((ArrayList) logInfo.get("users")).iterator();
-				while (userIterator.hasNext()) 
+				      																	       //  printing out info
+				//System.out.println("groupId : "+logInfo.get("groupId"));                       // from the chat file
+				//System.out.println("groupName : "+logInfo.get("groupName"));                   //  being read
+				Long sessionValue = (Long)logInfo.get("lastUpdatedSession");
+				//System.out.println("totalUsers : "+logInfo.get("totalUsers"));
+				//System.out.println("users : ");
+				
+				JSONObject oldSessionObject = (JSONObject)logInfo.get("session");
+				JSONArray oldMessageArray = (JSONArray)oldSessionObject.get("1");
+				
+				Iterator<JSONArray> oldMessageIterator = oldMessageArray.iterator();
+				while (oldMessageIterator.hasNext()) 
 				{        
-					System.out.println((userIterator.next())); 
+					System.out.println((oldMessageIterator.next())); 
 				}	
-				System.out.println("sessionNumber : "+logInfo.get("sessionNumber")+"\n");
-				//JSONArray messages = new JSONArray();                                                     // code to
-				//messages = (JSONArray) logInfo.get("message");											// display 
-				//Iterator<JSONArray> messageIterator = ((ArrayList) logInfo.get("message")).iterator();	// messages
-				//Iterator<JSONArray> msgItemIterator = ((ArrayList) logInfo.get("")).iterator();
+			
 			}
+		
 			catch (FileNotFoundException e) 
 			{
 				e.printStackTrace();
