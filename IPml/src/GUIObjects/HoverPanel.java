@@ -3,7 +3,8 @@
  */
 package GUIObjects;
 
-public class HoverWindow
+public class HoverPanel
+
 {
 
 }

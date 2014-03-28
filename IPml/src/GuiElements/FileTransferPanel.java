@@ -5,16 +5,25 @@ package GuiElements;
  * */
 import fileSending.Server;
 import globalfunctions.Contact;
+
 import javax.swing.JPanel;
+
 import java.awt.GridBagLayout;
+
 import javax.swing.JLabel;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
+
 import java.awt.Color;
+
 import javax.swing.border.TitledBorder;
+
 import serverclient.Mainstart;
+
 import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
@@ -26,7 +35,9 @@ import java.nio.file.Path;
 public class FileTransferPanel extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
-
+	private JButton btn_accept;
+	private JButton btn_reject;
+	
 	public FileTransferPanel(final Contact person, final Path filepath) {
 		
 		String filename = filepath.getFileName().toString();
@@ -50,12 +61,13 @@ public class FileTransferPanel extends JPanel{
 		add(lbl_fileName, gbc_lbl_fileName);
 		
 		//the accept button
-		JButton btn_accept = new JButton("Accept");
+		btn_accept = new JButton("Accept");
 		btn_accept.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new Thread(new Server(6666)).start();// Starts server
 				try {
 					person.SendReceiveFile(filepath.toString().trim(),Mainstart.myid);
+					onAcceptUI(); //TEST: see if it works
 				} catch (SocketException exc) {
 					// Do stuff
 					
@@ -74,7 +86,7 @@ public class FileTransferPanel extends JPanel{
 		
 		
 		//the reject button
-		JButton btn_reject = new JButton("Reject");
+		btn_reject = new JButton("Reject");
 		GridBagConstraints gbc_btn_reject = new GridBagConstraints();
 		gbc_btn_reject.gridx = 2;
 		gbc_btn_reject.gridy = 0;
@@ -83,4 +95,18 @@ public class FileTransferPanel extends JPanel{
 		add(btn_reject, gbc_btn_reject);
 		
 	}//constructor ends here
+	
+	boolean onAcceptUI(){
+		this.btn_accept.setVisible(false);
+		this.btn_reject.setText("Cancel"); //this changes the reject button to a cancel button
+		this.validate();
+		this.repaint();
+		return true; //TODO: if ACCEPTED will return TRUE use it to change action of REJECT to CANCEL
+	}
+	void onRejectUI(){
+		this.btn_accept.setVisible(false);
+		this.btn_reject.setVisible(false);
+		this.validate();
+		this.repaint();
+	}
 }
