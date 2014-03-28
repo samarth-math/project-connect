@@ -1,6 +1,7 @@
 package serverclient;
 
 import globalfunctions.Contact;
+import globalfunctions.FileTransfer;
 
 import java.sql.Timestamp;
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.net.UnknownHostException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+
 import GuiElements.ChatWindowPanelReceiver;
 import GuiElements.FileTransferPanel;
 
@@ -39,31 +41,15 @@ public class ReceiveMessage implements Runnable
 			person.getWindow().chatconsole(MessagePane);
 		}
 		else if(packdetails[0].equals("S")) {
-			String fileP = getFilePath(packdetails[3]);
-			System.out.println("Packet is " + packdetails[3] + "FIle path is inside S of ReceiveMessage" + fileP);
+			String fileP = FileTransfer.getFilePath(packdetails[3]);
 			Path filepath = Paths.get(fileP.trim());
-			System.out.println("FIle path is inside S of ReceiveMessage" + filepath.toString());
 			
-			
-			boolean flag=false;
 			FileTransferPanel ftPane = new FileTransferPanel(person,filepath);
 			person.getWindow().chatconsole(ftPane);
-			String header = packdetails[3];
-			String filePath = "";
-			System.out.println("Header " + header);
-			for(int i=0;i<header.length();i++) {
-				if(header.charAt(i)=='-') {
-				   flag = true;
-				}
-				else if(flag==true) {
-					filePath = filePath + (char)header.charAt(i);
-				}
-			}
-		
 		}
 		
 	}
-	public static void requestFile(char fileType,String filePath, String ipAddress) {
+	/*public static void requestFile(char fileType,String filePath, String ipAddress) {
 		
 		 
    	 byte[] buf = new byte[256];
@@ -91,13 +77,6 @@ public class ReceiveMessage implements Runnable
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	private String getFilePath(String filePath) {
-		int i=0;
-		while(filePath.charAt(i)!='-') {
-			i++;
-		}
-		i++;
-		return filePath.substring(i,filePath.length());
-	}
+	}*/
+
 }

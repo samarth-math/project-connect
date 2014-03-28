@@ -24,13 +24,11 @@ public class Mainstart
 	public static String myusername;
 	public static DatagramSocket socket;
 	public static BlockingQueue<DatagramPacket> Q;
-	public static AppWindow mainWindow=new AppWindow();
+	public static AppWindow mainWindow;
 	
 	public static void main(String[] args)
     {
 		
-		String nst = new String("This stuff here\n\r and this stuff here");
-		System.out.println(nst);
 		Q = new ArrayBlockingQueue<DatagramPacket>(15);
 		try {
 			socket = new DatagramSocket(3333);
@@ -45,15 +43,12 @@ public class Mainstart
 				System.err.print("Network Problems detected!");
 				System.exit(0);
 			}
+		java.awt.EventQueue.invokeLater(new Runnable() {
+		    public void run() {
+		    	mainWindow=new AppWindow();
+		    }
+		} );
 
-			try
-	        {
-	        	Thread.sleep(400);
-	        }
-	        catch(Exception E)
-	        {
-	        	System.out.print("Wokenup");
-	        }
 			PacketSorterThread PS = new PacketSorterThread(Q);
 			ShoutThread S = new ShoutThread();//"172.22.30.19", "172.22.30.21");
 			ListenThread L =  new ListenThread(Q);
@@ -70,12 +65,5 @@ public class Mainstart
 	        {
 	        	System.out.print("Wokenup");
 	        }
-			for (String key : Mainstart.people.keySet()) 
-			{
-				Contact person = (Contact) Mainstart.people.get(key);
-				System.out.println("Hashmap");
-				person.printall();
-			}
-
     }
 }

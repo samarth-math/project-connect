@@ -3,10 +3,15 @@ package GUIObjects;
 import javax.swing.Box;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+
 import globalfunctions.Contact;
 import GuiElements.ClickablePanel;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
+import serverclient.Mainstart;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 
@@ -51,8 +56,12 @@ public class AppWindow extends BasicWindow
 		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 0;
 		getContentPane().add(scrollPane, gbc_scrollPane);
-		
+				
 		setVisible(true);
+		for (String key : Mainstart.people.keySet()) {
+			  Contact person = (Contact) Mainstart.people.get(key);
+			  box.add(new ClickablePanel(person));
+			}
 	}
 	public void addnewperson(Contact person) // ListenThread can call to add more people as they join
 	{

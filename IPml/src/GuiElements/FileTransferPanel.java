@@ -53,7 +53,7 @@ public class FileTransferPanel extends JPanel{
 		JButton btn_accept = new JButton("Accept");
 		btn_accept.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new Thread(new Server(6666)).start();
+				new Thread(new Server(6666)).start();// Starts server
 				try {
 					person.SendReceiveFile(filepath.toString().trim(),Mainstart.myid);
 				} catch (SocketException exc) {

@@ -71,7 +71,9 @@ public class PacketSorterThread implements Runnable {
 	        	if (person1==null)
 	        	{
 	        		Mainstart.people.put(packdetails[2], person);
+	        		if(Mainstart.mainWindow!=null)
 	        		Mainstart.mainWindow.addnewperson(Mainstart.people.get(packdetails[2]));
+	        		
 	        	}
 	     
 	        	
@@ -134,7 +136,6 @@ public class PacketSorterThread implements Runnable {
 	           packdetails[2]=file path
 	          */
 	        	
-	        	System.out.println("I am calling Client :) "+ packdetails[2]);
 	        	Client obj = new Client(address.getHostAddress(),6666,packdetails[2]);
 					(new Thread(obj)).start();
 	        	

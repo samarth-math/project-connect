@@ -37,10 +37,10 @@ public class Server implements Runnable{
 			System.out.println(e.getMessage());
 		}
 	}
-	public static void main(String args[])  {
+/*	public static void main(String args[])  {
 		int portNumber = 6666;
 		new Thread(new Server(portNumber)).start();
-	}
+	}*/
 }
 	
 

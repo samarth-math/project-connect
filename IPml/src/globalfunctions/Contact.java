@@ -1,6 +1,7 @@
 package globalfunctions;
 import java.io.IOException;
 import java.net.*;
+
 import serverclient.Mainstart;
 import GUIObjects.ChatWindow;
 
@@ -24,24 +25,49 @@ public class Contact {
 	}
 	public ChatWindow getWindow()
 	{
+		final String id = mac;
 		if(cw!=null)
 			return cw;
 		else
-		{
-			System.out.println("Calling else");
-			cw = new ChatWindow(this);
+		{java.awt.EventQueue.invokeLater(new Runnable() {
+		    public void run() {
+		    	cw = new ChatWindow(id);
+		    }
+		} );
+			
 			return cw;
 		}
 	}
 	public void setWindowNull()
 	{
-		System.out.println("I set cw to null");
 		cw = null;
 	}
 	public void StartChat()
 	{
 		this.cw = getWindow();
 		//setWindow(new ChatWindow(this));
+		
+	}
+	public static void sendToAll(String Message, String senderid)
+	{
+		byte[] buf = new byte[1024];
+		buf = new String("M|"+senderid+"|"+Message).getBytes();
+		
+		InetAddress ipall=null;
+		try {
+			ipall = InetAddress.getByName("255.255.255.255");
+		} catch (UnknownHostException e1) {
+			// Unable to broadcast - figure out course of action
+			e1.printStackTrace();
+		}
+		DatagramPacket packet = new DatagramPacket(buf, buf.length, ipall, 3333);
+		DatagramSocket socket = Mainstart.socket;
+   		try {
+			socket.send(packet);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	public void SendMessage(String Message, String senderid) throws SocketException, IOException
@@ -67,7 +93,6 @@ public class Contact {
 	{
 		byte[] buf = new byte[1024];
 		buf = new String("R|"+senderid+"|"+filePath).getBytes();
-		System.out.println("SendReceiveFile "+new String(buf,"UTF8") + " IP " + ip + " port " + port);
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, ip, port);
 		DatagramSocket socket = Mainstart.socket;
    		socket.send(packet);

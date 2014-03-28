@@ -68,6 +68,14 @@ public class FileTransfer {
 			return false;
 	}
 
+	public static String getFilePath(String filePath) {
+		int i=0;
+		while(filePath.charAt(i)!='-') {
+			i++;
+		}
+		i++;
+		return filePath.substring(i,filePath.length());
+	}
 
 
 }

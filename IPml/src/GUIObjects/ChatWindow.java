@@ -25,6 +25,7 @@ import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 
+import serverclient.Mainstart;
 import serverclient.SendMessage;
 
 import java.awt.event.ActionListener;
@@ -46,9 +47,9 @@ public class ChatWindow extends BasicWindow
 	private Box history = Box.createVerticalBox();
 	private Contact person;
 	
-	public ChatWindow(Contact person)
+	public ChatWindow(String id)
 	{
-		this.person=person;
+		this.person=Mainstart.people.get(id);
 		setTitle("Chat with "+ person.getusername());
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setSize(650,500);
@@ -61,8 +62,7 @@ public class ChatWindow extends BasicWindow
 		this.addWindowListener(new WindowAdapter() {
 			  @Override
 			  public void windowClosing(WindowEvent e) {
-				System.out.println("I set the cw to null");
-			    person.setWindowNull();
+				person.setWindowNull();
 			  }
 			});
 		contentPane = new JPanel();
