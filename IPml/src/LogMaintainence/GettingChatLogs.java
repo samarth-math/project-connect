@@ -1,6 +1,7 @@
 package LogMaintainence;
+import globalfunctions.Contact;
+
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.json.simple.JSONArray;
@@ -8,13 +9,23 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import serverclient.Mainstart;
+
 public class GettingChatLogs extends Object{
 	
 	@SuppressWarnings("unchecked")
-	public void writeLog(String userId)
+	public void readLog(String userId)
 	{
-		String chatFileName = userId+".json";                  // file name based on userId
+		String chatFileName = userId+".json";  // file name based on userId
 		
+		String myId = Mainstart.myid;    ///   <------- why is this giving null??
+		
+		System.out.println(myId);
+		
+		Contact person = Mainstart.people.get(userId);         //person needed to get the correct chat window
+		
+		
+		long sessionTraversalCount = 0;
 		JSONParser parser = new JSONParser();
 		 
 		try {
@@ -28,14 +39,38 @@ public class GettingChatLogs extends Object{
 				//System.out.println("totalUsers : "+logInfo.get("totalUsers"));
 				//System.out.println("users : ");
 				
-				JSONObject oldSessionObject = (JSONObject)logInfo.get("session");
-				JSONArray oldMessageArray = (JSONArray)oldSessionObject.get("1");
+				sessionTraversalCount = sessionValue;
 				
-				Iterator<JSONArray> oldMessageIterator = oldMessageArray.iterator();
-				while (oldMessageIterator.hasNext()) 
-				{        
-					System.out.println((oldMessageIterator.next())); 
-				}	
+				JSONObject oldSessionObject = (JSONObject)logInfo.get("session");
+				JSONArray oldMessageArray;
+				
+				while(sessionTraversalCount > 0)
+				{
+					System.out.println("session : "+sessionTraversalCount);
+					
+					oldMessageArray = (JSONArray)oldSessionObject.get(""+sessionTraversalCount);
+					//System.out.println(oldSessionObject);
+					//System.out.println(oldMessageArray);					// print check
+					Iterator<JSONObject> oldMessageIterator = oldMessageArray.iterator();
+					
+					
+					while (oldMessageIterator.hasNext()) 
+					{        
+						JSONObject messageObject = (JSONObject)oldMessageIterator.next();
+						if(messageObject.get("userId")==myId)
+						{
+							System.out.println("           "+messageObject.get("userName")+" <"+messageObject.get("timeStamp")+"> : "+messageObject.get("messageText"));
+							
+						}
+						else
+						{
+							System.out.println(""+messageObject.get("userName")+" <"+messageObject.get("timeStamp")+"> : "+messageObject.get("messageText"));
+
+						}
+					 
+					}
+					sessionTraversalCount--;
+				}
 			
 			}
 		

@@ -7,17 +7,30 @@ public class testLogMethods {
 	public static void main(String args[])
 	{
 		Date date= new Date();                               
-		String suffix= ""+date.getTime();
-		String userId = "user1", userMessage= "the time right now is 500", userName = "user";
+		String time = ""+date.getTime();
+		int i=0;
 		
-		//LoggingChats newLog = new LoggingChats();
-		//.logCreate(userId, userName, userMessage);   // group Id supplied as argument
-			//ChatLogging newLog = new ChatLogging();
-			//newLog.logCreate(userId, userName, userMessage); 
-		//System.out.println("\n\n\n");
+		String userId = "user1", userMessage , userName;
 		
+		ChatLogging newLog = new ChatLogging();
 		GettingChatLogs oldChat = new GettingChatLogs();
-		oldChat.writeLog(userId);      // group Id supplied as argument
+		
+		while(i<2)
+		{
+			if(i%2==0)
+			{
+				userId = "user1"; userName = "user"; userMessage = "hi bro";
+			}
+			else
+			{
+				userId = "user1"; userName = "me"; userMessage = "yeah bro";
+			}
+				  
+			newLog.logCreate(userId, userName, userMessage, time); 
+			i++;
+		}
+		oldChat.readLog(userId); 
+		
 	}
 	
 }

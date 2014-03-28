@@ -14,16 +14,18 @@ import org.json.simple.parser.ParseException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import serverclient.Mainstart;
+
 
 
 public class ChatLogging
 {
-	private int totalUsers;
-	Date date= new Date();
-	
+	private int totalUsers;   
+
 	@SuppressWarnings("unchecked")
-	public void logCreate(String userId, String userName, String userMessage)
+	public void logCreate(String userId, String userName, String userMessage, String timeStamp)
 	{
+		String myId = Mainstart.myid;
 		
 		File path = new File(System.getProperty("user.dir"));
 		File jsonFilePath = new File(path,""+userId+".json");
@@ -42,7 +44,7 @@ public class ChatLogging
 				JSONObject mainObject = (JSONObject)obj;
 				
 				Long lastSessionValue = (Long)mainObject.get("lastUpdatedSession");
-				JSONObject sessionObject = (JSONObject)mainObject.get("session");
+				JSONObject sessionObject = (JSONObject) mainObject.get("session");
 				long lineCount = (long)mainObject.get("lineCount");
 				lineCount++;
 				
@@ -54,9 +56,13 @@ public class ChatLogging
 				}
 				
 				JSONObject messageObject = new JSONObject();
-				messageObject.put("timeStamp", ""+date.getTime());
+				messageObject.put("timeStamp", timeStamp);
 				messageObject.put("userName", userName);
 				messageObject.put("messageText", userMessage);
+				if(userId != myId)
+					messageObject.put("userId", userId);
+				else
+					messageObject.put("userId", myId);
 				
 				JSONArray chatArray;
 				
@@ -114,9 +120,13 @@ public class ChatLogging
 				mainObject.put("users", groupUsers);
 				
 				JSONObject messageObject = new JSONObject();
-				messageObject.put("timeStamp", ""+date.getTime());
+				messageObject.put("timeStamp", timeStamp);
 				messageObject.put("userName", userName);
 				messageObject.put("messageText", userMessage);
+				if(userId != myId)
+					messageObject.put("userId", userId);
+				else
+					messageObject.put("userId", myId);
 				
 				JSONArray chatArray = new JSONArray();
 				chatArray.add(messageObject);
@@ -136,6 +146,36 @@ public class ChatLogging
 			{
 				e.printStackTrace();
 			}
+		}
+	}
+	public void clearLog(String userId)
+	{
+		
+		File path = new File(System.getProperty("user.dir"));
+		File jsonFilePath = new File(path,""+userId+".json");
+		String fileName = userId+".json";
+		
+		//System.out.println(path);
+		//check file path
+		
+		if(jsonFilePath.exists())
+		{
+			try 
+			{
+				if(jsonFilePath.delete())
+					System.out.println("file "+fileName+" is deleted\n");
+				else
+					System.out.println("delete failed\n");
+			}
+			
+			catch (Exception e) 
+			{
+				e.printStackTrace();
+			} 		
+		 }
+		else
+		{
+			System.out.println("file doesnt exist!\n");
 		}
 	}
 
