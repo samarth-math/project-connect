@@ -34,16 +34,23 @@ public class FileTransferPanelS extends JPanel{
 			gbc_lbl_fileName.gridx = 0;
 			gbc_lbl_fileName.gridy = 0;
 			System.out.println(t.getTitle());
-			lbl_fileName.setBorder(new TitledBorder(new LineBorder(new Color(192, 192, 192)), "Sending",TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(128, 128, 128)));
+			lbl_fileName.setBorder(new TitledBorder(new LineBorder(new Color(192, 192, 192)), "Awaiting response",TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(128, 128, 128)));
 			lbl_fileName.setPreferredSize(new Dimension(200, 40));
 			lbl_fileName.setFont(new Font("DejaVu Sans", Font.PLAIN, 12));
 			add(lbl_fileName, gbc_lbl_fileName);
-			//showMsg("Sent");
+						
 	}
 	
 	public void showMsg(String msg){
 	
-		lbl_fileName.setBorder(new TitledBorder(new LineBorder(new Color(192, 192, 192)), msg,TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(128, 128, 128)));
-		validate();
+		this.lbl_fileName.setBorder(new TitledBorder(new LineBorder(new Color(192, 192, 192)), msg,TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(128, 128, 128)));
+		this.validate();
+	}
+	
+	void onAcceptance(){
+		this.setBackground(new Color(190,238,143));
+		this.getParent().validate();
+		this.getParent().repaint();
+		showMsg("sending...");
 	}
 }
