@@ -42,6 +42,8 @@ public class FileTransferPanel extends JPanel{
 		
 		String filename = filepath.getFileName().toString();
 		//wrapper panel 
+		setMaximumSize(new Dimension(3000,80));
+		setPreferredSize(new Dimension(280,80));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{320, 50,50};
 		gridBagLayout.rowHeights = new int[]{50};
@@ -87,6 +89,11 @@ public class FileTransferPanel extends JPanel{
 		
 		//the reject button
 		btn_reject = new JButton("Reject");
+		btn_reject.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				onRejectUI();
+			}
+		});
 		GridBagConstraints gbc_btn_reject = new GridBagConstraints();
 		gbc_btn_reject.gridx = 2;
 		gbc_btn_reject.gridy = 0;

@@ -16,10 +16,13 @@ public class FileTransferPanelS extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 	//wrapper panel 
+	
 	private JLabel lbl_fileName;
 	private TitledBorder t = new TitledBorder(new LineBorder(new Color(192, 192, 192)), null,TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(128, 128, 128));
 	
 	public FileTransferPanelS(String filename){
+			setMaximumSize(new Dimension(3000,80));
+			setPreferredSize(new Dimension(280,80));
 			GridBagLayout gridBagLayout = new GridBagLayout();
 			gridBagLayout.columnWidths = new int[]{320, 50,50};
 			gridBagLayout.rowHeights = new int[]{50};
