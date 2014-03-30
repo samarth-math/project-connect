@@ -176,13 +176,18 @@ public class ChatWindow extends BasicWindow
 		history.setCaretPosition(history.getDocument().getLength());
 	}
 	*/
-	public void chatconsole(JPanel M)
+	public void chatconsole(final JPanel M)
 	{
-		history.add(M);
-		validate();
-		int height = (int)history.getPreferredSize().getHeight();
-        Rectangle rect = new Rectangle(0,height,10,10);
-        history.scrollRectToVisible(rect);
+		java.awt.EventQueue.invokeLater(new Runnable() {
+		    public void run() {
+		    	history.add(M);
+				revalidate();
+				int height = (int)history.getPreferredSize().getHeight();
+		        Rectangle rect = new Rectangle(0,height,10,10);
+		        history.scrollRectToVisible(rect);
+		    }
+		} );
+		
 		
 	}
 }

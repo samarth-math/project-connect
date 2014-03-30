@@ -104,16 +104,25 @@ public class FileTransferPanel extends JPanel{
 	}//constructor ends here
 	
 	boolean onAcceptUI(){
-		this.btn_accept.setVisible(false);
-		this.btn_reject.setText("Cancel"); //this changes the reject button to a cancel button
-		this.validate();
-		this.repaint();
+		java.awt.EventQueue.invokeLater(new Runnable() {
+		    public void run() {
+		    	btn_accept.setVisible(false);
+				btn_reject.setText("Cancel"); //this changes the reject button to a cancel button
+				revalidate();
+				repaint();
+		    }
+		} );
 		return true; //TODO: if ACCEPTED will return TRUE use it to change action of REJECT to CANCEL
 	}
 	void onRejectUI(){
-		this.btn_accept.setVisible(false);
-		this.btn_reject.setVisible(false);
-		this.validate();
-		this.repaint();
+		java.awt.EventQueue.invokeLater(new Runnable() {
+		    public void run() {
+				btn_accept.setVisible(false);
+				btn_reject.setVisible(false);
+				revalidate();
+				repaint();
+		    }
+		} );
+
 	}
 }

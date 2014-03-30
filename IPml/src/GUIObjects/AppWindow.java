@@ -63,10 +63,15 @@ public class AppWindow extends BasicWindow
 			  box.add(new ClickablePanel(person));
 			}
 	}
-	public void addnewperson(Contact person) // ListenThread can call to add more people as they join
+	public void addnewperson(final Contact person) // ListenThread can call to add more people as they join
 	{
-		box.add(new ClickablePanel(person));
-		validate();
+		java.awt.EventQueue.invokeLater(new Runnable() {
+		    public void run() {
+		    	box.add(new ClickablePanel(person));
+				revalidate();
+		    }
+		} );
+		
 	}
 			
 	
