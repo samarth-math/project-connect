@@ -40,7 +40,7 @@ public class FileTransferPanel extends JPanel{
 	private JButton btn_cancel;
 	private Thread serverThread;
 	
-	public FileTransferPanel(final Contact person, final Path filepath) {
+	public FileTransferPanel(final Contact person, final Path filepath, final int sendPanelId) {
 		
 		String filename = filepath.getFileName().toString();
 		//wrapper panel 
@@ -71,7 +71,7 @@ public class FileTransferPanel extends JPanel{
 				serverThread = new Thread(new Server(6666));// Starts server
 				serverThread.start();
 				try {
-					person.sendAcceptFile(filepath.toString().trim(),MainStart.myID);
+					person.sendAcceptFile(filepath.toString().trim(),MainStart.myID,sendPanelId);
 					onAcceptUI(); //TEST: see if it works
 				} catch (SocketException exc) {
 					// Do stuff
@@ -124,7 +124,7 @@ public class FileTransferPanel extends JPanel{
 			
 		}//constructor ends here
 	
-	void onAcceptUI(){
+	private void onAcceptUI(){
 		java.awt.EventQueue.invokeLater(new Runnable() {
 		    public void run() {
 		    	btn_accept.setVisible(false);
@@ -136,7 +136,7 @@ public class FileTransferPanel extends JPanel{
 		} );
 		//return true; //TODO: if ACCEPTED will return TRUE use it to change action of REJECT to CANCEL
 	}
-	void onRejectUI(){
+	private void onRejectUI(){
 		java.awt.EventQueue.invokeLater(new Runnable() {
 		    public void run() {
 				btn_accept.setVisible(false);

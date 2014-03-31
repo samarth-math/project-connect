@@ -6,15 +6,10 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.Rectangle;
-
 import javax.swing.JTextPane;
 import javax.swing.JLabel;
-
 import java.awt.Font;
-
 import javax.swing.border.LineBorder;
-
 import java.awt.Color;
 
 
@@ -28,18 +23,19 @@ public class ChatWindowPanelReceiver extends JPanel{
 	public ChatWindowPanelReceiver(String inputText, String timeStamp) {
 		
 		//panel properties 
+
 		setMaximumSize(new Dimension(3000,70));
 		setPreferredSize(new Dimension(280,70));
-		setBackground(new Color(255, 255, 102));
+		setBackground(new Color(240, 128, 128));
 		setBorder(new LineBorder(Color.RED));
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.rowWeights = new double[]{2.0, 0.0};
+		gridBagLayout.rowWeights = new double[]{2.0};
 		gridBagLayout.columnWeights = new double[]{2.0};
 		setLayout(gridBagLayout);
 		
 		//create text pane
 		textpn_chatText = new JTextPane();
-		textpn_chatText.setBackground(new Color(255, 255, 0));
+		textpn_chatText.setBackground(Color.WHITE);
 		textpn_chatText.setBorder(null);
 		textpn_chatText.setText(inputText);
 		textpn_chatText.setEditable(false);

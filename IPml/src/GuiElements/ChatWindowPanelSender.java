@@ -24,7 +24,7 @@ public class ChatWindowPanelSender extends JPanel{
 		//set panel properties 
 		setMaximumSize(new Dimension(3000,70));
 		setPreferredSize(new Dimension(280,70));
-		setBackground(new Color(102, 255, 153));
+		setBackground(new Color(152, 251, 152));
 		setBorder(new LineBorder(Color.GREEN));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.rowWeights = new double[]{2.0, 0.0};
@@ -33,7 +33,7 @@ public class ChatWindowPanelSender extends JPanel{
 		
 		//create text-pane
 		textpn_chatText = new JTextPane();
-		textpn_chatText.setBackground(new Color(102, 255, 153));
+		textpn_chatText.setBackground(Color.WHITE);
 		textpn_chatText.setText(inputText);
 		textpn_chatText.setEditable(false);
 		

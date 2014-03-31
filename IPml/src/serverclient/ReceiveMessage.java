@@ -4,11 +4,7 @@ import globalfunctions.Contact;
 import globalfunctions.FileTransfer;
 
 import java.sql.Timestamp;
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -33,18 +29,21 @@ public class ReceiveMessage implements Runnable
 	public void run()
 	{/*packdetails[1]=mac
         packdetails[2]=threadnumber of sending thread
-        packdetails[3]=message/fileheader */
+         */
 		Thread.currentThread().setName("ReceiveMessageThread");
 		Contact person = (Contact) MainStart.people.get(packdetails[1]);
 		if(packdetails[0].equals("M")) {
+			//packdetails[3]=message
 			ChatWindowPanelReceiver MessagePane = new ChatWindowPanelReceiver(new String(person.getUserName()+":"+packdetails[3]), "tsdfhjskdf");
 			person.getWindow().chatconsole(MessagePane);
 		}
 		else if(packdetails[0].equals("S")) {
-			String fileP = FileTransfer.getFilePath(packdetails[3]);
+			//packdetails[3]=sendingPanelId
+			//packdetails[4]=fileheader
+			String fileP = FileTransfer.getFilePath(packdetails[4]);
 			Path filepath = Paths.get(fileP.trim());
-			
-			FileTransferPanel ftPane = new FileTransferPanel(person,filepath);
+			int sendPanelId = Integer.parseInt(packdetails[3]);
+			FileTransferPanel ftPane = new FileTransferPanel(person,filepath,sendPanelId);
 			person.getWindow().chatconsole(ftPane);
 		}
 		

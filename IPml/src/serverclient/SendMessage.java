@@ -13,7 +13,6 @@ public class SendMessage implements Runnable
 {
 	private Contact person = null;
 	private String Message = null;
-	private String threadnumber;
 	private Path filePath;
 	private String header;
 	private BlockingQueue<Character> q;
@@ -32,7 +31,7 @@ public class SendMessage implements Runnable
 	public void run()
 	{
 		Thread.currentThread().setName("SendMessage");
-		threadnumber=Long.toString(Thread.currentThread().getId());
+		String threadnumber=Long.toString(Thread.currentThread().getId());
 		q=new ArrayBlockingQueue<Character>(1);
 		MainStart.threadsync.put(threadnumber, q);
 		try
@@ -65,11 +64,13 @@ public class SendMessage implements Runnable
 					header = FileTransfer.getHeader(filePath);
 					
 					FileTransferPanelS ftPane = new FileTransferPanelS(filePath.getFileName().toString());
+					int x = ftPane.getIndex();
 					person.getWindow().chatconsole(ftPane);
+					MainStart.fileSendPanels.put(x, ftPane);
 					try
 					{
 						
-						person.sendFile(threadnumber+"|"+header, MainStart.myID);
+						person.sendFile(threadnumber+"|"+x+"|"+ header, MainStart.myID);
 						if(q.poll(500, TimeUnit.MILLISECONDS)==null)// Make this infinite maybe
 						{
 							ftPane.showMsg("No Confirmation Received");

@@ -12,6 +12,8 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.concurrent.BlockingQueue;
 
+import GuiElements.FileTransferPanelS;
+
 public class PacketSorterThread implements Runnable {
 	private BlockingQueue<DatagramPacket> bq;
 	private DatagramSocket socket;
@@ -113,7 +115,7 @@ public class PacketSorterThread implements Runnable {
 	        	{
 	        		for(int i=4;i<packdetails.length;i++)
 	        		{
-	        			packdetails[3]+=packdetails[i];
+	        			packdetails[3]+= "|"+packdetails[i];
 	        		}
 	        	}
 	        	ReceiveMessage RM = new ReceiveMessage(packdetails, address, t);
@@ -122,7 +124,8 @@ public class PacketSorterThread implements Runnable {
 	        else if(packdetails[0].equals("S"))// implies, SendFile  type packet
 	        {/*packdetails[1]=mac of person received from
 	           packdetails[2]=threadnumber of sending thread
-	           packdetails[3]=file header*/
+	           packdetails[3]=FileTransferPanelS index
+	           packdetails[4]=file header*/
 	        	Timestamp t =new Timestamp(new Date().getTime());
 	        	//Send Acknowledgment
 	        	String PString = new String("A|"+packdetails[2]);
@@ -140,10 +143,13 @@ public class PacketSorterThread implements Runnable {
 	        }
 	        else if(packdetails[0].equals("R"))// implies, Accepting File type packet
 	        {/*packdetails[1]=mac of person received from
-	           packdetails[2]=file path
+		       packdetails[2]=sendPanelId 
+	           packdetails[3]=file path
 	          */
-	        	
-	        	Client obj = new Client(address.getHostAddress(),6666,packdetails[2]);
+	        	int sendPId = Integer.parseInt(packdetails[2]);
+	        	FileTransferPanelS ftps = MainStart.fileSendPanels.get(sendPId);
+	        	ftps.onAcceptance();
+	        	Client obj = new Client(address.getHostAddress(),6666,packdetails[3]);
 					(new Thread(obj)).start();
 	        	
 	        }
