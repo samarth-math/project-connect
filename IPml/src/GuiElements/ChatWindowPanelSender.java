@@ -67,7 +67,7 @@ public class ChatWindowPanelSender extends JPanel{
 	//showMsg("message received"); //here is an example of how you should call it!	
 	//call this method on the panel when the acknowledgment is received 
 	
-	public void showMsg(String msg){ 
+	public void showDeliveryStatus(String msg){ 
 		
 		lbl_cnfrmMessage=new JLabel(msg);
 		lbl_cnfrmMessage.setBorder(null);

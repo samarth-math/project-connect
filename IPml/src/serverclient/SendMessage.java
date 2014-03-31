@@ -45,19 +45,19 @@ public class SendMessage implements Runnable
 					person.sendMessage(threadnumber+"|"+Message, MainStart.myID);
 					if(q.poll(500, TimeUnit.MILLISECONDS)==null)
 					{
-						MessagePane.showMsg("No Confirmation Received");
+						MessagePane.showDeliveryStatus("No Confirmation Received");
 						MainStart.threadsync.remove(threadnumber);
 					}
 					
 					else
 					{
-						MessagePane.showMsg("Message Delivered");
+						MessagePane.showDeliveryStatus("Message Delivered");
 						MainStart.threadsync.remove(threadnumber);
 					}
 				}
 				catch(InterruptedException e)
 				{
-					MessagePane.showMsg("Message Delivered");
+					MessagePane.showDeliveryStatus("Message Delivered");
 				}		
 			}
 				else {
