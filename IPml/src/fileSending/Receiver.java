@@ -89,7 +89,7 @@ public class Receiver {
 		
 		
 		// Creating the path where file will be saved
-		SaveAsPath = System.getProperty("user.dir") + File.separator ;
+		SaveAsPath = System.getProperty("user.dir") + File.separator ;// **************Location Chooser thing
 		System.out.println("Debugging inside Receiver.java SaveAsPath..." + SaveAsPath);
 		SaveAsPath = SaveAsPath + fileName.trim();
 		System.out.println("Debugging inside Receiver.java SaveAsPath..." + SaveAsPath);
