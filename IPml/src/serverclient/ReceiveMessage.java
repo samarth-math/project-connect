@@ -4,6 +4,7 @@ import globalfunctions.Contact;
 import globalfunctions.FileTransfer;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.net.InetAddress;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,7 +23,6 @@ public class ReceiveMessage implements Runnable
 	public ReceiveMessage(String [] packdetails, InetAddress ip, Timestamp t)
 	{
 		this.packdetails= packdetails;
-		//this.ip = ip;
 		this.t=t;
 	}
 	@Override
@@ -34,7 +34,7 @@ public class ReceiveMessage implements Runnable
 		Contact person = (Contact) MainStart.people.get(packdetails[1]);
 		if(packdetails[0].equals("M")) {
 			//packdetails[3]=message
-			ChatWindowPanelReceiver MessagePane = new ChatWindowPanelReceiver(new String(person.getUserName()+":"+packdetails[3]), "tsdfhjskdf");
+			ChatWindowPanelReceiver MessagePane = new ChatWindowPanelReceiver(new String(person.getUserName()+":"+packdetails[3]), new SimpleDateFormat("HH:mm:ss").format(t));
 			person.getWindow().chatconsole(MessagePane);
 		}
 		else if(packdetails[0].equals("S")) {

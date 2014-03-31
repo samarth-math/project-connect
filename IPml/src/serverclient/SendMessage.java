@@ -3,7 +3,11 @@ package serverclient;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.*;
+
 import GuiElements.ChatWindowPanelSender;
 import GuiElements.FileTransferPanelS;
 import globalfunctions.Contact;
@@ -37,7 +41,8 @@ public class SendMessage implements Runnable
 		try
 		{
 			if(Message!=null)  {
-				ChatWindowPanelSender MessagePane = new ChatWindowPanelSender(new String(MainStart.myUserName+":"+Message), "timestamp");
+				Timestamp t =new Timestamp(new Date().getTime());
+				ChatWindowPanelSender MessagePane = new ChatWindowPanelSender(new String(MainStart.myUserName+":"+Message), new SimpleDateFormat("HH:mm:ss").format(t));
 				person.getWindow().chatconsole(MessagePane);
 				try
 				{
