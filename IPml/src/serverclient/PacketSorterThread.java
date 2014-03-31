@@ -158,13 +158,14 @@ public class PacketSorterThread implements Runnable {
 			   packdetails[2]=sendPanelId 
 	         */
 	        	int sendPId = Integer.parseInt(packdetails[2]);
-	        	FileTransferPanelS ftps = MainStart.fileSendPanels.get(sendPId);
+	        	FileTransferPanelS ftps = MainStart.fileSendPanels.remove(sendPId);
 	        	ftps.onReject();
+	        	
 	        	
 	        }
 	        else if (packdetails[0].equals("A"))// Catching Acknowledgement
 	        {/*packdetails[1]=Thread Number */
-	        	BlockingQueue<Character> q = (BlockingQueue<Character>) MainStart.threadsync.get(packdetails[1]);
+	        	BlockingQueue<Character> q = (BlockingQueue<Character>) MainStart.threadsync.remove(packdetails[1]);
 	            q.add('y');
 		    }
 		}//end of try

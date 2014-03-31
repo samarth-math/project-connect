@@ -46,13 +46,11 @@ public class SendMessage implements Runnable
 					if(q.poll(500, TimeUnit.MILLISECONDS)==null)
 					{
 						MessagePane.showDeliveryStatus("No Confirmation Received");
-						MainStart.threadsync.remove(threadnumber);
 					}
 					
 					else
 					{
 						MessagePane.showDeliveryStatus("Message Delivered");
-						MainStart.threadsync.remove(threadnumber);
 					}
 				}
 				catch(InterruptedException e)
@@ -73,13 +71,13 @@ public class SendMessage implements Runnable
 						person.sendFile(threadnumber+"|"+x+"|"+ header, MainStart.myID);
 						if(q.poll(500, TimeUnit.MILLISECONDS)==null)// Make this infinite maybe
 						{
-							ftPane.showMsg("No Confirmation Received");
+							//ftPane.showDeliveryStatus("No Confirmation Received");
 							MainStart.threadsync.remove(threadnumber);
 						}
 						
 						else
 						{
-							ftPane.showMsg("Message Delivered");
+							//ftPane.showDeliveryStatus("Message Delivered");
 							MainStart.threadsync.remove(threadnumber);
 						}
 					}
