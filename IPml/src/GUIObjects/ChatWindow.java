@@ -25,7 +25,7 @@ import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 
-import serverclient.Mainstart;
+import serverclient.MainStart;
 import serverclient.SendMessage;
 
 import java.awt.event.ActionListener;
@@ -49,7 +49,7 @@ public class ChatWindow extends BasicWindow
 	
 	public ChatWindow(String id)
 	{
-		this.person=Mainstart.people.get(id);
+		this.person=MainStart.people.get(id);
 		setTitle("Chat with "+ person.getUserName());
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setSize(650,500);

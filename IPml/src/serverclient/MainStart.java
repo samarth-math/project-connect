@@ -15,7 +15,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import GUIObjects.AppWindow;
 
-public class Mainstart 
+public class MainStart 
 {
 	public static HashMap <String,BlockingQueue<Character>> threadsync = new HashMap <String, BlockingQueue<Character>> ();
 	public static HashMap <String,Contact> people = new HashMap <String,Contact> ();

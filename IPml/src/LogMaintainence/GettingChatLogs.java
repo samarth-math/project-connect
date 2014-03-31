@@ -9,7 +9,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import serverclient.Mainstart;
+import serverclient.MainStart;
 
 public class GettingChatLogs extends Object{
 	
@@ -18,11 +18,11 @@ public class GettingChatLogs extends Object{
 	{
 		String chatFileName = userId+".json";  // file name based on userId
 		
-		String myId = Mainstart.myid;    ///   <------- why is this giving null??
+		String myId = MainStart.myID;    ///   <------- why is this giving null??
 		
 		System.out.println(myId);
 		
-		Contact person = Mainstart.people.get(userId);         //person needed to get the correct chat window
+		Contact person = MainStart.people.get(userId);         //person needed to get the correct chat window
 		
 		
 		long sessionTraversalCount = 0;

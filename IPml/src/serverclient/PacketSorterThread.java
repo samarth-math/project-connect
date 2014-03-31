@@ -21,10 +21,10 @@ public class PacketSorterThread implements Runnable {
 	
 	PacketSorterThread(BlockingQueue<DatagramPacket> bq)
 	{
-		this.socket=Mainstart.socket;
+		this.socket=MainStart.socket;
 		this.bq = bq;
-        this.id=Mainstart.myID;
-        this.user = Mainstart.myUserName;
+        this.id=MainStart.myID;
+        this.user = MainStart.myUserName;
 		
 	}
 
@@ -67,12 +67,12 @@ public class PacketSorterThread implements Runnable {
 	        	//Save Packet
 	        	Contact person = new Contact(packdetails[2], packdetails[3], packdetails[4], packdetails[5], address, port);
 	        	//person.printall();
-	        	Contact person1 = Mainstart.people.get(packdetails[2]);
+	        	Contact person1 = MainStart.people.get(packdetails[2]);
 	        	if (person1==null)
 	        	{
-	        		Mainstart.people.put(packdetails[2], person);
-	        		if(Mainstart.mainWindow!=null)
-	        		Mainstart.mainWindow.addnewperson(Mainstart.people.get(packdetails[2]));
+	        		MainStart.people.put(packdetails[2], person);
+	        		if(MainStart.mainWindow!=null)
+	        		MainStart.mainWindow.addnewperson(MainStart.people.get(packdetails[2]));
 	        		
 	        	}
 	     
@@ -149,7 +149,7 @@ public class PacketSorterThread implements Runnable {
 	        }
 	        else if (packdetails[0].equals("A"))// Catching Acknowledgement
 	        {/*packdetails[1]=Thread Number */
-	        	BlockingQueue<Character> q = (BlockingQueue<Character>) Mainstart.threadsync.get(packdetails[1]);
+	        	BlockingQueue<Character> q = (BlockingQueue<Character>) MainStart.threadsync.get(packdetails[1]);
 	            q.add('y');
 		    }
 		}//end of try

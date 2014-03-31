@@ -14,7 +14,7 @@ public class ListenThread implements Runnable
 
     public ListenThread(BlockingQueue<DatagramPacket> Q)
     {
-    	this.socket=Mainstart.socket;
+    	this.socket=MainStart.socket;
     	this.Q=Q;
     }
 

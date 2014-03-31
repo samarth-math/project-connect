@@ -35,7 +35,7 @@ public class ReceiveMessage implements Runnable
         packdetails[2]=threadnumber of sending thread
         packdetails[3]=message/fileheader */
 		Thread.currentThread().setName("ReceiveMessageThread");
-		Contact person = (Contact) Mainstart.people.get(packdetails[1]);
+		Contact person = (Contact) MainStart.people.get(packdetails[1]);
 		if(packdetails[0].equals("M")) {
 			ChatWindowPanelReceiver MessagePane = new ChatWindowPanelReceiver(new String(person.getUserName()+":"+packdetails[3]), "tsdfhjskdf");
 			person.getWindow().chatconsole(MessagePane);

@@ -2,7 +2,7 @@ package globalfunctions;
 import java.io.IOException;
 import java.net.*;
 
-import serverclient.Mainstart;
+import serverclient.MainStart;
 import GUIObjects.ChatWindow;
 
 public class Contact {
@@ -61,7 +61,7 @@ public class Contact {
 			e1.printStackTrace();
 		}
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, ipall, 3333);
-		DatagramSocket socket = Mainstart.socket;
+		DatagramSocket socket = MainStart.socket;
    		try {
 			socket.send(packet);
 		} catch (IOException e) {
@@ -76,7 +76,7 @@ public class Contact {
 		buf = new String("M|"+senderid+"|"+Message).getBytes();
 		
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, ip, port);
-		DatagramSocket socket = Mainstart.socket;
+		DatagramSocket socket = MainStart.socket;
    		socket.send(packet);
 	}
 	
@@ -86,7 +86,7 @@ public class Contact {
 		buf = new String("S|"+senderid+"|"+header).getBytes();
 		System.out.println("Send File " + new String(buf,"UTF8"));
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, ip, port);
-		DatagramSocket socket = Mainstart.socket;
+		DatagramSocket socket = MainStart.socket;
    		socket.send(packet);
 	}
 	public void sendAcceptFile(String filePath, String senderid) throws SocketException, IOException
@@ -94,7 +94,7 @@ public class Contact {
 		byte[] buf = new byte[1024];
 		buf = new String("R|"+senderid+"|"+filePath).getBytes();
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, ip, port);
-		DatagramSocket socket = Mainstart.socket;
+		DatagramSocket socket = MainStart.socket;
    		socket.send(packet);
 	}
 	public String getId()

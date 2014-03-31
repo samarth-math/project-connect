@@ -14,7 +14,7 @@ import org.json.simple.parser.ParseException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import serverclient.Mainstart;
+import serverclient.MainStart;
 
 
 
@@ -25,7 +25,7 @@ public class ChatLogging
 	@SuppressWarnings("unchecked")
 	public void logCreate(String userId, String userName, String userMessage, String timeStamp)
 	{
-		String myId = Mainstart.myid;
+		String myId = MainStart.myID;
 		
 		File path = new File(System.getProperty("user.dir"));
 		File jsonFilePath = new File(path,""+userId+".json");

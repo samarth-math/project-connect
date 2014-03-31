@@ -18,18 +18,18 @@ public class ShoutThread implements Runnable
 	public ShoutThread(String ipadd1, String ipadd2)
 	{
 		// get a datagram socket
-		this.macadd=Mainstart.myID;
+		this.macadd=MainStart.myID;
 		this.ipadd1=ipadd1;
 		this.ipadd2=ipadd2;
-		this.user = Mainstart.myUserName;
-		this.socket= Mainstart.socket;
+		this.user = MainStart.myUserName;
+		this.socket= MainStart.socket;
 	}
 	public ShoutThread()
 	{
 		// get a datagram socket
-		this.socket = Mainstart.socket;
-		this.macadd=Mainstart.myID;
-		this.user = Mainstart.myUserName;;
+		this.socket = MainStart.socket;
+		this.macadd=MainStart.myID;
+		this.user = MainStart.myUserName;;
 	}
 
 	@Override

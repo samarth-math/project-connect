@@ -10,7 +10,7 @@ import GuiElements.ClickablePanel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import serverclient.Mainstart;
+import serverclient.MainStart;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -58,8 +58,8 @@ public class AppWindow extends BasicWindow
 		getContentPane().add(scrollPane, gbc_scrollPane);
 				
 		setVisible(true);
-		for (String key : Mainstart.people.keySet()) {
-			  Contact person = (Contact) Mainstart.people.get(key);
+		for (String key : MainStart.people.keySet()) {
+			  Contact person = (Contact) MainStart.people.get(key);
 			  box.add(new ClickablePanel(person));
 			}
 	}

@@ -34,26 +34,26 @@ public class SendMessage implements Runnable
 		Thread.currentThread().setName("SendMessage");
 		threadnumber=Long.toString(Thread.currentThread().getId());
 		q=new ArrayBlockingQueue<Character>(1);
-		Mainstart.threadsync.put(threadnumber, q);
+		MainStart.threadsync.put(threadnumber, q);
 		try
 		{
 			if(Message!=null)  {
-				ChatWindowPanelSender MessagePane = new ChatWindowPanelSender(new String(Mainstart.myUserName+":"+Message), "timestamp");
+				ChatWindowPanelSender MessagePane = new ChatWindowPanelSender(new String(MainStart.myUserName+":"+Message), "timestamp");
 				person.getWindow().chatconsole(MessagePane);
 				try
 				{
 					
-					person.sendMessage(threadnumber+"|"+Message, Mainstart.myID);
+					person.sendMessage(threadnumber+"|"+Message, MainStart.myID);
 					if(q.poll(500, TimeUnit.MILLISECONDS)==null)
 					{
 						MessagePane.showMsg("No Confirmation Received");
-						Mainstart.threadsync.remove(threadnumber);
+						MainStart.threadsync.remove(threadnumber);
 					}
 					
 					else
 					{
 						MessagePane.showMsg("Message Delivered");
-						Mainstart.threadsync.remove(threadnumber);
+						MainStart.threadsync.remove(threadnumber);
 					}
 				}
 				catch(InterruptedException e)
@@ -69,17 +69,17 @@ public class SendMessage implements Runnable
 					try
 					{
 						
-						person.sendFile(threadnumber+"|"+header, Mainstart.myID);
+						person.sendFile(threadnumber+"|"+header, MainStart.myID);
 						if(q.poll(500, TimeUnit.MILLISECONDS)==null)// Make this infinite maybe
 						{
 							ftPane.showMsg("No Confirmation Received");
-							Mainstart.threadsync.remove(threadnumber);
+							MainStart.threadsync.remove(threadnumber);
 						}
 						
 						else
 						{
 							ftPane.showMsg("Message Delivered");
-							Mainstart.threadsync.remove(threadnumber);
+							MainStart.threadsync.remove(threadnumber);
 						}
 					}
 					catch(InterruptedException e)

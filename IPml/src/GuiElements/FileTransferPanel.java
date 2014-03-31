@@ -22,7 +22,7 @@ import java.awt.Color;
 
 import javax.swing.border.TitledBorder;
 
-import serverclient.Mainstart;
+import serverclient.MainStart;
 
 import java.awt.Font;
 import java.awt.Dimension;
@@ -37,13 +37,15 @@ public class FileTransferPanel extends JPanel{
 	private static final long serialVersionUID = 1L;
 	private JButton btn_accept;
 	private JButton btn_reject;
+	private JButton btn_cancel;
+	private Thread serverThread;
 	
 	public FileTransferPanel(final Contact person, final Path filepath) {
 		
 		String filename = filepath.getFileName().toString();
 		//wrapper panel 
 		setMaximumSize(new Dimension(3000,80));
-		setPreferredSize(new Dimension(280,80));
+		setPreferredSize(new Dimension(500,80));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{320, 50,50};
 		gridBagLayout.rowHeights = new int[]{50};
@@ -66,9 +68,10 @@ public class FileTransferPanel extends JPanel{
 		btn_accept = new JButton("Accept");
 		btn_accept.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new Thread(new Server(6666)).start();// Starts server
+				serverThread = new Thread(new Server(6666));// Starts server
+				serverThread.start();
 				try {
-					person.sendAcceptFile(filepath.toString().trim(),Mainstart.myID);
+					person.sendAcceptFile(filepath.toString().trim(),MainStart.myID);
 					onAcceptUI(); //TEST: see if it works
 				} catch (SocketException exc) {
 					// Do stuff
@@ -101,18 +104,37 @@ public class FileTransferPanel extends JPanel{
 		btn_reject.setFont(new Font("DejaVu Sans", Font.PLAIN, 12));
 		add(btn_reject, gbc_btn_reject);
 		
-	}//constructor ends here
 	
-	boolean onAcceptUI(){
+	
+	//the cancel button
+			btn_cancel = new JButton("Cancel");
+			btn_cancel.setVisible(false);
+			btn_cancel.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					//
+					// The CODE FOR THE CANCEL BUTTON COMES HERE
+				}
+			});
+			GridBagConstraints gbc_btn_cancel = new GridBagConstraints();
+			gbc_btn_cancel.gridx = 2;
+			gbc_btn_cancel.gridy = 0;
+			btn_cancel.setBorder(new LineBorder(new Color(255, 0, 0), 2));
+			btn_cancel.setFont(new Font("DejaVu Sans", Font.PLAIN, 12));
+			add(btn_cancel, gbc_btn_cancel);
+			
+		}//constructor ends here
+	
+	void onAcceptUI(){
 		java.awt.EventQueue.invokeLater(new Runnable() {
 		    public void run() {
 		    	btn_accept.setVisible(false);
-				btn_reject.setText("Cancel"); //this changes the reject button to a cancel button
+		    	btn_reject.setVisible(false);
+				btn_cancel.setVisible(true);
 				revalidate();
 				repaint();
 		    }
 		} );
-		return true; //TODO: if ACCEPTED will return TRUE use it to change action of REJECT to CANCEL
+		//return true; //TODO: if ACCEPTED will return TRUE use it to change action of REJECT to CANCEL
 	}
 	void onRejectUI(){
 		java.awt.EventQueue.invokeLater(new Runnable() {
