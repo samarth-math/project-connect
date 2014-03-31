@@ -72,7 +72,7 @@ public class FileTransferPanel extends JPanel{
 				serverThread.start();
 				try {
 					person.sendAcceptFile(filepath.toString().trim(),MainStart.myID,sendPanelId);
-					onAcceptUI(); //TEST: see if it works
+					onAcceptUI();
 				} catch (SocketException exc) {
 					// Do stuff
 					
@@ -94,7 +94,15 @@ public class FileTransferPanel extends JPanel{
 		btn_reject = new JButton("Reject");
 		btn_reject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				onRejectUI();
+				try {
+					person.sendRejectFile(filepath.toString().trim(), MainStart.myID, sendPanelId);
+					onRejectUI();
+				} catch (SocketException exc) {
+					// Do stuff
+					
+				} catch (IOException exc) {
+					// Do stuff
+				}
 			}
 		});
 		GridBagConstraints gbc_btn_reject = new GridBagConstraints();

@@ -153,6 +153,15 @@ public class PacketSorterThread implements Runnable {
 					(new Thread(obj)).start();
 	        	
 	        }
+	        else if (packdetails[0].equals("N"))//Reject File type packet
+	        {/*packdetails[1]=mac of person received from
+			   packdetails[2]=sendPanelId 
+	         */
+	        	int sendPId = Integer.parseInt(packdetails[2]);
+	        	FileTransferPanelS ftps = MainStart.fileSendPanels.get(sendPId);
+	        	ftps.onReject();
+	        	
+	        }
 	        else if (packdetails[0].equals("A"))// Catching Acknowledgement
 	        {/*packdetails[1]=Thread Number */
 	        	BlockingQueue<Character> q = (BlockingQueue<Character>) MainStart.threadsync.get(packdetails[1]);

@@ -39,7 +39,7 @@ public class FileTransferPanelS extends JPanel{
 	private void createWindow()
 	{
 		setMaximumSize(new Dimension(3000,80));
-		setPreferredSize(new Dimension(280,80));
+		setPreferredSize(new Dimension(500,80));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{320, 50,50};
 		gridBagLayout.rowHeights = new int[]{50};
@@ -68,9 +68,16 @@ public class FileTransferPanelS extends JPanel{
 	}
 	
 	public void onAcceptance(){
-		setBackground(new Color(190,238,143));
+		setBackground(new Color(180,250,180));
 		getParent().revalidate();
 		getParent().repaint();
 		showMsg("sending...");
+	}
+	
+	public void onReject(){
+		setBackground(new Color(250,180,180));
+		getParent().revalidate();
+		getParent().repaint();
+		showMsg("File Transfer Rejected");
 	}
 }
