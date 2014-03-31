@@ -43,7 +43,7 @@ public class ClickablePanel extends JPanel{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount()==2)
-				person.StartChat();
+				person.startChat();
 			}
 		});
 
@@ -52,7 +52,7 @@ public class ClickablePanel extends JPanel{
 			//username labels 
 			this.username.setAlignmentX(Component.CENTER_ALIGNMENT);
 			this.username.setBounds(115, 12, 70, 26);
-			this.username.setText(person.getusername());
+			this.username.setText(person.getUserName());
 			this.add(username);
 			
 			//TODO user image labels

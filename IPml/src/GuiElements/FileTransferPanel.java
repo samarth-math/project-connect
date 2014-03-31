@@ -68,7 +68,7 @@ public class FileTransferPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				new Thread(new Server(6666)).start();// Starts server
 				try {
-					person.SendReceiveFile(filepath.toString().trim(),Mainstart.myid);
+					person.sendAcceptFile(filepath.toString().trim(),Mainstart.myID);
 					onAcceptUI(); //TEST: see if it works
 				} catch (SocketException exc) {
 					// Do stuff

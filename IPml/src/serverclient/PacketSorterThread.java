@@ -13,18 +13,18 @@ import java.util.Date;
 import java.util.concurrent.BlockingQueue;
 
 public class PacketSorterThread implements Runnable {
-	private BlockingQueue<DatagramPacket> BQ;
+	private BlockingQueue<DatagramPacket> bq;
 	private DatagramSocket socket;
     private String id;
     private String user;
     private byte[] buf;
 	
-	PacketSorterThread(BlockingQueue<DatagramPacket> BQ)
+	PacketSorterThread(BlockingQueue<DatagramPacket> bq)
 	{
 		this.socket=Mainstart.socket;
-		this.BQ = BQ;
-        this.id=Mainstart.myid;
-        this.user = Mainstart.myusername;
+		this.bq = bq;
+        this.id=Mainstart.myID;
+        this.user = Mainstart.myUserName;
 		
 	}
 
@@ -37,7 +37,7 @@ public class PacketSorterThread implements Runnable {
 		{
 			while (true) 
 			{
-				DatagramPacket p= BQ.take();
+				DatagramPacket p= bq.take();
 				PacketSort(p); 
 			}
 		}
@@ -109,6 +109,13 @@ public class PacketSorterThread implements Runnable {
 	            {
 	            	System.err.print("Network Problem : Unable to send packets!");
 	            }
+	        	if (packdetails.length>4)
+	        	{
+	        		for(int i=4;i<packdetails.length;i++)
+	        		{
+	        			packdetails[3]+=packdetails[i];
+	        		}
+	        	}
 	        	ReceiveMessage RM = new ReceiveMessage(packdetails, address, t);
 	        	new Thread(RM).start();
 	        }
@@ -131,7 +138,7 @@ public class PacketSorterThread implements Runnable {
 	        	ReceiveMessage RM = new ReceiveMessage(packdetails, address, t);
 	        	new Thread(RM).start();
 	        }
-	        else if(packdetails[0].equals("R"))// implies, Message type packet
+	        else if(packdetails[0].equals("R"))// implies, Accepting File type packet
 	        {/*packdetails[1]=mac of person received from
 	           packdetails[2]=file path
 	          */

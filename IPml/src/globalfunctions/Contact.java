@@ -42,7 +42,7 @@ public class Contact {
 	{
 		cw = null;
 	}
-	public void StartChat()
+	public void startChat()
 	{
 		this.cw = getWindow();
 		//setWindow(new ChatWindow(this));
@@ -70,7 +70,7 @@ public class Contact {
 		}
 		
 	}
-	public void SendMessage(String Message, String senderid) throws SocketException, IOException
+	public void sendMessage(String Message, String senderid) throws SocketException, IOException
 	{
 		byte[] buf = new byte[1024];
 		buf = new String("M|"+senderid+"|"+Message).getBytes();
@@ -80,7 +80,7 @@ public class Contact {
    		socket.send(packet);
 	}
 	
-	public void SendFile(String header, String senderid) throws SocketException, IOException
+	public void sendFile(String header, String senderid) throws SocketException, IOException
 	{
 		byte[] buf = new byte[1024];
 		buf = new String("S|"+senderid+"|"+header).getBytes();
@@ -89,7 +89,7 @@ public class Contact {
 		DatagramSocket socket = Mainstart.socket;
    		socket.send(packet);
 	}
-	public void SendReceiveFile(String filePath, String senderid) throws SocketException, IOException
+	public void sendAcceptFile(String filePath, String senderid) throws SocketException, IOException
 	{
 		byte[] buf = new byte[1024];
 		buf = new String("R|"+senderid+"|"+filePath).getBytes();
@@ -97,23 +97,23 @@ public class Contact {
 		DatagramSocket socket = Mainstart.socket;
    		socket.send(packet);
 	}
-	public String getid()
+	public String getId()
 	{
 		return mac;
 	}
-	public String getOSname()
+	public String getOSName()
 	{
 		return OS;
 	}
-	public String getHostname()
+	public String getHostName()
 	{
 		return Host;
 	}
-	public String getusername()
+	public String getUserName()
 	{
 		return username;
 	}
-	public InetAddress getip()
+	public InetAddress getIP()
 	{
 		return ip;
 	}

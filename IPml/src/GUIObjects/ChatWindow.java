@@ -50,7 +50,7 @@ public class ChatWindow extends BasicWindow
 	public ChatWindow(String id)
 	{
 		this.person=Mainstart.people.get(id);
-		setTitle("Chat with "+ person.getusername());
+		setTitle("Chat with "+ person.getUserName());
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setSize(650,500);
 		setLocationRelativeTo(null);

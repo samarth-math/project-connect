@@ -23,10 +23,10 @@ public class SendMessage implements Runnable
 		this.person=person;
 		this.filePath = filePath;	
 	}
-	public SendMessage(Contact person, String Message)
+	public SendMessage(Contact person, String message)
 	{
 		this.person=person;
-		this.Message= Message;	
+		this.Message= message;	
 	}
 	@Override
 	public void run()
@@ -38,12 +38,12 @@ public class SendMessage implements Runnable
 		try
 		{
 			if(Message!=null)  {
-				ChatWindowPanelSender MessagePane = new ChatWindowPanelSender(new String(Mainstart.myusername+":"+Message), "timestamp");
+				ChatWindowPanelSender MessagePane = new ChatWindowPanelSender(new String(Mainstart.myUserName+":"+Message), "timestamp");
 				person.getWindow().chatconsole(MessagePane);
 				try
 				{
 					
-					person.SendMessage(threadnumber+"|"+Message, Mainstart.myid);
+					person.sendMessage(threadnumber+"|"+Message, Mainstart.myID);
 					if(q.poll(500, TimeUnit.MILLISECONDS)==null)
 					{
 						MessagePane.showMsg("No Confirmation Received");
@@ -69,8 +69,8 @@ public class SendMessage implements Runnable
 					try
 					{
 						
-						person.SendFile(threadnumber+"|"+header, Mainstart.myid);
-						if(q.poll(500, TimeUnit.MILLISECONDS)==null)
+						person.sendFile(threadnumber+"|"+header, Mainstart.myID);
+						if(q.poll(500, TimeUnit.MILLISECONDS)==null)// Make this infinite maybe
 						{
 							ftPane.showMsg("No Confirmation Received");
 							Mainstart.threadsync.remove(threadnumber);
