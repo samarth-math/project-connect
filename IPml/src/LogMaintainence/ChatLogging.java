@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -18,87 +20,77 @@ import serverclient.MainStart;
 
 
 
-public class ChatLogging
+public class ChatLogging implements Runnable
 {
-	private int totalUsers;   
-
-	@SuppressWarnings("unchecked")
-	public void logCreate(String userId, String userName, String userMessage, String timeStamp)
+	private JSONObject mainObject, sessionObject, messageObject;
+	private JSONArray chatArray, groupUsers;
+	
+	private File path;
+	private File jsonFilePath;
+	private String fileName;
+	private String myId = MainStart.myID;
+	private int totalUsers;
+	
+	private BlockingQueue<String> bq;
+	public ChatLogging()         // BlockingQueue<String> bq as argument here 
 	{
-		String myId = MainStart.myID;
-		
-		File path = new File(System.getProperty("user.dir"));
-		File jsonFilePath = new File(path,""+userId+".json");
-		String fileName = userId+".json";
-		
-		//System.out.println(path);
-		//check file path
-		
-		if(jsonFilePath.exists())
+		this.bq = new ArrayBlockingQueue<String>(10);
+		try 
 		{
-			try 
-			{
-				JSONParser parser = new JSONParser();
-				Object obj = parser.parse(new FileReader(fileName));
-				
-				JSONObject mainObject = (JSONObject)obj;
-				
-				Long lastSessionValue = (Long)mainObject.get("lastUpdatedSession");
-				JSONObject sessionObject = (JSONObject) mainObject.get("session");
-				long lineCount = (long)mainObject.get("lineCount");
-				lineCount++;
-				
-				boolean sessionchange = false;
-				if(lineCount%5 == 0)
-				{
-					lastSessionValue++;
-					sessionchange = true;
-				}
-				
-				JSONObject messageObject = new JSONObject();
-				messageObject.put("timeStamp", timeStamp);
-				messageObject.put("userName", userName);
-				messageObject.put("messageText", userMessage);
-				if(userId != myId)
-					messageObject.put("userId", userId);
-				else
-					messageObject.put("userId", myId);
-				
-				JSONArray chatArray;
-				
-				if(!sessionchange)
-				{
-					chatArray = (JSONArray) sessionObject.get(lastSessionValue.toString());
-				}
-				else
-					 chatArray = new JSONArray();
-				
-				chatArray.add(messageObject);	
-				sessionObject.put(lastSessionValue.toString(), chatArray);
-				mainObject.put("lineCount", lineCount);
-				mainObject.put("lastUpdatedSession", lastSessionValue); 
+			bq.put("user1|y|z|w");
+			bq.put("user1|y|z|wjsf");
+			bq.put("user1|y|z|wsdkfjs");
+			bq.put("user1|y|z|wsdfhgs");
+			bq.put("user1|y|z|wsdufygsu");
+		} 
+		catch (InterruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
+	
+	
+	@SuppressWarnings("unchecked")
+	public void run() 
+	{
+		// TODO Auto-generated method stub
+		
+		String detailsArray[]=null;
+		
+		//   details =  0 userId  | 1  userName  | 2 timeStamp  | 3 messageText 
+		
+		try 
+		{
+			detailsArray = bq.take().split("\\|");
+		} 
+		catch (InterruptedException e1) 
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		if(detailsArray.length>4)
+		{
+			for(int i=4;i<detailsArray.length;i++)
+				detailsArray[3]+="|"+detailsArray[i];
 				
-				//Write Code to write the main object to file
-				jsonFilePath.createNewFile();
-				FileWriter jsonFileWriter = new FileWriter(jsonFilePath);				
-				jsonFileWriter.write(mainObject.toJSONString());
-				jsonFileWriter.flush();
-				jsonFileWriter.close();
-				
-			}
-			
-			catch (ParseException e) 
-			{
-				e.printStackTrace();
-			} 		
-			
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			} 
-		   }
-		else
+		}
+		
+		String userId = detailsArray[0];
+		String userName = detailsArray[1];
+		String timeStamp = detailsArray[2];
+		String messageText = detailsArray[3];
+		
+		path = new File(System.getProperty("user.dir"));
+		jsonFilePath = new File(path,""+userId+".json");
+		fileName = userId+".json";
+		
+		// this next code runs only for one time in beginning to create the file
+		//*********************************************************************************
+		
+		if(!jsonFilePath.exists())
 		{
 			try 
 			{
@@ -122,7 +114,8 @@ public class ChatLogging
 				JSONObject messageObject = new JSONObject();
 				messageObject.put("timeStamp", timeStamp);
 				messageObject.put("userName", userName);
-				messageObject.put("messageText", userMessage);
+				messageObject.put("messageText", messageText);
+				
 				if(userId != myId)
 					messageObject.put("userId", userId);
 				else
@@ -146,8 +139,111 @@ public class ChatLogging
 			{
 				e.printStackTrace();
 			}
+			
+		}
+		//************************************************************************************************
+		else
+		{
+			JSONParser parser = new JSONParser();
+			Object obj = null;
+			try 
+			{
+				obj = parser.parse(new FileReader(fileName));
+			} 
+			catch (IOException | ParseException e2)
+			{
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+		
+			mainObject = (JSONObject)obj;
+		
+			//System.out.println(obj);                   // print check
+			//System.out.println(mainObject);            // print check
+			
+			logCreate(userId, userName, messageText, timeStamp);
+		
+			writeLogToFile();
 		}
 	}
+	
+	
+	//-----------------------------------------------------------------------------------------------------------------
+	
+	
+	@SuppressWarnings("unchecked")
+	public void logCreate(String userId, String userName, String userMessage, String timeStamp)
+	{
+		Long lastSessionValue = (Long)mainObject.get("lastUpdatedSession");
+		sessionObject = (JSONObject) mainObject.get("session");
+		long lineCount = (long)mainObject.get("lineCount");
+		lineCount++;
+		
+		boolean sessionchange = false;
+		if(lineCount%5 == 0)
+		{
+			lastSessionValue++;
+			sessionchange = true;
+		}
+		
+		JSONObject messageObject = new JSONObject();
+		messageObject.put("timeStamp", timeStamp);
+		messageObject.put("userName", userName);
+		messageObject.put("messageText", userMessage);
+		if(userId != myId)
+			messageObject.put("userId", userId);
+		else
+			messageObject.put("userId", myId);
+		
+		//JSONArray chatArray;
+		
+		if(!sessionchange)
+		{
+			chatArray = (JSONArray) sessionObject.get(lastSessionValue.toString());
+		}
+		else
+			 chatArray = new JSONArray();
+		
+		chatArray.add(messageObject);	
+		sessionObject.put(lastSessionValue.toString(), chatArray);
+		mainObject.put("lineCount", lineCount);
+		mainObject.put("lastUpdatedSession", lastSessionValue);	
+	}
+	
+	
+	//----------------------------------------------------------------------------------------
+	
+	
+	public void writeLogToFile()
+	{
+		if(jsonFilePath.exists())
+		{
+			try 
+			{
+				//Write Code to write the main object to file
+				jsonFilePath.createNewFile();
+				FileWriter jsonFileWriter = new FileWriter(jsonFilePath);				
+				jsonFileWriter.write(mainObject.toJSONString());
+				jsonFileWriter.flush();
+				jsonFileWriter.close();
+				
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			} 
+		 }
+		else
+			System.out.println("File not found!");
+	}
+	
+	
+	
+	//------------------------------------------------------------------------------------------------------
+	
+	
+	
+	
 	public void clearLog(String userId)
 	{
 		
@@ -178,5 +274,8 @@ public class ChatLogging
 			System.out.println("file doesnt exist!\n");
 		}
 	}
+
+	
+	
 
 }
