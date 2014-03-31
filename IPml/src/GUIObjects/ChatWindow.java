@@ -76,11 +76,6 @@ public class ChatWindow extends BasicWindow
 		gbl_contentPane.rowWeights = new double[]{0, 1.0, 0};
 		contentPane.setLayout(gbl_contentPane);
 		
-		
-		/*history = new JTextArea();
-		history.setLineWrap(true);
-		history.setWrapStyleWord(true);
-		history.setEditable(false);*/
 		JScrollPane scroll1 = new JScrollPane(history);
 		scroll1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		GridBagConstraints scrollConstraints = new GridBagConstraints();
@@ -169,13 +164,6 @@ public class ChatWindow extends BasicWindow
 		setVisible(true);
 		txtMessage.requestFocusInWindow();
 	}
-	/*public void chatconsole(String M)//use this
-	{
-	
-		history.append(M+"\n\r");
-		history.setCaretPosition(history.getDocument().getLength());
-	}
-	*/
 	public void chatconsole(final JPanel M)
 	{
 		java.awt.EventQueue.invokeLater(new Runnable() {

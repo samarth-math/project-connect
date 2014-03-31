@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import javax.swing.border.MatteBorder;
 
 
 public class ChatWindowPanelReceiver extends JPanel{
@@ -23,11 +24,11 @@ public class ChatWindowPanelReceiver extends JPanel{
 	public ChatWindowPanelReceiver(String inputText, String timeStamp) {
 		
 		//panel properties 
-
+		
 		setMaximumSize(new Dimension(3000,70));
 		setPreferredSize(new Dimension(280,70));
-		setBackground(new Color(240, 128, 128));
-		setBorder(new LineBorder(Color.RED));
+		setBackground(Color.WHITE);
+		setBorder(new MatteBorder(0, 3, 0, 0, (Color) Color.RED));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.rowWeights = new double[]{2.0};
 		gridBagLayout.columnWeights = new double[]{2.0};
@@ -42,7 +43,7 @@ public class ChatWindowPanelReceiver extends JPanel{
 		
 		//add text-pane to panel
 		GridBagConstraints gbc_textpn_chatText = new GridBagConstraints();
-		gbc_textpn_chatText.insets = new Insets(0, 0, 5, 0);
+		gbc_textpn_chatText.insets = new Insets(0, 9, 5, 0);
 		gbc_textpn_chatText.fill = GridBagConstraints.BOTH;
 		gbc_textpn_chatText.gridx = 0;
 		gbc_textpn_chatText.gridy = 0;

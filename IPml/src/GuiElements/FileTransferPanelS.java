@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.border.MatteBorder;
 
 public class FileTransferPanelS extends JPanel{
 
@@ -44,7 +45,7 @@ public class FileTransferPanelS extends JPanel{
 		gridBagLayout.columnWidths = new int[]{320, 50,50};
 		gridBagLayout.rowHeights = new int[]{50};
 		setLayout(gridBagLayout);
-		setBorder(new LineBorder(new Color(255, 255, 0), 3));
+		setBorder(new MatteBorder(0, 3, 0, 0, (Color) Color.CYAN));
 		
 		//the filename label is here
 		lbl_fileName = new JLabel(filename);
