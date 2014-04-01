@@ -11,16 +11,17 @@ public class testLogMethods {
 		int i=0;
 		
 		String userId = "user1", userMessage , userName;
+		//int i=0;
 		
 		ChatLogging newLog = new ChatLogging("user1", "rajat");
-		new Thread(newLog).start();
+		//new Thread(newLog).start();
 		
 		
 		
-		/*
+		
 		GettingChatLogs oldChat = new GettingChatLogs();
 		
-		while(i<2)
+		/*while(i<2)
 		{
 			if(i%2==0)
 			{
@@ -33,9 +34,9 @@ public class testLogMethods {
 				  
 			newLog.logCreate(userId, userName, userMessage, time); 
 			i++;
-		}
+		}*/
 		oldChat.readLog(userId); 
 		
-	*/
+	
 	}
 }

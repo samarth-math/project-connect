@@ -143,10 +143,11 @@ public class ChatLogging implements Runnable
 	@SuppressWarnings("unchecked")
 	public void logCreate(String userId, String userName, String userMessage, String timeStamp)
 	{
-		System.out.println("Main object in logCreate :"+mainObject);
-		Integer lastSessionValue = (Integer)mainObject.get("lastUpdatedSession");
+		//System.out.println("Main object in logCreate :"+mainObject);
+		
+		long lastSessionValue = (long)mainObject.get("lastUpdatedSession");
 		JSONObject sessionObject = (JSONObject) mainObject.get("session");
-		int lineCount = (int)mainObject.get("lineCount");
+		long lineCount = (long)mainObject.get("lineCount");
 		lineCount++;
 		
 		boolean sessionchange = false;
@@ -169,13 +170,13 @@ public class ChatLogging implements Runnable
 		
 		if(!sessionchange)
 		{
-			chatArray = (JSONArray) sessionObject.get(lastSessionValue);//.toString());
+			chatArray = (JSONArray) sessionObject.get(""+lastSessionValue);
 		}
 		else
-			 chatArray = new JSONArray();
+			chatArray = new JSONArray();
 		
 		chatArray.add(messageObject);	
-		sessionObject.put(lastSessionValue.toString(), chatArray);
+		sessionObject.put(lastSessionValue, chatArray);
 		mainObject.put("lineCount", lineCount);
 		mainObject.put("lastUpdatedSession", lastSessionValue);	
 	}
@@ -183,12 +184,12 @@ public class ChatLogging implements Runnable
 	
 	public void writeLogToFile()
 	{
-		System.out.println("Main object writelogtofile :"+mainObject);
+		//System.out.println("Main object writelogtofile :"+mainObject);
 		try 
 		{
 			//Write Code to write the main object to file
 			jsonFilePath.createNewFile();
-			System.out.println(jsonFilePath);
+			//System.out.println(jsonFilePath);
 			FileWriter jsonFileWriter = new FileWriter(jsonFilePath);				
 			jsonFileWriter.write(mainObject.toJSONString());
 			jsonFileWriter.flush();
