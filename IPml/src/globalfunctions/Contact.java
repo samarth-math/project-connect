@@ -1,6 +1,9 @@
 package globalfunctions;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.*;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 import serverclient.MainStart;
 import GUIObjects.ChatWindow;
@@ -13,6 +16,7 @@ public class Contact {
 	private String Host;
 	private String username;
 	private ChatWindow cw=null;
+	private BlockingQueue<String> bq = null;
 	
 	public Contact(String mac, String OS, String Host, String username, InetAddress ip, int port)
 	{
@@ -29,14 +33,28 @@ public class Contact {
 		if(cw!=null)
 			return cw;
 		else
-		{java.awt.EventQueue.invokeLater(new Runnable() {
-		    public void run() {
-		    	cw = new ChatWindow(id);
-		    }
-		} );
+		{try {
+			java.awt.EventQueue.invokeAndWait(new Runnable() {
+			    public void run() {
+			    	cw = new ChatWindow(id);
+			    }
+			} );
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 			
 			return cw;
 		}
+	}
+	public void setNewBlockingQ()
+	{
+		bq=new ArrayBlockingQueue<String>(15);
+	}
+	public BlockingQueue<String> getBlockingQ()
+	{
+		return bq;
 	}
 	public void setWindowNull()
 	{

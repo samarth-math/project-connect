@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 
+import GUIObjects.ChatWindow;
 import GuiElements.ChatWindowPanelReceiver;
 import GuiElements.FileTransferPanel;
 
@@ -35,7 +36,9 @@ public class ReceiveMessage implements Runnable
 		if(packdetails[0].equals("M")) {
 			//packdetails[3]=message
 			ChatWindowPanelReceiver MessagePane = new ChatWindowPanelReceiver(new String(person.getUserName()+":"+packdetails[3]), new SimpleDateFormat("HH:mm:ss").format(t));
-			person.getWindow().chatconsole(MessagePane);
+			ChatWindow cw = person.getWindow();
+			cw.chatconsole(MessagePane);
+					
 		}
 		else if(packdetails[0].equals("S")) {
 			//packdetails[3]=sendingPanelId

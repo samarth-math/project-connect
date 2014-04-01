@@ -64,6 +64,13 @@ public class ChatWindow extends BasicWindow
 			  public void windowClosing(WindowEvent e) {
 				person.setWindowNull();
 			  }
+			  
+			  @Override
+			  public void windowOpened(WindowEvent e1){
+				  person.setNewBlockingQ();
+				  //Create Rajat's Method's Thread
+				  //Populate current Window with Rajat's read thread
+			  }
 			});
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
