@@ -16,7 +16,7 @@ import serverclient.MainStart;
 public class GettingChatLogs extends Object{
 	
 	@SuppressWarnings("unchecked")
-	public void readLog(String userId)
+	public static void readLog(String userId)
 	{
 		String chatFileName = userId+".json";  // file name based on userId
 		
@@ -54,7 +54,6 @@ public class GettingChatLogs extends Object{
 					//System.out.println(oldSessionObject);
 					//System.out.println(oldMessageArray);					// print check
 					Iterator<JSONObject> oldMessageIterator = oldMessageArray.iterator();
-					
 					
 					while (oldMessageIterator.hasNext()) 
 					{        

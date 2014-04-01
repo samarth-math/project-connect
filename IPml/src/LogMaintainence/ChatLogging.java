@@ -68,7 +68,7 @@ public class ChatLogging implements Runnable
 			mainObject.put("totalUsers", totalUsers);
 			mainObject.put("groupId", userId);
 			mainObject.put("groupName", userName);
-			mainObject.put("lineCount", 0);
+			mainObject.put("lineCount", 0l);
 			
 			JSONArray groupUsers = new JSONArray();
 			groupUsers.add(userId);
@@ -80,10 +80,10 @@ public class ChatLogging implements Runnable
 			JSONArray chatArray = new JSONArray();
 			
 			JSONObject sessionObject = new JSONObject();
-			sessionObject.put(1, chatArray);
+			sessionObject.put("1", chatArray);
 			
 			mainObject.put("session", sessionObject);
-			mainObject.put("lastUpdatedSession", 1);
+			mainObject.put("lastUpdatedSession", 1l);
 			System.out.println("Main object in the if file doesn't exist clause :"+mainObject);
 			
 		}

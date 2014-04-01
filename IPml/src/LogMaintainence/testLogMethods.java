@@ -13,13 +13,13 @@ public class testLogMethods {
 		String userId = "user1", userMessage , userName;
 		//int i=0;
 		
-		ChatLogging newLog = new ChatLogging("user1", "rajat");
+		//ChatLogging newLog = new ChatLogging("user1", "rajat");
 		//new Thread(newLog).start();
 		
 		
 		
 		
-		GettingChatLogs oldChat = new GettingChatLogs();
+		//GettingChatLogs oldChat = new GettingChatLogs();
 		
 		/*while(i<2)
 		{
@@ -35,8 +35,9 @@ public class testLogMethods {
 			newLog.logCreate(userId, userName, userMessage, time); 
 			i++;
 		}*/
-		oldChat.readLog(userId); 
+		//GettingChatLogs.readLog("78E400ACD134"); 
 		
+		GettingChatLogs.readLog("user1");
 	
 	}
 }
