@@ -11,7 +11,7 @@ public class Server implements Runnable{
 	
 	ServerSocket serverSocket = null;
 	Socket socket = null;
-	
+	FileTransferPanel ftp;
 	public Server(int portNumber, FileTransferPanel ftp) {
 		
 		try {
@@ -19,6 +19,7 @@ public class Server implements Runnable{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		this.ftp = ftp;
 	}
 	public void run() {
 		
@@ -28,7 +29,7 @@ public class Server implements Runnable{
 			System.out.println("Connection Accepted : " + socket);
 			
 			String SaveAs = "";
-			Receiver.receiveFile(socket,SaveAs);
+			Receiver.receiveFile(socket,SaveAs,ftp);
 			socket.close();
 			serverSocket.close();
 		}

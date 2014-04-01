@@ -7,11 +7,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
 
+import GuiElements.FileTransferPanel;
+
 public class Receiver {
 	
 	private static String[] rootPath;
-	
-	public static void receiveFile(Socket socket,String SaveAsPath) throws IOException {
+	private static String fileSeparator;
+	public static float i;
+	public static float max;
+
+	public static void receiveFile(Socket socket,String SaveAsPath,FileTransferPanel ftp) throws IOException {
 	    
 		/* File Header is of the format 
 		 * [f/d]*[file/directory Size]-[file/directory path][newline character]
@@ -26,6 +31,14 @@ public class Receiver {
 	    int newline = 10;
 	    int endOfStream = -1;
 		boolean entry = false; 
+	
+		
+		fileSeparator = File.separator;
+		
+		if(fileSeparator.equals("\\"))
+			fileSeparator = "[\\\\]";
+		else
+			fileSeparator = "/";
 		
 		InputStream is = socket.getInputStream();
 		while(true) {
@@ -75,7 +88,9 @@ public class Receiver {
 			entry=true;
 		}
 		else {
-			String f[] = filePath.split(File.separator);
+			
+			//String f[] = filePath.split("[\\\\]");
+			String f[] = filePath.split(fileSeparator);
 			fileName =  f[f.length-1];
 		}
 
@@ -118,8 +133,10 @@ public class Receiver {
 		int chunkSize=1024*1024; // chunkSize bytes are read in each step
 		long leftBytes = fileSize; // Number of bytes left to be written
 		
-		byte [] bytearray = new byte [chunkSize];
+		max = leftBytes;
 		
+		byte [] bytearray = new byte [chunkSize];
+		new SwingWorkerProgress(ftp);
 		do {
 			if(chunkSize>leftBytes) {
 				bytesRead = is.read(bytearray,0,(int)leftBytes);
@@ -129,9 +146,7 @@ public class Receiver {
 			}
 			bos.write(bytearray,0,(int)bytesRead);
 			leftBytes = leftBytes - bytesRead;
-			
-			//ju.setValue( (int) (( (fileSize-leftBytes)*1.0 )/fileSize)*100 );
-			
+			i = i + bytesRead;			
 		} while(currentTotal<=fileSize && bytesRead > 0);
 				
 		bos.flush();
@@ -143,12 +158,14 @@ public class Receiver {
 
 	private static void splitPath(String filePath) {
 		 //rootPath = filePath.split("[\\\\]");
-		 rootPath = filePath.split(File.separator);
+		 rootPath = filePath.split(fileSeparator);
 	}
 	
 	private static boolean checkPath (String filePath) {
 		System.out.println("Inside checkPath " + filePath);
-		String splitPath[] = filePath.split(File.separator);
+	
+		//String splitPath[] = filePath.split("[\\\\]");
+		String splitPath[] = filePath.split(fileSeparator);
 		if(rootPath.length==splitPath.length)
 			return true;
 		else
@@ -157,7 +174,7 @@ public class Receiver {
 	private static String relativePath(String filePath) {
 		
 		//String relativePath[] = filePath.split("[\\\\]");
-		String relativePath[] = filePath.split(File.separator);
+		String relativePath[] = filePath.split(fileSeparator);
 		String relativeLocation = "";
 		int index = rootPath.length-1;
 		while( (index < relativePath.length) ) {
@@ -166,5 +183,17 @@ public class Receiver {
 		}
 			return relativeLocation;
 	}
+
+private static boolean deleteRecursive(File path) {
+    if (path.isDirectory()) {
+        for (File file : path.listFiles()) {
+            if (!deleteRecursive(file))
+                return false;
+        }
+    }
+    return path.delete();
+ }
+
 }
-	
+
+
