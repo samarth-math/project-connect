@@ -159,7 +159,7 @@ public class ChatWindow extends BasicWindow
 		setVisible(true);
 		txtMessage.requestFocusInWindow();
 		
-		//btn_folder here
+		//btn_folder here for Baid!
 		JButton btn_Folder = new JButton("Folder");
 		GridBagConstraints gbc_btn_Folder = new GridBagConstraints();
 		gbc_btn_Folder.insets = new Insets(0, 0, 0, 5);
