@@ -22,7 +22,7 @@ public class GettingChatLogs extends Object{
 		
 		String myId = MainStart.myID;    ///   <------- why is this giving null??
 		
-		System.out.println(myId);
+		System.out.println(" 'myId' in GettingChatLogs :"+myId+"\n");      // print check
 		
 		Contact person = MainStart.people.get(userId);         //person needed to get the correct chat window
 		
@@ -37,7 +37,7 @@ public class GettingChatLogs extends Object{
 				      																	       //  printing out info
 				//System.out.println("groupId : "+logInfo.get("groupId"));                       // from the chat file
 				//System.out.println("groupName : "+logInfo.get("groupName"));                   //  being read
-				Long sessionValue = (Long)logInfo.get("lastUpdatedSession");
+				long sessionValue = (long)logInfo.get("lastUpdatedSession");
 				//System.out.println("totalUsers : "+logInfo.get("totalUsers"));
 				//System.out.println("users : ");
 				
@@ -62,20 +62,23 @@ public class GettingChatLogs extends Object{
 						if(messageObject.get("userId")==myId)
 						{
 							String s1 = new String(messageObject.get("userName")+": "+messageObject.get("messageText"));
-							ChatWindowPanelSender cwsp = new ChatWindowPanelSender(s1, messageObject.get("timeStamp").toString());
-							person.getWindow().chatconsole(cwsp);
+							//ChatWindowPanelSender cwsp = new ChatWindowPanelSender(s1, messageObject.get("timeStamp").toString());
+							//person.getWindow().chatconsole(cwsp);
 							
+							System.out.println(s1);             //print check
 							
 						}
 						else
 						{
 							String s1 = new String(messageObject.get("userName")+": "+messageObject.get("messageText"));
-							ChatWindowPanelReceiver cwrp = new ChatWindowPanelReceiver(s1, messageObject.get("timeStamp").toString());
-							person.getWindow().chatconsole(cwrp);
+							//ChatWindowPanelReceiver cwrp = new ChatWindowPanelReceiver(s1, messageObject.get("timeStamp").toString());
+							//person.getWindow().chatconsole(cwrp);
 
+							System.out.println(s1);             //print check
 						}
 					 
 					}
+					System.out.println();
 					sessionTraversalCount--;
 				}
 			
