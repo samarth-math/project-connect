@@ -4,18 +4,19 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import GuiElements.FileTransferPanel;
+
 
 public class Server implements Runnable{
 	
 	ServerSocket serverSocket = null;
 	Socket socket = null;
 	
-	public Server(int portNumber) {
+	public Server(int portNumber, FileTransferPanel ftp) {
 		
 		try {
 			this.serverSocket = new ServerSocket(portNumber);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

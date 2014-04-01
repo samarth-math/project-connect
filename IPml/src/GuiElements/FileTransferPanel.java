@@ -65,11 +65,12 @@ public class FileTransferPanel extends JPanel{
 		lbl_fileName.setFont(new Font("DejaVu Sans", Font.PLAIN, 12));
 		add(lbl_fileName, gbc_lbl_fileName);
 		
+		final FileTransferPanel ftp = this;
 		//the accept button
 		btn_accept = new JButton("Accept");
 		btn_accept.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				serverThread = new Thread(new Server(6666));// Starts server
+				serverThread = new Thread(new Server(6666, ftp));// Starts server
 				serverThread.start();
 				try {
 					person.sendAcceptFile(filepath.toString().trim(),MainStart.myID,sendPanelId);
