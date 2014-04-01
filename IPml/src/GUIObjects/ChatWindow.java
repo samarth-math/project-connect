@@ -22,6 +22,7 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 
@@ -146,6 +147,13 @@ public class ChatWindow extends BasicWindow
 		
 		btnFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				try {
+			        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			    }catch(Exception ex) {
+			        ex.printStackTrace();
+			    }
+				
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.setMultiSelectionEnabled(true);
 				fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
