@@ -40,8 +40,9 @@ public class SendMessage implements Runnable
 		MainStart.threadsync.put(threadnumber, q);
 		try
 		{
+			Timestamp t =new Timestamp(new Date().getTime());
 			if(Message!=null)  {
-				Timestamp t =new Timestamp(new Date().getTime());
+				
 				ChatWindowPanelSender MessagePane = new ChatWindowPanelSender(new String(MainStart.myUserName+":"+Message), new SimpleDateFormat("HH:mm:ss").format(t));
 				person.getWindow().chatconsole(MessagePane);
 				try
@@ -56,6 +57,7 @@ public class SendMessage implements Runnable
 					else
 					{
 						MessagePane.showDeliveryStatus("Message Delivered");
+						person.getBlockingQ().put(MainStart.myID+"|"+MainStart.myUserName+"|"+ new SimpleDateFormat("HH:mm:ss").format(t)+"|"+Message);
 					}
 				}
 				catch(InterruptedException e)
@@ -66,7 +68,7 @@ public class SendMessage implements Runnable
 				else {
 					header = FileTransfer.getHeader(filePath);
 					
-					FileTransferPanelS ftPane = new FileTransferPanelS(filePath.getFileName().toString());
+					FileTransferPanelS ftPane = new FileTransferPanelS(filePath.getFileName().toString(),new SimpleDateFormat("HH:mm:ss").format(t));
 					int x = ftPane.getIndex();
 					person.getWindow().chatconsole(ftPane);
 					MainStart.fileSendPanels.put(x, ftPane);

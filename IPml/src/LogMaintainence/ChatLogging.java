@@ -34,25 +34,13 @@ public class ChatLogging implements Runnable
 	private String userName;
 	
 	private BlockingQueue<String> bq;
-	public ChatLogging(String userId, String userName)         // BlockingQueue<String> bq as argument here 
+	public ChatLogging(String userId, String userName, BlockingQueue<String> bq) 
 	{
 		this.userId = userId;
 		this.userName = userName;
 		this.fileName = userId+".json";
-		this.bq = new ArrayBlockingQueue<String>(10);
-		try 
-		{
-			bq.put("user1|y|z|w");
-			bq.put("user1|y|z|wjsf");
-			bq.put("user1|y|z|wsdkfjs");
-			bq.put("user1|y|z|wsdfhgs");
-			bq.put("user1|y|z|wsdufygsu");
-			bq.put("CLOSE");
-		} 
-		catch (InterruptedException e)
-		{
-			e.printStackTrace();
-		}
+		this.bq = bq;
+	
 	}
 
 	

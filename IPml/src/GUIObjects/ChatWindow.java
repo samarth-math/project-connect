@@ -35,6 +35,9 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.ScrollPaneConstants;
 
+import LogMaintainence.ChatLogging;
+import LogMaintainence.GettingChatLogs;
+
 import java.awt.event.WindowAdapter;
 import java.io.File;
 import java.nio.file.Path;
@@ -64,13 +67,20 @@ public class ChatWindow extends BasicWindow
 			  @Override
 			  public void windowClosing(WindowEvent e) {
 				person.setWindowNull();
+				try {
+					person.getBlockingQ().put("CLOSE");
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
 			  }
 			  
 			  @Override
 			  public void windowOpened(WindowEvent e1){
 				  person.setNewBlockingQ();
-				  //Create Rajat's Method's Thread
+				  ChatLogging cl = new ChatLogging(person.getId(), person.getUserName(), person.getBlockingQ());
+				  new Thread(cl).start();
 				  //Populate current Window with Rajat's read thread
+				  GettingChatLogs.readLog(person.getId());
 			  }
 			});
 		contentPane = new JPanel();

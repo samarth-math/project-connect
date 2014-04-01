@@ -39,8 +39,6 @@ public class Contact {
 			cw = new ChatWindow(id);
 			return cw;
 		}
-			
-		
 	}
 	public void setNewBlockingQ()
 	{

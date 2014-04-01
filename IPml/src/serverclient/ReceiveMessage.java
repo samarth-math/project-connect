@@ -38,6 +38,11 @@ public class ReceiveMessage implements Runnable
 			ChatWindowPanelReceiver MessagePane = new ChatWindowPanelReceiver(new String(person.getUserName()+":"+packdetails[3]), new SimpleDateFormat("HH:mm:ss").format(t));
 			ChatWindow cw = person.getWindow();
 			cw.chatconsole(MessagePane);
+			try {
+				person.getBlockingQ().put(packdetails[1]+"|"+person.getUserName()+"|"+ new SimpleDateFormat("HH:mm:ss").format(t)+"|"+packdetails[3]);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 					
 		}
 		else if(packdetails[0].equals("S")) {
