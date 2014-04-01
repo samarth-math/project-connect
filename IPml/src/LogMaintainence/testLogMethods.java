@@ -13,8 +13,8 @@ public class testLogMethods {
 		String userId = "user1", userMessage , userName;
 		//int i=0;
 		
-		//ChatLogging newLog = new ChatLogging("user1", "rajat");
-		//new Thread(newLog).start();
+		ChatLogging newLog = new ChatLogging("user1", "rajat");
+		new Thread(newLog).start();
 		
 		
 		
