@@ -146,16 +146,21 @@ public class ChatWindow extends BasicWindow
 		
 		btnFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser fc = new JFileChooser();
-				int returnVal = fc.showOpenDialog(getParent());
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setMultiSelectionEnabled(true);
+				fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+				int returnVal = fileChooser.showOpenDialog(getParent());
 
 		        if (returnVal == JFileChooser.APPROVE_OPTION) {
-		            File file = fc.getSelectedFile();
-		            String fileP= file.getAbsolutePath();
-		            Path filePath = Paths.get(fileP);
-		            System.out.println("File Path " + filePath);
-		            SendMessage SM = new SendMessage(person, filePath);
-					new Thread(SM).start();
+		            File[] file = fileChooser.getSelectedFiles();
+		            for(File f : file) {
+		            	String fileP= f.getAbsolutePath();
+			            Path filePath = Paths.get(fileP);
+			            System.out.println("File Path " + filePath);
+			            SendMessage SM = new SendMessage(person, filePath);
+						new Thread(SM).start();
+		            }
+		            
 		        } else {
 /*************************** //What to do if the person closes the file chooser****/
 		        }
@@ -165,14 +170,6 @@ public class ChatWindow extends BasicWindow
 		
 		setVisible(true);
 		txtMessage.requestFocusInWindow();
-		
-		//btn_folder here for Baid!
-		JButton btn_Folder = new JButton("Folder");
-		GridBagConstraints gbc_btn_Folder = new GridBagConstraints();
-		gbc_btn_Folder.insets = new Insets(0, 0, 0, 5);
-		gbc_btn_Folder.gridx = 2;
-		gbc_btn_Folder.gridy = 2;
-		contentPane.add(btn_Folder, gbc_btn_Folder);
 		GridBagConstraints gbc_btnFile = new GridBagConstraints();
 		gbc_btnFile.insets = new Insets(0, 0, 0, 5);
 		gbc_btnFile.gridx = 3;

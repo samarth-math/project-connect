@@ -47,6 +47,7 @@ public class Client implements Runnable {
 		if( FileTransfer.isFile(filePath.toString()) )
 			sendFile(socket,filePath,os);
 		else{
+			System.out.println("Inside Client.java ... It's a folder");
 			sendFile(socket,filePath,os);
 			sendFolder(socket,filePath.toString(),os);
 		}
@@ -62,7 +63,7 @@ public class Client implements Runnable {
 		long fileSize= fSize;
 		int chunkSize = 1024*1024;
 
-		System.out.println("Inside Server.java... File Size is " + fileSize + " file Name " + fileName + "FIle path " + filePath.toString());
+		System.out.println("Inside Client.java... File Size is " + fileSize + " file Name " + fileName + "FIle path " + filePath.toString());
 		
 		boolean flag=false;
 		char pathType= ' ';
@@ -81,7 +82,7 @@ public class Client implements Runnable {
 				pathType = 'd';
 			}
 		}
-		System.out.println("Path type " + pathType);
+		System.out.println("Inside Client.java... Path type " + pathType);
 		
 		/* File Header is of the format 
 		 * [f/d]*[file/directory Size]-[file/directory path][newline character]
@@ -95,8 +96,8 @@ public class Client implements Runnable {
 		// Creation of file header
 		fileHeader = header.getBytes("UTF-8");
 		
-		for(int i=0;i<fileHeader.length;i++)
-			System.out.print("" + (char) fileHeader[i]);
+		//for(int i=0;i<fileHeader.length;i++)
+			//System.out.print("" + (char) fileHeader[i]);
 		
 		
 		if(pathType=='d') {
@@ -130,7 +131,7 @@ public class Client implements Runnable {
 	
 		os.flush();
 		bufferedinput.close();
-		os.close();
+		//don't close the outputstream here
 		
 		System.out.println("File Transfer Complete...");
 	}
