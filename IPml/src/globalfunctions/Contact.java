@@ -5,6 +5,8 @@ import java.net.*;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
+import javax.swing.SwingUtilities;
+
 import serverclient.MainStart;
 import GUIObjects.ChatWindow;
 
@@ -33,20 +35,12 @@ public class Contact {
 		if(cw!=null)
 			return cw;
 		else
-		{try {
-			java.awt.EventQueue.invokeAndWait(new Runnable() {
-			    public void run() {
-			    	cw = new ChatWindow(id);
-			    }
-			} );
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-			
+		{
+			cw = new ChatWindow(id);
 			return cw;
 		}
+			
+		
 	}
 	public void setNewBlockingQ()
 	{
