@@ -9,6 +9,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import GuiElements.ChatWindowPanelReceiver;
+import GuiElements.ChatWindowPanelSender;
 import serverclient.MainStart;
 
 public class GettingChatLogs extends Object{
@@ -59,12 +61,17 @@ public class GettingChatLogs extends Object{
 						JSONObject messageObject = (JSONObject)oldMessageIterator.next();
 						if(messageObject.get("userId")==myId)
 						{
-							System.out.println("           "+messageObject.get("userName")+" <"+messageObject.get("timeStamp")+"> : "+messageObject.get("messageText"));
+							String s1 = new String(messageObject.get("userName")+": "+messageObject.get("messageText"));
+							ChatWindowPanelSender cwsp = new ChatWindowPanelSender(s1, messageObject.get("timeStamp").toString());
+							person.getWindow().chatconsole(cwsp);
+							
 							
 						}
 						else
 						{
-							System.out.println(""+messageObject.get("userName")+" <"+messageObject.get("timeStamp")+"> : "+messageObject.get("messageText"));
+							String s1 = new String(messageObject.get("userName")+": "+messageObject.get("messageText"));
+							ChatWindowPanelReceiver cwrp = new ChatWindowPanelReceiver(s1, messageObject.get("timeStamp").toString());
+							person.getWindow().chatconsole(cwrp);
 
 						}
 					 

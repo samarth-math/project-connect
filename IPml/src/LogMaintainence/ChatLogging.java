@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -22,18 +23,22 @@ import serverclient.MainStart;
 
 public class ChatLogging implements Runnable
 {
-	private JSONObject mainObject, sessionObject, messageObject;
-	private JSONArray chatArray, groupUsers;
+	private JSONObject mainObject;
 	
 	private File path;
 	private File jsonFilePath;
 	private String fileName;
 	private String myId = MainStart.myID;
 	private int totalUsers;
+	private String userId;
+	private String userName;
 	
 	private BlockingQueue<String> bq;
-	public ChatLogging()         // BlockingQueue<String> bq as argument here 
+	public ChatLogging(String userId, String userName)         // BlockingQueue<String> bq as argument here 
 	{
+		this.userId = userId;
+		this.userName = userName;
+		this.fileName = userId+".json";
 		this.bq = new ArrayBlockingQueue<String>(10);
 		try 
 		{
@@ -42,107 +47,47 @@ public class ChatLogging implements Runnable
 			bq.put("user1|y|z|wsdkfjs");
 			bq.put("user1|y|z|wsdfhgs");
 			bq.put("user1|y|z|wsdufygsu");
+			bq.put("CLOSE");
 		} 
 		catch (InterruptedException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	
-	
 	@SuppressWarnings("unchecked")
 	public void run() 
 	{
-		// TODO Auto-generated method stub
-		
-		String detailsArray[]=null;
-		
-		//   details =  0 userId  | 1  userName  | 2 timeStamp  | 3 messageText 
-		
-		try 
-		{
-			detailsArray = bq.take().split("\\|");
-		} 
-		catch (InterruptedException e1) 
-		{
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		if(detailsArray.length>4)
-		{
-			for(int i=4;i<detailsArray.length;i++)
-				detailsArray[3]+="|"+detailsArray[i];
-				
-		}
-		
-		String userId = detailsArray[0];
-		String userName = detailsArray[1];
-		String timeStamp = detailsArray[2];
-		String messageText = detailsArray[3];
-		
 		path = new File(System.getProperty("user.dir"));
-		jsonFilePath = new File(path,""+userId+".json");
-		fileName = userId+".json";
-		
-		// this next code runs only for one time in beginning to create the file
-		//*********************************************************************************
+		jsonFilePath = new File(path,fileName);
 		
 		if(!jsonFilePath.exists())
 		{
-			try 
-			{
-				jsonFilePath.createNewFile();
-				FileWriter jsonFileWriter = new FileWriter(jsonFilePath);
-				
-				JSONObject mainObject = new JSONObject();
-				mainObject.put("totalUsers", totalUsers);
-				mainObject.put("lastUpdatedSession", 0);
-				mainObject.put("groupId", userId);
-				mainObject.put("groupName", userName);
-				mainObject.put("lineCount", 1);
-				
-				JSONArray groupUsers = new JSONArray();
-				groupUsers.add(userId);
-				//groupUsers.add("rajat");
-				//groupUsers.add("shasuck");
-				//groupUsers.add("baid");
-				mainObject.put("users", groupUsers);
-				
-				JSONObject messageObject = new JSONObject();
-				messageObject.put("timeStamp", timeStamp);
-				messageObject.put("userName", userName);
-				messageObject.put("messageText", messageText);
-				
-				if(userId != myId)
-					messageObject.put("userId", userId);
-				else
-					messageObject.put("userId", myId);
-				
-				JSONArray chatArray = new JSONArray();
-				chatArray.add(messageObject);
-				
-				JSONObject sessionObject = new JSONObject();
-				sessionObject.put(1, chatArray);
-				
-				mainObject.put("session", sessionObject);
-				mainObject.put("lastUpdatedSession", 1);
-				
-				jsonFileWriter.write(mainObject.toJSONString());
-				jsonFileWriter.flush();
-				jsonFileWriter.close();
-				
-			}
-			catch (IOException e) 
-			{
-				e.printStackTrace();
-			}
+			mainObject = new JSONObject();
+			mainObject.put("totalUsers", totalUsers);
+			mainObject.put("groupId", userId);
+			mainObject.put("groupName", userName);
+			mainObject.put("lineCount", 0);
+			
+			JSONArray groupUsers = new JSONArray();
+			groupUsers.add(userId);
+			//groupUsers.add("rajat");
+			//groupUsers.add("shasuck");
+			//groupUsers.add("baid");
+			mainObject.put("users", groupUsers);
+					
+			JSONArray chatArray = new JSONArray();
+			
+			JSONObject sessionObject = new JSONObject();
+			sessionObject.put(1, chatArray);
+			
+			mainObject.put("session", sessionObject);
+			mainObject.put("lastUpdatedSession", 1);
+			System.out.println("Main object in the if file doesn't exist clause :"+mainObject);
 			
 		}
-		//************************************************************************************************
-		else
+		else//if file exists
 		{
 			JSONParser parser = new JSONParser();
 			Object obj = null;
@@ -152,31 +97,56 @@ public class ChatLogging implements Runnable
 			} 
 			catch (IOException | ParseException e2)
 			{
-				// TODO Auto-generated catch block
 				e2.printStackTrace();
 			}
 		
 			mainObject = (JSONObject)obj;
-		
-			//System.out.println(obj);                   // print check
-			//System.out.println(mainObject);            // print check
-			
-			logCreate(userId, userName, messageText, timeStamp);
-		
-			writeLogToFile();
 		}
+		
+		boolean on = true;
+		while(on)
+		{
+			String qElement=null;
+			String detailsArray[] = null;
+			for(int i=0;i<15;i++)
+			{
+				try {
+					qElement = bq.poll(1000, TimeUnit.MILLISECONDS);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				
+				if( qElement!=null && !qElement.isEmpty())
+				{
+					if(!qElement.equals("CLOSE"))
+					{
+						detailsArray = qElement.split("\\|");//details[0]=userId  [1]=userName [2]=timeStamp [3]=messageText
+						if(detailsArray.length>4)
+						{
+							for(int j=4;j<detailsArray.length;j++)//Concatenating message with pipes into one place
+								detailsArray[3]+="|"+detailsArray[j];
+						}
+						logCreate(detailsArray[0], detailsArray[1], detailsArray[3], detailsArray[2]);
+					}
+					else
+					{
+						on=false;
+						break;
+					}
+				}
+			}
+			writeLogToFile();
+		}	
 	}
-	
-	
-	//-----------------------------------------------------------------------------------------------------------------
-	
+		
 	
 	@SuppressWarnings("unchecked")
 	public void logCreate(String userId, String userName, String userMessage, String timeStamp)
 	{
-		Long lastSessionValue = (Long)mainObject.get("lastUpdatedSession");
-		sessionObject = (JSONObject) mainObject.get("session");
-		long lineCount = (long)mainObject.get("lineCount");
+		System.out.println("Main object in logCreate :"+mainObject);
+		Integer lastSessionValue = (Integer)mainObject.get("lastUpdatedSession");
+		JSONObject sessionObject = (JSONObject) mainObject.get("session");
+		int lineCount = (int)mainObject.get("lineCount");
 		lineCount++;
 		
 		boolean sessionchange = false;
@@ -195,11 +165,11 @@ public class ChatLogging implements Runnable
 		else
 			messageObject.put("userId", myId);
 		
-		//JSONArray chatArray;
+		JSONArray chatArray;
 		
 		if(!sessionchange)
 		{
-			chatArray = (JSONArray) sessionObject.get(lastSessionValue.toString());
+			chatArray = (JSONArray) sessionObject.get(lastSessionValue);//.toString());
 		}
 		else
 			 chatArray = new JSONArray();
@@ -209,40 +179,26 @@ public class ChatLogging implements Runnable
 		mainObject.put("lineCount", lineCount);
 		mainObject.put("lastUpdatedSession", lastSessionValue);	
 	}
-	
-	
-	//----------------------------------------------------------------------------------------
-	
+		
 	
 	public void writeLogToFile()
 	{
-		if(jsonFilePath.exists())
+		System.out.println("Main object writelogtofile :"+mainObject);
+		try 
 		{
-			try 
-			{
-				//Write Code to write the main object to file
-				jsonFilePath.createNewFile();
-				FileWriter jsonFileWriter = new FileWriter(jsonFilePath);				
-				jsonFileWriter.write(mainObject.toJSONString());
-				jsonFileWriter.flush();
-				jsonFileWriter.close();
-				
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			} 
-		 }
-		else
-			System.out.println("File not found!");
+			//Write Code to write the main object to file
+			jsonFilePath.createNewFile();
+			System.out.println(jsonFilePath);
+			FileWriter jsonFileWriter = new FileWriter(jsonFilePath);				
+			jsonFileWriter.write(mainObject.toJSONString());
+			jsonFileWriter.flush();
+			jsonFileWriter.close();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		} 
 	}
-	
-	
-	
-	//------------------------------------------------------------------------------------------------------
-	
-	
-	
 	
 	public void clearLog(String userId)
 	{
@@ -250,9 +206,6 @@ public class ChatLogging implements Runnable
 		File path = new File(System.getProperty("user.dir"));
 		File jsonFilePath = new File(path,""+userId+".json");
 		String fileName = userId+".json";
-		
-		//System.out.println(path);
-		//check file path
 		
 		if(jsonFilePath.exists())
 		{
