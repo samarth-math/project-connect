@@ -19,7 +19,7 @@ public class FileTransferPanelS extends JPanel{
 	private static int totalNum;
 	private int index;
 	private String filename;
-	//wrapper panel 
+	//wrapper panel boy 
 	
 	private JLabel lbl_fileName;
 	private TitledBorder t = new TitledBorder(new LineBorder(new Color(192, 192, 192)), null,TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(128, 128, 128));
