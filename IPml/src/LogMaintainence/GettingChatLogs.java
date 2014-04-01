@@ -19,7 +19,9 @@ public class GettingChatLogs extends Object{
 	public static void readLog(String userId)
 	{
 		String chatFileName = userId+".json";  // file name based on userId
-		
+		File path = new File(System.getProperty("user.dir"));
+		File chatFilePath = new File(path,chatFileName);
+
 		String myId = MainStart.myID;    ///   <------- why is this giving null??
 		
 		System.out.println(" 'myId' in GettingChatLogs :"+myId+"\n");      // print check
@@ -30,7 +32,9 @@ public class GettingChatLogs extends Object{
 		long sessionTraversalCount = 0;
 		JSONParser parser = new JSONParser();
 		 
-		try {
+		if(chatFilePath.exists())
+		{
+			try {
 				Object obj = parser.parse(new FileReader(chatFileName));
 				JSONObject logInfo = (JSONObject)obj;	
 				
@@ -81,21 +85,25 @@ public class GettingChatLogs extends Object{
 					sessionTraversalCount--;
 				}
 			
+				}
+		
+				catch (FileNotFoundException e) 
+				{
+					e.printStackTrace();
+				} 
+				catch (IOException e)
+				{
+					e.printStackTrace();
+				} 
+				catch (ParseException e) 
+				{
+					e.printStackTrace();
+				}	
 			}
-		
-			catch (FileNotFoundException e) 
-			{
-				e.printStackTrace();
-			} 
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			} 
-			catch (ParseException e) 
-			{
-				e.printStackTrace();
-			}	
-		
+		else
+		{
+			System.out.println("No chats exist\n");
+		}
 	}
 
 }
