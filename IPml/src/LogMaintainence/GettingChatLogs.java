@@ -18,7 +18,7 @@ public class GettingChatLogs extends Object{
 	@SuppressWarnings("unchecked")
 	public static void readLog(String userId)
 	{
-		String chatFileName = userId+".json";  // file name based on userId
+		String chatFileName = userId+".json";                     // file name based on userId
 		File path = new File(System.getProperty("user.dir"));
 		File chatFilePath = new File(path,chatFileName);
 
@@ -33,9 +33,7 @@ public class GettingChatLogs extends Object{
 		{
 			try {
 				Object obj = parser.parse(new FileReader(chatFileName));
-				JSONObject logInfo = (JSONObject)obj;	
-				
-				      																	       //  printing out info
+				JSONObject logInfo = (JSONObject)obj;											 //  printing out info
 				//System.out.println("groupId : "+logInfo.get("groupId"));                       // from the chat file
 				//System.out.println("groupName : "+logInfo.get("groupName"));                   //  being read
 				long sessionValue = (long)logInfo.get("lastUpdatedSession");
@@ -49,8 +47,7 @@ public class GettingChatLogs extends Object{
 				int i=1;
 				while(i<=sessionTraversalCount)
 				{
-					System.out.println("session : "+i);
-					
+					//System.out.println("session : "+i);
 					oldMessageArray = (JSONArray)oldSessionObject.get(""+i);
 					//System.out.println(oldSessionObject);
 					//System.out.println(oldMessageArray);					// print check
