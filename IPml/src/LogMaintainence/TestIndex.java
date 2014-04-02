@@ -4,10 +4,11 @@ public class TestIndex {
 
 	public static void main(String args[])
 	{ 
-		chatFileIndex ind = new chatFileIndex();
-		ind.createGroupEntry("foobar");
-		ind.displayAllGroupChatFiles();
-		ind.getGroups(); 
+		System.out.println("In    :TestIndex.java  \nUsing :static methods of chatFileIndex.java\n\n");
+		
+		//chatFileIndex.createGroupEntry("foobar");
+		chatFileIndex.displayAllGroupChatFiles();
+		System.out.print("Hash Map containing all groups :\n"+ chatFileIndex.getGroups()); 
 	}
 }
   

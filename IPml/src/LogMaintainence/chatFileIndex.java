@@ -86,6 +86,7 @@ public class chatFileIndex {
 					JSONObject name = (JSONObject) gid.get(1);
 					System.out.println(id.get("groupId")+" --> "+name.get("groupName"));        
 			}	
+			System.out.println();
 		}
 		catch (ParseException e) 
 		{
