@@ -1,14 +1,9 @@
 package LogMaintainence;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
@@ -16,8 +11,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
-import serverclient.MainStart;
 
 
 
@@ -28,7 +21,6 @@ public class ChatLogging implements Runnable
 	private File path;
 	private File jsonFilePath;
 	private String fileName;
-	private String myId = MainStart.myID;
 	private int totalUsers;
 	private String userId;
 	private String userName;
@@ -130,8 +122,6 @@ public class ChatLogging implements Runnable
 	@SuppressWarnings("unchecked")
 	public void logCreate(String userId, String userName, String userMessage, String timeStamp)
 	{
-		//System.out.println("Main object in logCreate :"+mainObject);
-		
 		long lastSessionValue = (long)mainObject.get("lastUpdatedSession");
 		JSONObject sessionObject = (JSONObject) mainObject.get("session");
 		long lineCount = (long)mainObject.get("lineCount");
@@ -169,12 +159,10 @@ public class ChatLogging implements Runnable
 	
 	public void writeLogToFile()
 	{
-		//System.out.println("Main object writelogtofile :"+mainObject);
 		try 
 		{
 			//Write Code to write the main object to file
 			jsonFilePath.createNewFile();
-			//System.out.println(jsonFilePath);
 			FileWriter jsonFileWriter = new FileWriter(jsonFilePath);				
 			jsonFileWriter.write(mainObject.toJSONString());
 			jsonFileWriter.flush();
@@ -213,8 +201,4 @@ public class ChatLogging implements Runnable
 			System.out.println("file doesnt exist!\n");
 		}
 	}
-
-	
-	
-
 }
