@@ -49,12 +49,12 @@ public class GettingChatLogs extends Object{
 				
 				JSONObject oldSessionObject = (JSONObject)logInfo.get("session");
 				JSONArray oldMessageArray;
-				
-				while(sessionTraversalCount > 0)
+				int i=1;
+				while(i<=sessionTraversalCount)
 				{
-					System.out.println("session : "+sessionTraversalCount);
+					System.out.println("session : "+i);
 					
-					oldMessageArray = (JSONArray)oldSessionObject.get(""+sessionTraversalCount);
+					oldMessageArray = (JSONArray)oldSessionObject.get(""+i);
 					//System.out.println(oldSessionObject);
 					//System.out.println(oldMessageArray);					// print check
 					Iterator<JSONObject> oldMessageIterator = oldMessageArray.iterator();
@@ -82,7 +82,7 @@ public class GettingChatLogs extends Object{
 					 
 					}
 					System.out.println();
-					sessionTraversalCount--;
+					i++;
 				}
 			
 				}
