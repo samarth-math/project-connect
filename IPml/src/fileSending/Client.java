@@ -62,11 +62,13 @@ public class Client implements Runnable {
 	public void sendFile(Socket socket,Path filePath, OutputStream os) throws IOException {
 		
 		String fileName = filePath.getFileName().toString().trim();
-		long fSize =  Files.size(filePath);
+		File f = new File(fileName);
+		long fSize = f.length();
+		//long fSize =  Files.size(filePath);
 		long fileSize= fSize;
 		int chunkSize = 1024*1024;
 
-		System.out.println("Inside Client.java (sendFile Method) File Size is " + fileSize + " file Name " + fileName + "FIle path " + filePath.toString()+"*");
+		System.out.println("Inside Client.java (sendFile Method) File Size is " + fileSize + " file Name " + fileName + "FIle path " + fileName+"*");
 		
 		boolean flag=false;
 		char pathType= ' ';

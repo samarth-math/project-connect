@@ -32,14 +32,6 @@ public class Receiver {
 	    int endOfStream = -1;
 		boolean entry = false; 
 	
-		
-		fileSeparator = File.separator;
-		
-		if(fileSeparator.equals("\\"))
-			fileSeparator = "[\\\\]";
-		else
-			fileSeparator = "[/]";
-		System.out.println("Inside Receiver.java.. File Separator is " + fileSeparator);
 		InputStream is = socket.getInputStream();
 		while(true) {
 			
@@ -82,6 +74,16 @@ public class Receiver {
 		if(current==endOfStream)
 			break;
 		
+		for(int i=0;i<filePath.length();i++) {
+			if(filePath.charAt(i)=='\\') {
+				fileSeparator = "[\\\\]";
+				break;
+			}
+			if(filePath.charAt(i)=='/') {
+				fileSeparator = "[/]";
+				break;
+			}
+		}
 		if(entry==false) {
 			splitPath(filePath);
 			fileName = rootPath[rootPath.length-1].trim();
@@ -157,14 +159,11 @@ public class Receiver {
 	}
 
 	private static void splitPath(String filePath) {
-		 //rootPath = filePath.split("[\\\\]");
 		 rootPath = filePath.split(fileSeparator);
 	}
 	
 	private static boolean checkPath (String filePath) {
-		System.out.println("Inside checkPath " + filePath);
-	
-		//String splitPath[] = filePath.split("[\\\\]");
+			
 		String splitPath[] = filePath.split(fileSeparator);
 		if(rootPath.length==splitPath.length)
 			return true;
@@ -172,8 +171,7 @@ public class Receiver {
 			return false;
 	}
 	private static String relativePath(String filePath) {
-		
-		//String relativePath[] = filePath.split("[\\\\]");
+
 		String relativePath[] = filePath.split(fileSeparator);
 		String relativeLocation = "";
 		int index = rootPath.length-1;
