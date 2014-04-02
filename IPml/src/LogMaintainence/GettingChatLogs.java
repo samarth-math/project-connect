@@ -18,13 +18,16 @@ public class GettingChatLogs extends Object{
 	@SuppressWarnings("unchecked")
 	public static void readLog(String userId)
 	{
-		String chatFileName = userId+".json";                     // file name based on userId
-		File path = new File(System.getProperty("user.dir"));
-		File chatFilePath = new File(path,chatFileName);
+		String chatFileName = userId+".json";             // file name based on userId
+		
+		String oldPathString = System.getProperty("user.dir");
+		String newPathString = oldPathString+"/chatlogs";
+		
+		File newPath = new File(newPathString);
+		File chatFilePath = new File(newPath,chatFileName);
 
 		String myId = MainStart.myID;		
 		Contact person = MainStart.people.get(userId);         //person needed to get the correct chat window
-		
 		
 		long sessionTraversalCount = 0;
 		JSONParser parser = new JSONParser();
@@ -32,13 +35,10 @@ public class GettingChatLogs extends Object{
 		if(chatFilePath.exists())
 		{
 			try {
-				Object obj = parser.parse(new FileReader(chatFileName));
-				JSONObject logInfo = (JSONObject)obj;											 //  printing out info
-				//System.out.println("groupId : "+logInfo.get("groupId"));                       // from the chat file
-				//System.out.println("groupName : "+logInfo.get("groupName"));                   //  being read
+				Object obj = parser.parse(new FileReader(chatFilePath));
+				JSONObject logInfo = (JSONObject)obj;											 
+				               
 				long sessionValue = (long)logInfo.get("lastUpdatedSession");
-				//System.out.println("totalUsers : "+logInfo.get("totalUsers"));
-				//System.out.println("users : ");
 				
 				sessionTraversalCount = sessionValue;
 				
@@ -48,11 +48,10 @@ public class GettingChatLogs extends Object{
 				while(i<=sessionTraversalCount)
 				{
 					//System.out.println("session : "+i);
-					oldMessageArray = (JSONArray)oldSessionObject.get(""+i);
-					//System.out.println(oldSessionObject);
-					//System.out.println(oldMessageArray);					// print check
-					Iterator<JSONObject> oldMessageIterator = oldMessageArray.iterator();
 					
+					oldMessageArray = (JSONArray)oldSessionObject.get(""+i);
+					
+					Iterator<JSONObject> oldMessageIterator = oldMessageArray.iterator();
 					while (oldMessageIterator.hasNext()) 
 					{        
 						JSONObject messageObject = (JSONObject)oldMessageIterator.next();
@@ -62,8 +61,6 @@ public class GettingChatLogs extends Object{
 							ChatWindowPanelSender cwsp = new ChatWindowPanelSender(s1, messageObject.get("timeStamp").toString());
 							person.getWindow().chatconsole(cwsp);
 							
-							//System.out.println(s1);             //print check
-							
 						}
 						else
 						{
@@ -71,7 +68,6 @@ public class GettingChatLogs extends Object{
 							ChatWindowPanelReceiver cwrp = new ChatWindowPanelReceiver(s1, messageObject.get("timeStamp").toString());
 							person.getWindow().chatconsole(cwrp);
 
-							//System.out.println(s1);             //print check
 						}
 					 
 					}

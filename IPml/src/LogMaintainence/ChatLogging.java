@@ -39,10 +39,15 @@ public class ChatLogging implements Runnable
 	@SuppressWarnings("unchecked")
 	public void run() 
 	{
-		path = new File(System.getProperty("user.dir"));
-		jsonFilePath = new File(path,fileName);
+		String oldPathString = System.getProperty("user.dir");
+		String newPathString = oldPathString+"/chatlogs";
 		
-		if(!jsonFilePath.exists())
+		File newPath = new File(newPathString);
+		newPath.mkdirs();
+		
+		jsonFilePath = new File(newPath,fileName);
+		
+		if(!jsonFilePath.exists())    // if file doesn't exist
 		{
 			mainObject = new JSONObject();
 			mainObject.put("totalUsers", totalUsers);
@@ -66,13 +71,13 @@ public class ChatLogging implements Runnable
 			mainObject.put("lastUpdatedSession", 1l);
 			
 		}
-		else//if file exists
+		else    //if file exists
 		{
 			JSONParser parser = new JSONParser();
 			Object obj = null;
 			try 
 			{
-				obj = parser.parse(new FileReader(fileName));
+				obj = parser.parse(new FileReader(jsonFilePath));
 			} 
 			catch (IOException | ParseException e2)
 			{
@@ -102,7 +107,7 @@ public class ChatLogging implements Runnable
 						detailsArray = qElement.split("\\|");    //details[0]=userId  [1]=userName [2]=timeStamp [3]=messageText
 						if(detailsArray.length>4)
 						{
-							for(int j=4;j<detailsArray.length;j++)   //Concatenating message with pipes into one place
+							for(int j=4;j<detailsArray.length;j++)     //Concatenating message with pipes into one place
 								detailsArray[3]+="|"+detailsArray[j];
 						}
 						logCreate(detailsArray[0], detailsArray[1], detailsArray[3], detailsArray[2]);
@@ -144,7 +149,6 @@ public class ChatLogging implements Runnable
 		
 		if(!sessionchange)
 		{
-			//System.out.println("Last session value" + lastSessionValue);   // print check
 			chatArray = (JSONArray) sessionObject.get(""+lastSessionValue);
 		}
 		else
@@ -161,7 +165,8 @@ public class ChatLogging implements Runnable
 	{
 		try 
 		{
-			//Write Code to write the main object to file
+			/*  Write Code to write the main object to file   */
+			
 			jsonFilePath.createNewFile();
 			FileWriter jsonFileWriter = new FileWriter(jsonFilePath);				
 			jsonFileWriter.write(mainObject.toJSONString());
