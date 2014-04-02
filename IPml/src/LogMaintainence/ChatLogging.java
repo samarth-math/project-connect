@@ -99,10 +99,10 @@ public class ChatLogging implements Runnable
 				{
 					if(!qElement.equals("CLOSE"))
 					{
-						detailsArray = qElement.split("\\|");//details[0]=userId  [1]=userName [2]=timeStamp [3]=messageText
+						detailsArray = qElement.split("\\|");    //details[0]=userId  [1]=userName [2]=timeStamp [3]=messageText
 						if(detailsArray.length>4)
 						{
-							for(int j=4;j<detailsArray.length;j++)//Concatenating message with pipes into one place
+							for(int j=4;j<detailsArray.length;j++)   //Concatenating message with pipes into one place
 								detailsArray[3]+="|"+detailsArray[j];
 						}
 						logCreate(detailsArray[0], detailsArray[1], detailsArray[3], detailsArray[2]);
@@ -144,7 +144,7 @@ public class ChatLogging implements Runnable
 		
 		if(!sessionchange)
 		{
-			System.out.println("Last session value" + lastSessionValue);
+			//System.out.println("Last session value" + lastSessionValue);   // print check
 			chatArray = (JSONArray) sessionObject.get(""+lastSessionValue);
 		}
 		else
