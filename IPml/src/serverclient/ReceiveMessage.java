@@ -2,14 +2,11 @@ package serverclient;
 
 import globalfunctions.Contact;
 import globalfunctions.FileTransfer;
-
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.net.InetAddress;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-
 import GUIObjects.ChatWindow;
 import GuiElements.ChatWindowPanelReceiver;
 import GuiElements.FileTransferPanel;
@@ -18,7 +15,7 @@ public class ReceiveMessage implements Runnable
 {
 	String packdetails[] = null;
 	//InetAddress ip = null;
-	HashMap <String, Contact> people = null;
+	//HashMap <String, Contact> people = null;
 	Timestamp t = null;
 	
 	public ReceiveMessage(String [] packdetails, InetAddress ip, Timestamp t)

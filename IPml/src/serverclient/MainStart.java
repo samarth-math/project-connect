@@ -6,15 +6,14 @@
 
 package serverclient;
 import globalfunctions.Contact;
+import java.net.ServerSocket;
 import globalfunctions.IpAddress;
-
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.HashMap;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-
 import GUIObjects.AppWindow;
 import GuiElements.FileTransferPanelS;
 
@@ -28,7 +27,7 @@ public class MainStart
 	public static BlockingQueue<DatagramPacket> Q;
 	public static AppWindow mainWindow;
 	public static HashMap <Integer, FileTransferPanelS> fileSendPanels = new HashMap <Integer, FileTransferPanelS>();
-	
+	public static ServerSocket ftpsocket;
 	public static void main(String[] args)
     {
 		
@@ -56,7 +55,7 @@ public class MainStart
 			ShoutThread S = new ShoutThread();//"172.22.30.19", "172.22.30.21");
 			ListenThread L =  new ListenThread(Q);
 						
-			new Thread (PS).start();
+			new Thread(PS).start();
 			new Thread(L).start();
 			new Thread(S).start();
 		
