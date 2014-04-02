@@ -72,7 +72,6 @@ public class ChatLogging implements Runnable
 			
 			mainObject.put("session", sessionObject);
 			mainObject.put("lastUpdatedSession", 1l);
-			System.out.println("Main object in the if file doesn't exist clause :"+mainObject);
 			
 		}
 		else//if file exists
@@ -149,22 +148,20 @@ public class ChatLogging implements Runnable
 		messageObject.put("timeStamp", timeStamp);
 		messageObject.put("userName", userName);
 		messageObject.put("messageText", userMessage);
-		if(userId != myId)
-			messageObject.put("userId", userId);
-		else
-			messageObject.put("userId", myId);
+		messageObject.put("userId", userId);
 		
 		JSONArray chatArray;
 		
 		if(!sessionchange)
 		{
+			System.out.println("Last session value" + lastSessionValue);
 			chatArray = (JSONArray) sessionObject.get(""+lastSessionValue);
 		}
 		else
 			chatArray = new JSONArray();
 		
 		chatArray.add(messageObject);	
-		sessionObject.put(lastSessionValue, chatArray);
+		sessionObject.put(""+lastSessionValue, chatArray);
 		mainObject.put("lineCount", lineCount);
 		mainObject.put("lastUpdatedSession", lastSessionValue);	
 	}
