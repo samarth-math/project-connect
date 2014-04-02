@@ -73,15 +73,6 @@ public class ChatWindow extends BasicWindow
 					e1.printStackTrace();
 				}
 			  }
-			  
-			  @Override
-			  public void windowOpened(WindowEvent e1){
-				  person.setNewBlockingQ();
-				  ChatLogging cl = new ChatLogging(person.getId(), person.getUserName(), person.getBlockingQ());
-				  new Thread(cl).start();
-				  //Populate current Window with Rajat's read thread
-				  GettingChatLogs.readLog(person.getId());
-			  }
 			});
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

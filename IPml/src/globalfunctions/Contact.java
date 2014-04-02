@@ -9,6 +9,8 @@ import javax.swing.SwingUtilities;
 
 import serverclient.MainStart;
 import GUIObjects.ChatWindow;
+import LogMaintainence.ChatLogging;
+import LogMaintainence.GettingChatLogs;
 
 public class Contact {
 	private InetAddress ip;
@@ -36,7 +38,13 @@ public class Contact {
 			return cw;
 		else
 		{
-			cw = new ChatWindow(id);								
+			cw = new ChatWindow(id);
+			GettingChatLogs.readLog(id);
+			setNewBlockingQ();			
+			ChatLogging cl = new ChatLogging(id, username, bq);
+			new Thread(cl).start();
+			  //Populate current Window with Rajat's read thread
+			
 			return cw;
 		}
 	}
