@@ -68,18 +68,35 @@ public class ChatWindowPanelSender extends JPanel{
 	//showMsg("message received"); //here is an example of how you should call it!	
 	//call this method on the panel when the acknowledgment is received 
 	
-	public void showDeliveryStatus(String msg){ 
+	public void showDeliveryStatus(boolean s){ 
 		
-		lbl_cnfrmMessage=new JLabel(msg);
-		lbl_cnfrmMessage.setBorder(null);
-		lbl_cnfrmMessage.setBackground(Color.WHITE);
-		lbl_cnfrmMessage.setFont(new Font("Ubuntu Light", Font.PLAIN, 10));
-		GridBagConstraints gbc_lbl_cnfrmMessage = new GridBagConstraints();
-		gbc_lbl_cnfrmMessage.anchor = GridBagConstraints.SOUTHEAST;
-		gbc_lbl_cnfrmMessage.gridx = 0;
-		gbc_lbl_cnfrmMessage.gridy = 2;
-		add(lbl_cnfrmMessage, gbc_lbl_cnfrmMessage);//another useless comment
-		validate();
-		
+		if(s)
+		{
+			lbl_cnfrmMessage=new JLabel("Message Delivered");
+			lbl_cnfrmMessage.setBorder(null);
+			lbl_cnfrmMessage.setForeground(Color.GREEN);
+			//lbl_cnfrmMessage.setOpaque(true);
+			lbl_cnfrmMessage.setFont(new Font("Ubuntu Light", Font.PLAIN, 10));
+			GridBagConstraints gbc_lbl_cnfrmMessage = new GridBagConstraints();
+			gbc_lbl_cnfrmMessage.anchor = GridBagConstraints.SOUTHEAST;
+			gbc_lbl_cnfrmMessage.gridx = 0;
+			gbc_lbl_cnfrmMessage.gridy = 2;
+			add(lbl_cnfrmMessage, gbc_lbl_cnfrmMessage);
+			revalidate();
+		}
+		else
+		{
+			lbl_cnfrmMessage=new JLabel("No Confirmation Received");
+			lbl_cnfrmMessage.setBorder(null);
+			lbl_cnfrmMessage.setForeground(Color.RED);
+			//lbl_cnfrmMessage.setOpaque(true);
+			lbl_cnfrmMessage.setFont(new Font("Ubuntu Light", Font.PLAIN, 10));
+			GridBagConstraints gbc_lbl_cnfrmMessage = new GridBagConstraints();
+			gbc_lbl_cnfrmMessage.anchor = GridBagConstraints.SOUTHEAST;
+			gbc_lbl_cnfrmMessage.gridx = 0;
+			gbc_lbl_cnfrmMessage.gridy = 2;
+			add(lbl_cnfrmMessage, gbc_lbl_cnfrmMessage);
+			revalidate();
+		}
 	}
 }

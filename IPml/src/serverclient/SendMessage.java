@@ -51,18 +51,18 @@ public class SendMessage implements Runnable
 					person.sendMessage(threadnumber+"|"+Message, MainStart.myID);
 					if(q.poll(500, TimeUnit.MILLISECONDS)==null)
 					{
-						MessagePane.showDeliveryStatus("No Confirmation Received");
+						MessagePane.showDeliveryStatus(false);
 					}
 					
 					else
 					{
-						MessagePane.showDeliveryStatus("Message Delivered");
+						MessagePane.showDeliveryStatus(true);
 						person.getBlockingQ().put(MainStart.myID+"|"+MainStart.myUserName+"|"+ new SimpleDateFormat("HH:mm:ss").format(t)+"|"+Message);
 					}
 				}
 				catch(InterruptedException e)
 				{
-					MessagePane.showDeliveryStatus("Message Delivered");
+					MessagePane.showDeliveryStatus(true);
 				}		
 			}
 				else {

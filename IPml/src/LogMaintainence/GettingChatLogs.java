@@ -22,10 +22,7 @@ public class GettingChatLogs extends Object{
 		File path = new File(System.getProperty("user.dir"));
 		File chatFilePath = new File(path,chatFileName);
 
-		String myId = MainStart.myID;    ///   <------- why is this giving null??
-		
-		System.out.println(" 'myId' in GettingChatLogs :"+myId+"\n");      // print check
-		
+		String myId = MainStart.myID;		
 		Contact person = MainStart.people.get(userId);         //person needed to get the correct chat window
 		
 		
