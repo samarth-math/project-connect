@@ -36,7 +36,28 @@ public class Contact {
 			return cw;
 		else
 		{
-			cw = new ChatWindow(id);
+				Thread cwin = new Thread( new Runnable() {
+					@Override
+					public void run() {
+						try {
+							SwingUtilities.invokeAndWait(new Runnable(){
+								@Override
+								public void run() {
+									cw = new ChatWindow(id);								
+								}
+							});
+						} catch (InvocationTargetException e) {
+							e.printStackTrace();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+
+					}
+				
+				});
+				cwin.start();
+			
+			
 			return cw;
 		}
 	}
