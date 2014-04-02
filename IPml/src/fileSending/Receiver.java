@@ -38,8 +38,8 @@ public class Receiver {
 		if(fileSeparator.equals("\\"))
 			fileSeparator = "[\\\\]";
 		else
-			fileSeparator = "/";
-		
+			fileSeparator = "[/]";
+		System.out.println("Inside Receiver.java.. File Separator is " + fileSeparator);
 		InputStream is = socket.getInputStream();
 		while(true) {
 			
@@ -55,7 +55,7 @@ public class Receiver {
 		// do while loop is used to extract the file header		
 		int current=0; // current represents number of byte read in each step
 		boolean flag = false; // flag will be set when '-' is encountered which is the separator in file header
-
+		System.out.println("Inside receiver.java");
 		char pathType = ' ';
 		do {
 			current = is.read(header);

@@ -32,7 +32,7 @@ public class SwingWorkerProgress {
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
                 */
-                System.out.println("Safely working...");
+               
                 ftp.add(new TestPane());
                 ftp.revalidate();
                 

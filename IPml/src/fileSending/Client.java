@@ -21,14 +21,14 @@ public class Client implements Runnable {
 	public Client(String ip, int pNumber, String filePath) {
 	 this.ipAddress = ip;
 	 this.portNumber = pNumber;
-	 this.filePath = filePath;
+	 this.filePath = filePath.trim();
  }
  
 	public void run() {
 		
 		try {
 			
-			System.out.println("Initiating connection... " + ipAddress + " " + portNumber);
+			System.out.println("Inside Client.java->Initiating connection... " + ipAddress + " " + portNumber);
 			Socket socket = new Socket(ipAddress,portNumber);
 			System.out.println("Socket is "  + socket);		
 			OutputStream os=  socket.getOutputStream();
@@ -44,9 +44,12 @@ public class Client implements Runnable {
 	}
 	
 	public void send(Socket socket,Path filePath, OutputStream os) throws IOException {
-		if( FileTransfer.isFile(filePath.toString()) )
+		if( FileTransfer.isFile(filePath.toString()) ) {
 			sendFile(socket,filePath,os);
-		else{
+			System.out.println("Inside Client.java ... It's a file");
+		}
+			
+		else if( FileTransfer.isDirectory(filePath.toString()) ){
 			System.out.println("Inside Client.java ... It's a folder");
 			sendFile(socket,filePath,os);
 			sendFolder(socket,filePath.toString(),os);
@@ -58,12 +61,12 @@ public class Client implements Runnable {
 
 	public void sendFile(Socket socket,Path filePath, OutputStream os) throws IOException {
 		
-		String fileName = filePath.getFileName().toString();
+		String fileName = filePath.getFileName().toString().trim();
 		long fSize =  Files.size(filePath);
 		long fileSize= fSize;
 		int chunkSize = 1024*1024;
 
-		System.out.println("Inside Client.java... File Size is " + fileSize + " file Name " + fileName + "FIle path " + filePath.toString());
+		System.out.println("Inside Client.java (sendFile Method) File Size is " + fileSize + " file Name " + fileName + "FIle path " + filePath.toString()+"*");
 		
 		boolean flag=false;
 		char pathType= ' ';

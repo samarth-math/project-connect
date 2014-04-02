@@ -46,7 +46,7 @@ public class TestPane extends JPanel {
                             SwingWorker.StateValue state = (SwingWorker.StateValue) evt.getNewValue();
                             switch (state) {
                                 case DONE:
-                                    start.setEnabled(true);
+                                	pbProgress.setVisible(false);
                                     break;
                             }
                         }
