@@ -17,10 +17,11 @@ public class Server implements Runnable{
 	private ServerSocket serverSocket;
 	private String[] rootPath;
 	private String fileSeparator;
+	private String SaveAsPath;
 	public float i;
 	public float max;
 	private FileTransferPanel ftp;
-	public Server(int portNumber, FileTransferPanel ftp) {
+	public Server(int portNumber, FileTransferPanel ftp,String SaveAsPath) {
 		if(MainStart.ftpsocket==null)
 		{
 			try {
@@ -31,6 +32,7 @@ public class Server implements Runnable{
 		}
 		serverSocket = MainStart.ftpsocket;
 		this.ftp = ftp;
+		this.SaveAsPath = SaveAsPath;
 	}
 	public void run() {
 		
@@ -41,8 +43,7 @@ public class Server implements Runnable{
 			
 			socket1 = serverSocket.accept();
 			System.out.println("Connection Accepted : socket" + socket1);
-			String SaveAs1 = "";
-			receiveFile(socket1,SaveAs1,ftp);
+			receiveFile(socket1,SaveAsPath,ftp);
 			socket1.close();
 						
 			//serverSocket.close();
@@ -147,11 +148,6 @@ public void receiveFile(Socket socket,String SaveAsPath,FileTransferPanel ftp) t
 			fileName = relativePath(filePath) ;
 		}
 		
-		
-		// Creating the path where file will be saved
-		SaveAsPath = System.getProperty("user.dir") + File.separator ;// **************Location Chooser thing
-		System.out.println("Debugging inside Receiver.java SaveAsPath..." + SaveAsPath);
-		SaveAsPath = SaveAsPath + fileName.trim();
 		System.out.println("Debugging inside Receiver.java SaveAsPath..." + SaveAsPath);
 		
 		File file = new File(SaveAsPath) ;

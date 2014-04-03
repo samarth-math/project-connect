@@ -6,6 +6,8 @@ package GuiElements;
 import fileSending.Server;
 import globalfunctions.Contact;
 
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.GridBagLayout;
@@ -28,9 +30,11 @@ import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.io.IOException;
 import java.net.SocketException;
 import java.nio.file.Path;
+
 import javax.swing.border.MatteBorder;
 
 public class FileTransferPanel extends JPanel{
@@ -41,9 +45,9 @@ public class FileTransferPanel extends JPanel{
 	private JButton btn_cancel;
 	private Thread serverThread;
 	
-	public FileTransferPanel(final Contact person, final Path filepath, final int sendPanelId) {
+	public FileTransferPanel(final Contact person, final String filepath, final int sendPanelId) {
 		
-		String filename = filepath.getFileName().toString();
+		final String filename = fileName(filepath);
 		//wrapper panel 
 		setMaximumSize(new Dimension(3000,80));
 		setPreferredSize(new Dimension(500,80));
@@ -70,7 +74,25 @@ public class FileTransferPanel extends JPanel{
 		btn_accept = new JButton("Accept");
 		btn_accept.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				serverThread = new Thread(new Server(6666, ftp));// Starts server
+				
+				
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setVisible(true);
+				fileChooser.setDialogTitle("Select a location to save the file");
+				fileChooser.setSelectedFile(new File(filename));
+				int returnVal = fileChooser.showSaveDialog(getParent());
+				
+				
+				//int returnVal = fileChooser.showOpenDialog(getParent());
+				String SaveAsPath="";
+		        if (returnVal == JFileChooser.APPROVE_OPTION) {
+		            File file = fileChooser.getSelectedFile();
+		            SaveAsPath = file.getAbsolutePath();	
+		            System.out.println("SaveAsPath inside Filetransferpanel..." + SaveAsPath);
+		        }
+		        
+		        
+				serverThread = new Thread(new Server(6666, ftp,SaveAsPath));// Starts server
 				serverThread.start();
 				try {
 					person.sendAcceptFile(filepath.toString().trim(),MainStart.myID,sendPanelId);
@@ -156,5 +178,15 @@ public class FileTransferPanel extends JPanel{
 		    }
 		} );
 
+	}
+	private static String fileName(String filePath) {
+		int pos=0;
+		for(int i=filePath.length()-1;i>=0;i--) {
+			if(filePath.charAt(i)=='\\' || filePath.charAt(i)=='/') {
+				pos = i;
+				break;
+			}
+		}
+		return filePath.substring(pos+1,filePath.length());
 	}
 }
