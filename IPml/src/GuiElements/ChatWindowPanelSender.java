@@ -1,15 +1,21 @@
 package GuiElements;
 
 import javax.swing.JPanel;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Dimension;
+
 import javax.swing.JTextPane;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.border.LineBorder;
+
 import java.awt.Color;
+
 import javax.swing.border.MatteBorder;
 
 public class ChatWindowPanelSender extends JPanel{
@@ -22,13 +28,18 @@ public class ChatWindowPanelSender extends JPanel{
 	
 	public ChatWindowPanelSender(String inputText, String timeStamp) {
 		
+		createWindow(inputText, timeStamp);
+		
+}
+	private void createWindow(String inputText, String timeStamp )
+	{
 		//set panel properties 
 		setMaximumSize(new Dimension(3000,80));
-		setPreferredSize(new Dimension(280,80));
+		setPreferredSize(new Dimension(500,80));
 		setBackground(Color.WHITE);
 		setBorder(new MatteBorder(0, 3, 0, 0, (Color) Color.GREEN));
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.rowWeights = new double[]{2.0, 0.0};
+		gridBagLayout.rowWeights = new double[]{2.0, 0.0, 0.0};
 		gridBagLayout.columnWeights = new double[]{2.0};
 		setLayout(gridBagLayout);
 		
@@ -62,7 +73,8 @@ public class ChatWindowPanelSender extends JPanel{
 		gbc_lbl_chatTimeStamp.gridy = 1;
 		add(lbl_chatTimeStamp, gbc_lbl_chatTimeStamp);
 		scrollRectToVisible(null);
-}
+
+	}
 	
 	
 	//showMsg("message received"); //here is an example of how you should call it!	
@@ -75,7 +87,6 @@ public class ChatWindowPanelSender extends JPanel{
 			lbl_cnfrmMessage=new JLabel("Message Delivered");
 			lbl_cnfrmMessage.setBorder(null);
 			lbl_cnfrmMessage.setForeground(Color.GREEN);
-			//lbl_cnfrmMessage.setOpaque(true);
 			lbl_cnfrmMessage.setFont(new Font("Ubuntu Light", Font.PLAIN, 10));
 			GridBagConstraints gbc_lbl_cnfrmMessage = new GridBagConstraints();
 			gbc_lbl_cnfrmMessage.anchor = GridBagConstraints.SOUTHEAST;
@@ -89,7 +100,6 @@ public class ChatWindowPanelSender extends JPanel{
 			lbl_cnfrmMessage=new JLabel("No Confirmation Received");
 			lbl_cnfrmMessage.setBorder(null);
 			lbl_cnfrmMessage.setForeground(Color.RED);
-			//lbl_cnfrmMessage.setOpaque(true);
 			lbl_cnfrmMessage.setFont(new Font("Ubuntu Light", Font.PLAIN, 10));
 			GridBagConstraints gbc_lbl_cnfrmMessage = new GridBagConstraints();
 			gbc_lbl_cnfrmMessage.anchor = GridBagConstraints.SOUTHEAST;

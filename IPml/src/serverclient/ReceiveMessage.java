@@ -48,7 +48,7 @@ public class ReceiveMessage implements Runnable
 			String fileP = FileTransfer.getFilePath(packdetails[4]);
 			Path filepath = Paths.get(fileP.trim());
 			int sendPanelId = Integer.parseInt(packdetails[3]);
-			FileTransferPanel ftPane = new FileTransferPanel(person,filepath,sendPanelId);
+			FileTransferPanel ftPane = new FileTransferPanel(person,filepath.toString(),sendPanelId, new SimpleDateFormat("HH:mm:ss").format(t));
 			person.getWindow().chatconsole(ftPane);
 		}
 		

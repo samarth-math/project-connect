@@ -56,7 +56,7 @@ public class SendMessage implements Runnable
 					
 					else
 					{
-						MessagePane.showDeliveryStatus(true);
+						MessagePane.showDeliveryStatus(false);
 						person.getBlockingQ().put(MainStart.myID+"|"+MainStart.myUserName+"|"+ new SimpleDateFormat("HH:mm:ss").format(t)+"|"+Message);
 					}
 				}
@@ -78,19 +78,17 @@ public class SendMessage implements Runnable
 						person.sendFile(threadnumber+"|"+x+"|"+ header, MainStart.myID);
 						if(q.poll(500, TimeUnit.MILLISECONDS)==null)// Make this infinite maybe
 						{
-							//ftPane.showDeliveryStatus("No Confirmation Received");
-							MainStart.threadsync.remove(threadnumber);
+							ftPane.showDeliveryStatus(false);
 						}
 						
 						else
 						{
-							//ftPane.showDeliveryStatus("Message Delivered");
-							MainStart.threadsync.remove(threadnumber);
+							ftPane.showDeliveryStatus(true);
 						}
 					}
 					catch(InterruptedException e)
 					{
-						ftPane.showMsg("Message Delivered");
+						ftPane.showDeliveryStatus(false);
 					}		
 				}
 

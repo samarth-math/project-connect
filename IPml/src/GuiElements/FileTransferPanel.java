@@ -45,15 +45,15 @@ public class FileTransferPanel extends JPanel{
 	private JButton btn_cancel;
 	private Thread serverThread;
 	
-	public FileTransferPanel(final Contact person, final String filepath, final int sendPanelId) {
+	public FileTransferPanel(final Contact person, final String filepath, final int sendPanelId, String timeStamp) {
 		
 		final String filename = fileName(filepath);
 		//wrapper panel 
 		setMaximumSize(new Dimension(3000,80));
 		setPreferredSize(new Dimension(500,80));
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{320, 50,50};
-		gridBagLayout.rowHeights = new int[]{50};
+		gridBagLayout.columnWidths = new int[]{360, 70,70};
+		gridBagLayout.rowHeights = new int[]{50,30};
 		setLayout(gridBagLayout);
 		setBorder(new MatteBorder(0, 3, 0, 0, (Color) Color.BLUE));
 		
@@ -154,6 +154,21 @@ public class FileTransferPanel extends JPanel{
 			btn_cancel.setFont(new Font("DejaVu Sans", Font.PLAIN, 12));
 			add(btn_cancel, gbc_btn_cancel);
 			
+			//create time-stamp label
+			JLabel lbl_chatTimeStamp = new JLabel(timeStamp);
+			lbl_chatTimeStamp.setBorder(null);
+			lbl_chatTimeStamp.setBackground(Color.WHITE);
+			lbl_chatTimeStamp.setFont(new Font("Ubuntu Light", Font.PLAIN, 10));
+			
+			//add time-stamp label
+			GridBagConstraints gbc_lbl_chatTimeStamp = new GridBagConstraints();
+			gbc_lbl_chatTimeStamp.insets = new Insets(0, 0, 5, 0);
+			gbc_lbl_chatTimeStamp.anchor = GridBagConstraints.EAST;
+			gbc_lbl_chatTimeStamp.gridx = 2;
+			gbc_lbl_chatTimeStamp.gridy = 1;
+			add(lbl_chatTimeStamp, gbc_lbl_chatTimeStamp);
+			scrollRectToVisible(null);
+			
 		}//constructor ends here
 	
 	private void onAcceptUI(){
@@ -166,7 +181,6 @@ public class FileTransferPanel extends JPanel{
 				repaint();
 		    }
 		} );
-		//return true; //TODO: if ACCEPTED will return TRUE use it to change action of REJECT to CANCEL
 	}
 	private void onRejectUI(){
 		java.awt.EventQueue.invokeLater(new Runnable() {
@@ -177,7 +191,6 @@ public class FileTransferPanel extends JPanel{
 				repaint();
 		    }
 		} );
-
 	}
 	private static String fileName(String filePath) {
 		int pos=0;
