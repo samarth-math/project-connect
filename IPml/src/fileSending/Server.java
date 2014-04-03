@@ -56,7 +56,9 @@ public class Server implements Runnable{
 		
 		}
 	}
-	
+public float geti(){
+	return i;
+}
 public void receiveFile(Socket socket,String SaveAsPath,FileTransferPanel ftp) throws IOException {
 	    
 		/* File Header is of the format 
@@ -179,7 +181,7 @@ public void receiveFile(Socket socket,String SaveAsPath,FileTransferPanel ftp) t
 		max = leftBytes;
 		
 		byte [] bytearray = new byte [chunkSize];
-		new SwingWorkerProgress(ftp,i,max);
+		new SwingWorkerProgress(ftp,max,this);
 		do {
 			if(chunkSize>leftBytes) {
 				bytesRead = is.read(bytearray,0,(int)leftBytes);

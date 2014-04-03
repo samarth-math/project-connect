@@ -12,7 +12,7 @@ import GuiElements.FileTransferPanel;
 public class SwingWorkerProgress {
 	
 
-    public SwingWorkerProgress(final FileTransferPanel ftp, final float i, final float max) {
+    public SwingWorkerProgress(final FileTransferPanel ftp, final float max, final Server s) {
 
         EventQueue.invokeLater(new Runnable() {
             @Override
@@ -31,7 +31,7 @@ public class SwingWorkerProgress {
                 frame.setVisible(true);
                 */
                
-                ftp.add(new TestPane(i,max));
+                ftp.add(new TestPane(max,s));
                 ftp.revalidate();
                 
             }

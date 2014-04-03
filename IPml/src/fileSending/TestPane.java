@@ -17,7 +17,7 @@ public class TestPane extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JProgressBar pbProgress;
 
-    public TestPane(float i, float max) {
+    public TestPane(float max, Server s) {
         setBorder(new EmptyBorder(10, 10, 10, 10));
         pbProgress = new JProgressBar();
         setLayout(new GridBagLayout());
@@ -28,7 +28,7 @@ public class TestPane extends JPanel {
         add(pbProgress, gbc);
 
                
-                ProgressWorker pw = new ProgressWorker(i,max);
+                ProgressWorker pw = new ProgressWorker(max, s);
                 pw.addPropertyChangeListener(new PropertyChangeListener() {
 
                     @Override
