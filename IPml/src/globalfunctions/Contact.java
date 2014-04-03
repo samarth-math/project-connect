@@ -38,7 +38,23 @@ public class Contact {
 			return cw;
 		else
 		{
-			cw = new ChatWindow(id);
+	
+					try {
+						SwingUtilities.invokeAndWait(new Runnable()
+						{
+							@Override
+							public void run()
+							{
+								cw = new ChatWindow(id);
+							}
+						});
+					} catch (InvocationTargetException e) {
+						e.printStackTrace();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				
+			
 			GettingChatLogs.readLog(id);
 			setNewBlockingQ();			
 			ChatLogging cl = new ChatLogging(id, username, bq);
@@ -62,8 +78,15 @@ public class Contact {
 	}
 	public void startChat()
 	{
-		this.cw = getWindow();
-		//setWindow(new ChatWindow(this));
+		Thread Chat = new Thread()
+		{
+			@Override
+			public void run()
+			{
+				cw = getWindow();
+			}
+		};
+		Chat.start();
 		
 	}
 	public static void sendToAll(String Message, String senderid)
