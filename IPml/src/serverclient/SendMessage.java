@@ -56,13 +56,13 @@ public class SendMessage implements Runnable
 					
 					else
 					{
-						MessagePane.showDeliveryStatus(false);
+						MessagePane.showDeliveryStatus(true);
 						person.getBlockingQ().put(MainStart.myID+"|"+MainStart.myUserName+"|"+ new SimpleDateFormat("HH:mm:ss").format(t)+"|"+Message);
 					}
 				}
 				catch(InterruptedException e)
 				{
-					MessagePane.showDeliveryStatus(true);
+					MessagePane.showDeliveryStatus(false);
 				}		
 			}
 				else {
