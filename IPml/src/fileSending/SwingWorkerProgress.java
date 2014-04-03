@@ -10,12 +10,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 import GuiElements.FileTransferPanel;
 
 public class SwingWorkerProgress {
+	
 
-    public static void main(String[] args) {
-       // new SwingWorkerProgress();
-    }
+    public SwingWorkerProgress(final FileTransferPanel ftp, final float i, final float max) {
 
-    public SwingWorkerProgress(final FileTransferPanel ftp) {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -33,7 +31,7 @@ public class SwingWorkerProgress {
                 frame.setVisible(true);
                 */
                
-                ftp.add(new TestPane());
+                ftp.add(new TestPane(i,max));
                 ftp.revalidate();
                 
             }

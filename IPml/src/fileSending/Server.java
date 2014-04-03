@@ -19,8 +19,7 @@ public class Server implements Runnable{
 	private String fileSeparator;
 	public float i;
 	public float max;
-	
-	FileTransferPanel ftp;
+	private FileTransferPanel ftp;
 	public Server(int portNumber, FileTransferPanel ftp) {
 		if(MainStart.ftpsocket==null)
 		{
@@ -180,7 +179,7 @@ public void receiveFile(Socket socket,String SaveAsPath,FileTransferPanel ftp) t
 		max = leftBytes;
 		
 		byte [] bytearray = new byte [chunkSize];
-		new SwingWorkerProgress(ftp);
+		new SwingWorkerProgress(ftp,i,max);
 		do {
 			if(chunkSize>leftBytes) {
 				bytesRead = is.read(bytearray,0,(int)leftBytes);

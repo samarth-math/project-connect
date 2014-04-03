@@ -4,11 +4,8 @@ package fileSending;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
@@ -17,11 +14,10 @@ import javax.swing.border.EmptyBorder;
 
 public class TestPane extends JPanel {
 
-    private JProgressBar pbProgress;
-    private JButton start;
+	private static final long serialVersionUID = 1L;
+	private JProgressBar pbProgress;
 
-    public TestPane() {
-
+    public TestPane(float i, float max) {
         setBorder(new EmptyBorder(10, 10, 10, 10));
         pbProgress = new JProgressBar();
         setLayout(new GridBagLayout());
@@ -32,7 +28,7 @@ public class TestPane extends JPanel {
         add(pbProgress, gbc);
 
                
-                ProgressWorker pw = new ProgressWorker();
+                ProgressWorker pw = new ProgressWorker(i,max);
                 pw.addPropertyChangeListener(new PropertyChangeListener() {
 
                     @Override
