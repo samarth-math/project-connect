@@ -71,7 +71,6 @@ public class SendMessage implements Runnable
 					FileTransferPanelS ftPane = new FileTransferPanelS(filePath.getFileName().toString(),new SimpleDateFormat("HH:mm:ss").format(t));
 					int x = ftPane.getIndex();
 					person.getWindow().chatconsole(ftPane);
-					MainStart.fileSendPanels.put(x, ftPane);
 					try
 					{
 						

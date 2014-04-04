@@ -89,7 +89,7 @@ public class Contact {
 		Chat.start();
 		
 	}
-	public static void sendToAll(String Message, String senderid)
+	/*public static void sendToAll(String Message, String senderid)
 	{
 		byte[] buf = new byte[1024];
 		buf = new String("M|"+senderid+"|"+Message).getBytes();
@@ -110,7 +110,7 @@ public class Contact {
 			e.printStackTrace();
 		}
 		
-	}
+	}*/
 	public void sendMessage(String Message, String senderid) throws SocketException, IOException
 	{
 		byte[] buf = new byte[1024];

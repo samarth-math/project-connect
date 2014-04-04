@@ -158,10 +158,10 @@ public class PacketSorterThread implements Runnable {
 			   packdetails[2]=sendPanelId 
 	         */
 	        	int sendPId = Integer.parseInt(packdetails[2]);
+	        	System.out.println("Value of senderpanel in the received packet "+sendPId);
 	        	FileTransferPanelS ftps = MainStart.fileSendPanels.remove(sendPId);
-	        	ftps.onReject();
-	        	
-	        	
+	        	if (ftps!=null)
+	        		ftps.onReject();
 	        }
 	        else if (packdetails[0].equals("A"))// Catching Acknowledgement
 	        {/*packdetails[1]=Thread Number */

@@ -6,105 +6,88 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Dimension;
-
 import javax.swing.JTextPane;
 import javax.swing.JLabel;
-
 import java.awt.Font;
-
-import javax.swing.border.LineBorder;
-
 import java.awt.Color;
-
 import javax.swing.border.MatteBorder;
 
 public class ChatWindowPanelSender extends JPanel{
-	
+
 	private static final long serialVersionUID = 1L;
-	private JLabel lbl_cnfrmMessage;
-	private JTextPane textpn_chatText;
-	private JLabel lbl_chatTimeStamp;
-	
-	
+
 	public ChatWindowPanelSender(String inputText, String timeStamp) {
-		
-		createWindow(inputText, timeStamp);
-		
-}
-	private void createWindow(String inputText, String timeStamp )
-	{
-		//set panel properties 
-		setMaximumSize(new Dimension(3000,80));
-		setPreferredSize(new Dimension(500,80));
+	
 		setBackground(Color.WHITE);
-		setBorder(new MatteBorder(0, 3, 0, 0, (Color) Color.GREEN));
+		setMaximumSize(new Dimension(3000,1000));
+		setPreferredSize(new Dimension(500,70));
+		setBorder(new MatteBorder(0, 3, 0, 0, Color.GREEN));
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.rowWeights = new double[]{2.0, 0.0, 0.0};
-		gridBagLayout.columnWeights = new double[]{2.0};
+		gridBagLayout.columnWidths = new int[]{500};
+		gridBagLayout.rowHeights = new int[]{45,25};
+		gridBagLayout.columnWeights = new double[]{1.0};
+		gridBagLayout.rowWeights = new double[]{1.0, 0.0};
 		setLayout(gridBagLayout);
+		createInsidePanel(inputText, timeStamp);
 		
-		//create text-pane
-		textpn_chatText = new JTextPane();
-		textpn_chatText.setBackground(Color.WHITE);
-		textpn_chatText.setText(inputText);
-		textpn_chatText.setEditable(false);
-		
-		//add text-pane to panel
-		GridBagConstraints gbc_textpn_chatText = new GridBagConstraints();
-		gbc_textpn_chatText.insets = new Insets(0, 9, 5, 0);
-		gbc_textpn_chatText.fill = GridBagConstraints.BOTH;
-		gbc_textpn_chatText.gridx = 0;
-		gbc_textpn_chatText.gridy = 0;
-		add(textpn_chatText, gbc_textpn_chatText);
+	}
+	
+	private void createInsidePanel(String inputText, String timeStamp){
 		
 		
+		JTextPane txtpnMessage = new JTextPane();
+		txtpnMessage.setEditable(false);
+		txtpnMessage.setBackground(Color.WHITE);
+		txtpnMessage.setText(inputText);
 		
-		//create time-stamp label
-		lbl_chatTimeStamp = new JLabel(timeStamp);
-		lbl_chatTimeStamp.setBorder(null);
-		lbl_chatTimeStamp.setBackground(Color.WHITE);
-		lbl_chatTimeStamp.setFont(new Font("Ubuntu Light", Font.PLAIN, 10));
+		GridBagConstraints gbc_txtpnMessage = new GridBagConstraints();
+		gbc_txtpnMessage.fill = GridBagConstraints.BOTH;
+		gbc_txtpnMessage.gridx = 0;
+		gbc_txtpnMessage.gridy = 0;
+		gbc_txtpnMessage.insets = new Insets(3, 3, 0, 0);
+		add(txtpnMessage, gbc_txtpnMessage);
 		
-		//add time-stamp label
-		GridBagConstraints gbc_lbl_chatTimeStamp = new GridBagConstraints();
-		gbc_lbl_chatTimeStamp.insets = new Insets(0, 0, 5, 0);
-		gbc_lbl_chatTimeStamp.anchor = GridBagConstraints.EAST;
-		gbc_lbl_chatTimeStamp.gridx = 0;
-		gbc_lbl_chatTimeStamp.gridy = 1;
-		add(lbl_chatTimeStamp, gbc_lbl_chatTimeStamp);
-		scrollRectToVisible(null);
+		JLabel lblTimestamp = new JLabel(timeStamp);
+		lblTimestamp.setFont(new Font("Ubuntu Light", Font.PLAIN, 10));
+		lblTimestamp.setBackground(Color.WHITE);
+		
+		GridBagConstraints gbc_lblTimestamp = new GridBagConstraints();
+		gbc_lblTimestamp.gridx = 0;
+		gbc_lblTimestamp.gridy = 1;
+		gbc_lblTimestamp.anchor = GridBagConstraints.NORTHEAST;
+		add(lblTimestamp, gbc_lblTimestamp);
+
 
 	}
 	
-	
-	//showMsg("message received"); //here is an example of how you should call it!	
 	//call this method on the panel when the acknowledgment is received 
 	
 	public void showDeliveryStatus(boolean s){ 
 		
+		JLabel lbl_cnfrmMessage;
 		if(s)
 		{
 			lbl_cnfrmMessage=new JLabel("Message Delivered");
-			lbl_cnfrmMessage.setBorder(null);
-			lbl_cnfrmMessage.setForeground(Color.GREEN);
+			lbl_cnfrmMessage.setForeground(new Color(50, 155, 50));
 			lbl_cnfrmMessage.setFont(new Font("Ubuntu Light", Font.PLAIN, 10));
+			
 			GridBagConstraints gbc_lbl_cnfrmMessage = new GridBagConstraints();
-			gbc_lbl_cnfrmMessage.anchor = GridBagConstraints.SOUTHEAST;
 			gbc_lbl_cnfrmMessage.gridx = 0;
-			gbc_lbl_cnfrmMessage.gridy = 2;
+			gbc_lbl_cnfrmMessage.gridy = 1;
+			gbc_lbl_cnfrmMessage.anchor = GridBagConstraints.SOUTHEAST;
 			add(lbl_cnfrmMessage, gbc_lbl_cnfrmMessage);
 			revalidate();
 		}
 		else
 		{
 			lbl_cnfrmMessage=new JLabel("No Confirmation Received");
-			lbl_cnfrmMessage.setBorder(null);
-			lbl_cnfrmMessage.setForeground(Color.RED);
+			lbl_cnfrmMessage.setForeground(new Color(205, 0, 50));
 			lbl_cnfrmMessage.setFont(new Font("Ubuntu Light", Font.PLAIN, 10));
+			
 			GridBagConstraints gbc_lbl_cnfrmMessage = new GridBagConstraints();
-			gbc_lbl_cnfrmMessage.anchor = GridBagConstraints.SOUTHEAST;
 			gbc_lbl_cnfrmMessage.gridx = 0;
-			gbc_lbl_cnfrmMessage.gridy = 2;
+			gbc_lbl_cnfrmMessage.gridy = 1;
+			gbc_lbl_cnfrmMessage.anchor = GridBagConstraints.SOUTHEAST;
 			add(lbl_cnfrmMessage, gbc_lbl_cnfrmMessage);
 			revalidate();
 		}
