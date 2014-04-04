@@ -12,7 +12,6 @@ import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JButton;
-import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
 import serverclient.MainStart;
@@ -55,13 +54,13 @@ public class FileTransferPanel extends JPanel{
 	
 		//the filename label is here
 		JLabel lbl_fileName = new JLabel("<html>"+filename+"</html>");
-		lbl_fileName.setMinimumSize(new Dimension(220, 50));
+		//lbl_fileName.setMinimumSize(new Dimension(300, 50));
 		GridBagConstraints gbc_lbl_fileName = new GridBagConstraints();
 		gbc_lbl_fileName.anchor = GridBagConstraints.WEST;
 		gbc_lbl_fileName.insets = new Insets(3, 3, 5, 5);
 		gbc_lbl_fileName.gridx = 0;
 		gbc_lbl_fileName.gridy = 0;
-		lbl_fileName.setBorder(new TitledBorder(new LineBorder(new Color(192, 192, 192)), "<html>Awaiting response</html>",TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(128, 128, 128)));
+		lbl_fileName.setBorder(new TitledBorder(null, "<html>Awaiting response</html>",TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(128, 128, 128)));
 		lbl_fileName.setFont(new Font("Ubuntu", Font.PLAIN, 14));
 		add(lbl_fileName, gbc_lbl_fileName);
 		
@@ -130,6 +129,7 @@ public class FileTransferPanel extends JPanel{
 		add(btnReject, gbc_btnReject);
 	
 		btnCancel = new JButton("Cancel");
+		btnCancel.setVisible(false);
 		btnReject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {

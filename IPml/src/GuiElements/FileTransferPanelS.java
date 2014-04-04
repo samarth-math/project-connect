@@ -44,7 +44,7 @@ public class FileTransferPanelS extends JPanel{
 	
 		//the filename label is here
 		lbl_fileName = new JLabel("<html>"+filename+"</html>");
-		lbl_fileName.setMinimumSize(new Dimension(220, 50));
+		//lbl_fileName.setMinimumSize(new Dimension(220, 50));
 		GridBagConstraints gbc_lbl_fileName = new GridBagConstraints();
 		gbc_lbl_fileName.anchor = GridBagConstraints.WEST;
 		gbc_lbl_fileName.insets = new Insets(3, 3, 0, 0);
@@ -77,7 +77,7 @@ public class FileTransferPanelS extends JPanel{
 	
 	public void showMsg(String msg){
 	
-		this.lbl_fileName.setBorder(new TitledBorder(new LineBorder(new Color(192, 192, 192)), msg,TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(128, 128, 128)));
+		this.lbl_fileName.setBorder(new TitledBorder(null, new String("<html>"+msg+"</html>"),TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(128, 128, 128)));
 		this.revalidate();
 	}
 	
@@ -89,6 +89,7 @@ public class FileTransferPanelS extends JPanel{
 	}
 	
 	public void onReject(){
+		System.out.println("Being Rejected");
 		setBackground(new Color(255,228,228));
 		getParent().revalidate();
 		getParent().repaint();
