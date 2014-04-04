@@ -149,7 +149,7 @@ public class PacketSorterThread implements Runnable {
 	        	int sendPId = Integer.parseInt(packdetails[2]);
 	        	FileTransferPanelS ftps = MainStart.fileSendPanels.get(sendPId);
 	        	ftps.onAcceptance();
-	        	Client obj = new Client(address.getHostAddress(),6666,packdetails[3]);
+	        	Client obj = new Client(address.getHostAddress(),6666,packdetails[3],ftps);
 					(new Thread(obj)).start();
 	        	
 	        }

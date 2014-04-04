@@ -9,6 +9,8 @@ import java.net.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import GuiElements.FileTransferPanelS;
+
 
 public class Client implements Runnable {
 
@@ -17,7 +19,7 @@ public class Client implements Runnable {
 	private String filePath;
 	
 	
-	public Client(String ip, int pNumber, String filePath) {
+	public Client(String ip, int pNumber, String filePath, FileTransferPanelS ftps) {
 	 this.ipAddress = ip;
 	 this.portNumber = pNumber;
 	 this.filePath = filePath.trim();
