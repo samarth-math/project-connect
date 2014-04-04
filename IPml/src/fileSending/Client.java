@@ -17,12 +17,14 @@ public class Client implements Runnable {
 	private int portNumber;
 	private String ipAddress;
 	private String filePath;
+	private FileTransferPanelS ftps;
 	
 	
 	public Client(String ip, int pNumber, String filePath, FileTransferPanelS ftps) {
 	 this.ipAddress = ip;
 	 this.portNumber = pNumber;
 	 this.filePath = filePath.trim();
+	 this.ftps=ftps;
  }
  
 	public void run() {
