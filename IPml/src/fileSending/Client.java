@@ -130,6 +130,7 @@ public class Client implements Runnable {
 		long leftBytes = fileSize; // number of bytes remaining to be written to socket stream
 		
 		ftps.getprogbar().startProgress(fileSize, this);
+		
 		while (leftBytes>0) {
 			leftBytes = leftBytes - read;
 			if(chunkSize>leftBytes) {
@@ -141,7 +142,7 @@ public class Client implements Runnable {
 			os.write(bytearray,0,read);
 			bytesSent=bytesSent+read;
 		}
-	
+		ftps.showMsg("File Transfer Complete");
 		os.flush();
 		bufferedinput.close();
 		//don't close the outputstream here
