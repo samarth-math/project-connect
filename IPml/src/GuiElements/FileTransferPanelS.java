@@ -63,7 +63,7 @@ public class FileTransferPanelS extends JPanel{
 		panel.setLayout(gbl_panel);
 		
 		//the filename label is here
-		JLabel lbl_fileName = new JLabel("<html>"+filename+"</html>");
+		lbl_fileName = new JLabel("<html>"+filename+"</html>");
 		//lbl_fileName.setMinimumSize(new Dimension(300, 50));
 		GridBagConstraints gbc_lbl_fileName = new GridBagConstraints();
 		gbc_lbl_fileName.anchor = GridBagConstraints.WEST;
