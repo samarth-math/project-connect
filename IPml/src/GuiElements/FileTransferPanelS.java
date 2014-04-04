@@ -27,7 +27,7 @@ public class FileTransferPanelS extends JPanel{
 		index=totalNum;		
 		setBackground(Color.WHITE);
 		setMaximumSize(new Dimension(3000,1000));
-		setPreferredSize(new Dimension(500,70));
+		setPreferredSize(new Dimension(500,100));
 		setBorder(new MatteBorder(0, 3, 0, 0, (Color) new Color(102, 204, 204)));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{500};
