@@ -1,15 +1,16 @@
 package fileSending;
 
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
-
 import javax.swing.border.EmptyBorder;
 
 public class TestPane extends JPanel {
@@ -17,7 +18,9 @@ public class TestPane extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JProgressBar pbProgress;
 
-    public TestPane(float max, Server s) {
+
+    public TestPane() {
+    	setBackground(Color.WHITE);
         setBorder(new EmptyBorder(10, 10, 10, 10));
         pbProgress = new JProgressBar();
         setLayout(new GridBagLayout());
@@ -26,7 +29,9 @@ public class TestPane extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 0;
         add(pbProgress, gbc);
-
+    }
+    public void startProgress(float max, Server s)
+    {
                
                 ProgressWorker pw = new ProgressWorker(max, s);
                 pw.addPropertyChangeListener(new PropertyChangeListener() {

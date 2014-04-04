@@ -17,7 +17,6 @@ public class ProgressWorker extends SwingWorker<Object, Object> {
     protected Object doInBackground() throws Exception {
        
         while (s.geti() < max) {
-     
             int progress = Math.round(((float)s.geti() / (float)max) * 100f);
             setProgress(progress);
             try {
