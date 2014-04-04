@@ -32,7 +32,7 @@ public class TestPane extends JPanel {
     }
     public void startProgress(float max, Server s)
     {
-               
+         		this.setVisible(true);
                 ProgressWorker pw = new ProgressWorker(max, s);
                 pw.addPropertyChangeListener(new PropertyChangeListener() {
 
@@ -56,4 +56,32 @@ public class TestPane extends JPanel {
                 });
                 pw.execute();
     }
+    
+    public void startProgress(float max, Client c)
+    {
+    			this.setVisible(true);
+                ProgressWorker pw = new ProgressWorker(max, c);
+                pw.addPropertyChangeListener(new PropertyChangeListener() {
+
+                    @Override
+                    public void propertyChange(PropertyChangeEvent evt) {
+                        String name = evt.getPropertyName();
+                        if (name.equals("progress")) {
+                            int progress = (int) evt.getNewValue();
+                            pbProgress.setValue(progress);
+                            repaint();
+                        } else if (name.equals("state")) {
+                            SwingWorker.StateValue state = (SwingWorker.StateValue) evt.getNewValue();
+                            switch (state) {
+                                case DONE:
+                                	pbProgress.setVisible(false);
+                                    break;
+                            }
+                        }
+                    }
+
+                });
+                pw.execute();
+    }
+
 }

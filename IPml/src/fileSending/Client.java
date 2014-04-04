@@ -18,6 +18,7 @@ public class Client implements Runnable {
 	private String ipAddress;
 	private String filePath;
 	private FileTransferPanelS ftps;
+	private long bytesSent;
 	
 	
 	public Client(String ip, int pNumber, String filePath, FileTransferPanelS ftps) {
@@ -62,6 +63,10 @@ public class Client implements Runnable {
 			os.close();
 	}
 
+	public long geti()
+	{
+		return bytesSent;
+	}
 	public void sendFile(Socket socket,Path filePath, OutputStream os) throws IOException {
 		
 		//String fileName = filePath.getFileName().toString().trim();
@@ -123,7 +128,8 @@ public class Client implements Runnable {
 		// sending file content to sender
 		int read = 0;
 		long leftBytes = fileSize; // number of bytes remaining to be written to socket stream
-				
+		
+		ftps.getprogbar().startProgress(fileSize, this);
 		while (leftBytes>0) {
 			leftBytes = leftBytes - read;
 			if(chunkSize>leftBytes) {
@@ -133,6 +139,7 @@ public class Client implements Runnable {
 				read=bufferedinput.read(bytearray,0,chunkSize);
 			}
 			os.write(bytearray,0,read);
+			bytesSent=bytesSent+read;
 		}
 	
 		os.flush();

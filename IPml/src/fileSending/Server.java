@@ -176,9 +176,7 @@ public void receiveFile(Socket socket,String SaveAsPath,FileTransferPanel ftp) t
 		max = leftBytes;
 		
 		byte [] bytearray = new byte [chunkSize];
-		TestPane tpane = ftp.getprogbar();
-		tpane.startProgress(max,this);
-		tpane.setVisible(true);
+		ftp.getprogbar().startProgress(max,this);
 		do {
 			if(chunkSize>leftBytes) {
 				bytesRead = is.read(bytearray,0,(int)leftBytes);
