@@ -20,9 +20,6 @@ import java.awt.Insets;
 import javax.swing.JButton;
 
 import java.awt.Color;
-
-import javax.swing.border.TitledBorder;
-
 import serverclient.MainStart;
 
 import java.awt.Font;
@@ -40,8 +37,10 @@ public class FileTransferPanel extends JPanel{
 	private JButton btnAccept;
 	private JButton btnReject;
 	private JButton btnCancel;
-	private Thread serverThread;
+	private Server serverThread;
 	private TestPane progBar;
+	private JPanel panel_1;
+	private JLabel lblStatus;
 	
 	public FileTransferPanel(Contact person, String filename, int sendPanelId, String timeStamp) {
 		
@@ -74,11 +73,11 @@ public class FileTransferPanel extends JPanel{
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{360};
 		gbl_panel.rowHeights = new int[]{35,20};
-		gbl_panel.columnWeights = new double[]{Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{Double.MIN_VALUE};
+		gbl_panel.columnWeights = new double[]{1.0};
+		gbl_panel.rowWeights = new double[]{1.0};
 		panel.setLayout(gbl_panel);
 		
-		//the filename label is here
+		/*//the filename label is here
 		JLabel lbl_fileName = new JLabel("<html>"+filename+"</html>");
 		//lbl_fileName.setMinimumSize(new Dimension(300, 50));
 		GridBagConstraints gbc_lbl_fileName = new GridBagConstraints();
@@ -88,10 +87,30 @@ public class FileTransferPanel extends JPanel{
 		gbc_lbl_fileName.gridy = 0;
 		lbl_fileName.setBorder(new TitledBorder(null, "<html>Awaiting response</html>",TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(128, 128, 128)));
 		lbl_fileName.setFont(new Font("Ubuntu", Font.PLAIN, 14));
-		panel.add(lbl_fileName, gbc_lbl_fileName);
+		panel.add(lbl_fileName, gbc_lbl_fileName);*/
 		
 		progBar = new TestPane();
 		progBar.setVisible(false);
+		
+		panel_1 = new JPanel();
+		panel_1.setBackground(Color.WHITE);
+		panel_1.setLayout(null);
+		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+		gbc_panel_1.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_1.fill = GridBagConstraints.BOTH;
+		gbc_panel_1.gridx = 0;
+		gbc_panel_1.gridy = 0;
+		panel.add(panel_1, gbc_panel_1);
+		
+		JLabel lblFile = new JLabel(filename);
+		lblFile.setFont(new Font("Ubuntu", Font.PLAIN, 14));
+		lblFile.setBounds(12, 12, 216, 28);
+		panel_1.add(lblFile);
+		
+		lblStatus = new JLabel("Receiving File");
+		lblStatus.setForeground(new Color(128, 128, 128));
+		lblStatus.setBounds(12, 0, 189, 15);
+		panel_1.add(lblStatus);
 		GridBagConstraints gbc_progBar = new GridBagConstraints();
 		gbc_progBar.anchor= GridBagConstraints.SOUTHWEST;
 		gbc_progBar.gridx = 0;
@@ -116,8 +135,8 @@ public class FileTransferPanel extends JPanel{
 			            SaveAsPath = file.getAbsolutePath();	
 			            System.out.println("SaveAsPath inside Filetransferpanel..." + SaveAsPath);
 			        }
-				serverThread = new Thread(new Server(6666, ftp,SaveAsPath));// Starts server
-				serverThread.start();
+				serverThread = new Server(6666, ftp,SaveAsPath);
+				new Thread(serverThread).start();
 				try {
 					person.sendAcceptFile(MainStart.myID,sendPanelId);
 					onAcceptUI();
@@ -163,7 +182,8 @@ public class FileTransferPanel extends JPanel{
 		btnCancel.setVisible(false);
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				//CANCEL FUNCTIONALITY
+				serverThread.stop=true;
 			}
 		});
 		
@@ -188,9 +208,16 @@ public class FileTransferPanel extends JPanel{
 	
 	}//constructor ends here
 	
+	public void showMsg(String msg)
+	{
+		lblStatus.setText(msg);
+		revalidate();
+	}
+	
 	private void onAcceptUI(){
 		java.awt.EventQueue.invokeLater(new Runnable() {
 		    public void run() {
+		    	lblStatus.setText("File Transfer Accepted");
 		    	btnAccept.setVisible(false);
 		    	btnReject.setVisible(false);
 				btnCancel.setVisible(true);
@@ -202,6 +229,7 @@ public class FileTransferPanel extends JPanel{
 	private void onRejectUI(){
 		java.awt.EventQueue.invokeLater(new Runnable() {
 		    public void run() {
+		    	lblStatus.setText("File Transfer Rejected");
 				btnAccept.setVisible(false);
 				btnReject.setVisible(false);
 				revalidate();

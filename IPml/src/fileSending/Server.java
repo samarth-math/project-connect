@@ -20,6 +20,7 @@ public class Server implements Runnable{
 	public float i;
 	public float max;
 	private FileTransferPanel ftp;
+	public boolean stop = false;
 	public Server(int portNumber, FileTransferPanel ftp,String SaveAsPath) {
 		if(MainStart.ftpsocket==null)
 		{
@@ -187,14 +188,24 @@ public void receiveFile(Socket socket,String SaveAsPath,FileTransferPanel ftp) t
 			bos.write(bytearray,0,(int)bytesRead);
 			leftBytes = leftBytes - bytesRead;
 			i = i + bytesRead;			
-		} while(currentTotal<=fileSize && bytesRead > 0);
+		} while(currentTotal<=fileSize && bytesRead > 0 && !stop);
 				
 		bos.flush();
 		bos.close();
 		
-		System.out.println("Finished Receiving File...");
+		if(stop)
+		{
+			ftp.showMsg("File Transfer Cancelled");
+			//deleteRecursive(SaveAsPath;) code to delete downloaded files so far.
 		}
+		else
+		{
+			ftp.showMsg("File Transfer Complete");
+		}
+		
+		System.out.println("Finished Receiving File...");
 	}
+}
 
 	private void splitPath(String filePath) {
 		 rootPath = filePath.split(fileSeparator);

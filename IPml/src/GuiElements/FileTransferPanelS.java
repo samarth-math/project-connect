@@ -9,7 +9,6 @@ import java.awt.Insets;
 import java.nio.file.Path;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.TitledBorder;
 import javax.swing.border.MatteBorder;
 
 import fileSending.TestPane;
@@ -19,10 +18,12 @@ public class FileTransferPanelS extends JPanel{
 	private static final long serialVersionUID = 1L;
 	private static int totalNum;
 	private int index;
-	private JLabel lbl_fileName;
 	private TestPane progBar;
 	private JPanel panel;
 	private Path filepath;
+	private JPanel panel_1;
+	private JLabel lblFile;
+	private JLabel lblStatus;
 	//private TitledBorder t = new TitledBorder(new LineBorder(new Color(192, 192, 192)), null,TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(128, 128, 128));
 	
 	public FileTransferPanelS(String filename, String timeStamp, Path filepath){
@@ -60,11 +61,11 @@ public class FileTransferPanelS extends JPanel{
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{360};
 		gbl_panel.rowHeights = new int[]{35,10};
-		gbl_panel.columnWeights = new double[]{Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{Double.MIN_VALUE};
+		gbl_panel.columnWeights = new double[]{1.0};
+		gbl_panel.rowWeights = new double[]{1.0};
 		panel.setLayout(gbl_panel);
 		
-		//the filename label is here
+		/*//the filename label is here
 		lbl_fileName = new JLabel("<html>"+filename+"</html>");
 		//lbl_fileName.setMinimumSize(new Dimension(300, 50));
 		GridBagConstraints gbc_lbl_fileName = new GridBagConstraints();
@@ -74,10 +75,30 @@ public class FileTransferPanelS extends JPanel{
 		gbc_lbl_fileName.gridy = 0;
 		lbl_fileName.setBorder(new TitledBorder(null, "<html>Awaiting response</html>",TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(128, 128, 128)));
 		lbl_fileName.setFont(new Font("Ubuntu", Font.PLAIN, 14));
-		panel.add(lbl_fileName, gbc_lbl_fileName);
+		panel.add(lbl_fileName, gbc_lbl_fileName);*/
 		
 		progBar = new TestPane();
 		progBar.setVisible(false);
+		
+		panel_1 = new JPanel();
+		panel_1.setBackground(Color.WHITE);
+		panel_1.setLayout(null);
+		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
+		gbc_panel_1.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_1.fill = GridBagConstraints.BOTH;
+		gbc_panel_1.gridx = 0;
+		gbc_panel_1.gridy = 0;
+		panel.add(panel_1, gbc_panel_1);
+		
+		lblFile = new JLabel(filename);
+		lblFile.setBounds(30, 12, 288, 28);
+		lblFile.setFont(new Font("Ubuntu", Font.PLAIN, 14));
+		panel_1.add(lblFile);
+		
+		lblStatus = new JLabel("Awaiting Response");
+		lblStatus.setBounds(30, 0, 170, 15);
+		lblStatus.setForeground(new Color(128, 128, 128));
+		panel_1.add(lblStatus);
 		GridBagConstraints gbc_progBar = new GridBagConstraints();
 		gbc_progBar.anchor= GridBagConstraints.SOUTHWEST;
 		gbc_progBar.gridx = 0;
@@ -109,24 +130,29 @@ public class FileTransferPanelS extends JPanel{
 	}
 	public void showMsg(String msg){
 	
-		this.lbl_fileName.setBorder(new TitledBorder(null, new String("<html>"+msg+"</html>"),TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(128, 128, 128)));
-		this.revalidate();
+		lblStatus.setText(msg);
+		revalidate();
 	}
 	
 	public void onAcceptance(){
 		setBackground(new Color(180,250,180));
+		panel_1.setBackground(new Color(180,250,180));
 		panel.setBackground(new Color(180,250,180));
 		progBar.setBackground(new Color(180,250,180));
+		lblStatus.setText("Sending...");
 		getParent().revalidate();
 		getParent().repaint();
-		showMsg("sending...");
+		
 	}
 	
 	public void onReject(){
 		setBackground(new Color(255,228,228));
+		panel_1.setBackground(new Color(255,228,228));
+		panel.setBackground(new Color(255,228,228));
+		progBar.setBackground(new Color(255,228,228));
+		lblStatus.setText("File Transfer Rejected");
 		getParent().revalidate();
 		getParent().repaint();
-		showMsg("File Transfer Rejected");
 	}
 	
 	public TestPane getprogbar()
