@@ -5,7 +5,6 @@ import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.Dimension;
 import javax.swing.JTextPane;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -19,14 +18,12 @@ public class ChatWindowPanelSender extends JPanel{
 	public ChatWindowPanelSender(String inputText, String timeStamp) {
 	
 		setBackground(Color.WHITE);
-		setMaximumSize(new Dimension(3000,1000));
-		setPreferredSize(new Dimension(500,70));
 		setBorder(new MatteBorder(0, 3, 0, 0, Color.GREEN));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{500};
 		gridBagLayout.rowHeights = new int[]{45,25};
 		gridBagLayout.columnWeights = new double[]{1.0};
-		gridBagLayout.rowWeights = new double[]{1.0, 0.0};
+		gridBagLayout.rowWeights = new double[]{0.0};
 		setLayout(gridBagLayout);
 		createInsidePanel(inputText, timeStamp);
 		
