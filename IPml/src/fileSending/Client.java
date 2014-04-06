@@ -16,15 +16,15 @@ public class Client implements Runnable {
 
 	private int portNumber;
 	private String ipAddress;
-	private String filePath;
+	private Path filePath;
 	private FileTransferPanelS ftps;
 	private long bytesSent;
 	
 	
-	public Client(String ip, int pNumber, String filePath, FileTransferPanelS ftps) {
+	public Client(String ip, int pNumber, Path filePath, FileTransferPanelS ftps) {
 	 this.ipAddress = ip;
 	 this.portNumber = pNumber;
-	 this.filePath = filePath.trim();
+	 this.filePath = filePath;
 	 this.ftps=ftps;
  }
  
@@ -36,10 +36,8 @@ public class Client implements Runnable {
 			Socket socket = new Socket(ipAddress,portNumber);
 			System.out.println("Socket is "  + socket);		
 			OutputStream os=  socket.getOutputStream();
-			
-			Path path = Paths.get(filePath);
-			
-			send(socket,path, os);
+						
+			send(socket,filePath, os);
 			socket.close();
 			
 		} catch(Exception e) {
@@ -50,11 +48,9 @@ public class Client implements Runnable {
 	public void send(Socket socket,Path filePath, OutputStream os) throws IOException {
 		if( FileTransfer.isFile(filePath.toString()) ) {
 			sendFile(socket,filePath,os);
-			System.out.println("Inside Client.java ... It's a file");
 		}
 			
 		else if( FileTransfer.isDirectory(filePath.toString()) ){
-			System.out.println("Inside Client.java ... It's a folder");
 			sendFile(socket,filePath,os);
 			sendFolder(socket,filePath.toString(),os);
 		}

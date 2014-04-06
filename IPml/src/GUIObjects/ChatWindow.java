@@ -35,13 +35,9 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.ScrollPaneConstants;
 
-import LogMaintainence.ChatLogging;
-import LogMaintainence.GettingChatLogs;
-
 import java.awt.event.WindowAdapter;
 import java.io.File;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class ChatWindow extends BasicWindow
 {
@@ -163,10 +159,8 @@ public class ChatWindow extends BasicWindow
 		        if (returnVal == JFileChooser.APPROVE_OPTION) {
 		            File[] file = fileChooser.getSelectedFiles();
 		            for(File f : file) {
-		            	String fileP= f.getAbsolutePath();
-			            Path filePath = Paths.get(fileP);
-			            System.out.println("File Path " + filePath);
-			            SendMessage SM = new SendMessage(person, filePath);
+		            	Path filepath = f.toPath();
+			            SendMessage SM = new SendMessage(person, filepath);
 						new Thread(SM).start();
 		            }
 		            

@@ -6,10 +6,9 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-
+import java.nio.file.Path;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.MatteBorder;
 
@@ -23,10 +22,12 @@ public class FileTransferPanelS extends JPanel{
 	private JLabel lbl_fileName;
 	private TestPane progBar;
 	private JPanel panel;
+	private Path filepath;
 	//private TitledBorder t = new TitledBorder(new LineBorder(new Color(192, 192, 192)), null,TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(128, 128, 128));
 	
-	public FileTransferPanelS(String filename, String timeStamp){
+	public FileTransferPanelS(String filename, String timeStamp, Path filepath){
 		
+		this.filepath = filepath;
 		totalNum++;
 		index=totalNum;		
 		setBackground(Color.WHITE);
@@ -102,7 +103,10 @@ public class FileTransferPanelS extends JPanel{
 		return index;
 	}
 	
-	
+	public Path getFilePath()
+	{
+		return filepath;
+	}
 	public void showMsg(String msg){
 	
 		this.lbl_fileName.setBorder(new TitledBorder(null, new String("<html>"+msg+"</html>"),TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(128, 128, 128)));

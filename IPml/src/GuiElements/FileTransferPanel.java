@@ -34,8 +34,6 @@ import java.io.IOException;
 import java.net.SocketException;
 
 import javax.swing.border.MatteBorder;
-import javax.swing.JToolBar;
-
 public class FileTransferPanel extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
@@ -45,9 +43,8 @@ public class FileTransferPanel extends JPanel{
 	private Thread serverThread;
 	private TestPane progBar;
 	
-	public FileTransferPanel(Contact person, String filepath, int sendPanelId, String timeStamp) {
+	public FileTransferPanel(Contact person, String filename, int sendPanelId, String timeStamp) {
 		
-		String filename = fileName(filepath);
 		setBackground(Color.WHITE);
 		setMaximumSize(new Dimension(3000,1000));
 		setPreferredSize(new Dimension(500,120));
@@ -58,12 +55,12 @@ public class FileTransferPanel extends JPanel{
 		gridBagLayout.columnWeights = new double[]{1.0};
 		gridBagLayout.rowWeights = new double[]{1.0, 0.0};
 		setLayout(gridBagLayout);
-		createInsidePanel(person,filepath,sendPanelId,timeStamp, filename);
+		createInsidePanel(person,filename,sendPanelId,timeStamp);
 		
 	}
 
 	
-	private void createInsidePanel(final Contact person, final String filepath, final int sendPanelId, final String timeStamp, final String filename){
+	private void createInsidePanel(final Contact person, final String filename, final int sendPanelId, final String timeStamp){
 		JPanel panel = new JPanel();
 		panel.setBorder(null);
 		panel.setBackground(Color.WHITE);
@@ -119,12 +116,10 @@ public class FileTransferPanel extends JPanel{
 			            SaveAsPath = file.getAbsolutePath();	
 			            System.out.println("SaveAsPath inside Filetransferpanel..." + SaveAsPath);
 			        }
-		        
-		        
 				serverThread = new Thread(new Server(6666, ftp,SaveAsPath));// Starts server
 				serverThread.start();
 				try {
-					person.sendAcceptFile(filepath.toString().trim(),MainStart.myID,sendPanelId);
+					person.sendAcceptFile(MainStart.myID,sendPanelId);
 					onAcceptUI();
 				} catch (SocketException exc) {
 					// Do stuff
@@ -147,7 +142,7 @@ public class FileTransferPanel extends JPanel{
 		btnReject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					person.sendRejectFile(filepath.toString().trim(), MainStart.myID, sendPanelId);
+					person.sendRejectFile(MainStart.myID, sendPanelId);
 					onRejectUI();
 				} catch (SocketException exc) {
 					// Do stuff
@@ -214,16 +209,7 @@ public class FileTransferPanel extends JPanel{
 		    }
 		} );
 	}
-	private static String fileName(String filePath) {
-		int pos=0;
-		for(int i=filePath.length()-1;i>=0;i--) {
-			if(filePath.charAt(i)=='\\' || filePath.charAt(i)=='/') {
-				pos = i;
-				break;
-			}
-		}
-		return filePath.substring(pos+1,filePath.length());
-	}
+
 	
 	public TestPane getprogbar()
 	{

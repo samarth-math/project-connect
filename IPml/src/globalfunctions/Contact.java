@@ -130,15 +130,15 @@ public class Contact {
 		DatagramSocket socket = MainStart.socket;
    		socket.send(packet);
 	}
-	public void sendAcceptFile(String filePath, String senderid, int sendPanelId) throws SocketException, IOException
+	public void sendAcceptFile(String senderid, int sendPanelId) throws SocketException, IOException
 	{
 		byte[] buf = new byte[1024];
-		buf = new String("R|"+senderid+"|"+sendPanelId+"|"+filePath).getBytes();
+		buf = new String("R|"+senderid+"|"+sendPanelId).getBytes();
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, ip, port);
 		DatagramSocket socket = MainStart.socket;
    		socket.send(packet);
 	}
-	public void sendRejectFile(String filePath, String senderid, int sendPanelId) throws SocketException, IOException
+	public void sendRejectFile(String senderid, int sendPanelId) throws SocketException, IOException
 	{
 		byte[] buf = new byte[1024];
 		buf = new String("N|"+senderid+"|"+sendPanelId).getBytes();

@@ -1,12 +1,9 @@
 package serverclient;
 
 import globalfunctions.Contact;
-import globalfunctions.FileTransfer;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.net.InetAddress;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import GUIObjects.ChatWindow;
 import GuiElements.ChatWindowPanelReceiver;
 import GuiElements.FileTransferPanel;
@@ -44,11 +41,9 @@ public class ReceiveMessage implements Runnable
 		}
 		else if(packdetails[0].equals("S")) {
 			//packdetails[3]=sendingPanelId
-			//packdetails[4]=fileheader
-			String fileP = FileTransfer.getFilePath(packdetails[4]);
-			Path filepath = Paths.get(fileP.trim());
+			//packdetails[4]=filename
 			int sendPanelId = Integer.parseInt(packdetails[3]);
-			FileTransferPanel ftPane = new FileTransferPanel(person,filepath.toString(),sendPanelId, new SimpleDateFormat("HH:mm:ss").format(t));
+			FileTransferPanel ftPane = new FileTransferPanel(person,packdetails[4],sendPanelId, new SimpleDateFormat("HH:mm:ss").format(t));
 			person.getWindow().chatconsole(ftPane);
 		}
 		

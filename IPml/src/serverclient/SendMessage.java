@@ -1,6 +1,5 @@
 package serverclient;
 
-
 import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.Timestamp;
@@ -11,20 +10,18 @@ import java.util.concurrent.*;
 import GuiElements.ChatWindowPanelSender;
 import GuiElements.FileTransferPanelS;
 import globalfunctions.Contact;
-import globalfunctions.FileTransfer;
 
 public class SendMessage implements Runnable
 {
 	private Contact person = null;
 	private String Message = null;
-	private Path filePath;
-	private String header;
+	private Path filepath;
 	private BlockingQueue<Character> q;
 	
-	public SendMessage(Contact person, Path filePath)
+	public SendMessage(Contact person, Path filepath)
 	{
 		this.person=person;
-		this.filePath = filePath;	
+		this.filepath = filepath;	
 	}
 	public SendMessage(Contact person, String message)
 	{
@@ -65,32 +62,31 @@ public class SendMessage implements Runnable
 					MessagePane.showDeliveryStatus(false);
 				}		
 			}
-				else {
-					header = FileTransfer.getHeader(filePath);
+			else {
+				String filename = filepath.getFileName().toString();
+				FileTransferPanelS ftPane = new FileTransferPanelS(filename,new SimpleDateFormat("HH:mm:ss").format(t),filepath);
+				int x = ftPane.getIndex();
+				MainStart.fileSendPanels.put(x,ftPane);
+				person.getWindow().chatconsole(ftPane);
+				try
+				{
 					
-					FileTransferPanelS ftPane = new FileTransferPanelS(filePath.getFileName().toString(),new SimpleDateFormat("HH:mm:ss").format(t));
-					int x = ftPane.getIndex();
-					MainStart.fileSendPanels.put(x,ftPane);
-					person.getWindow().chatconsole(ftPane);
-					try
-					{
-						
-						person.sendFile(threadnumber+"|"+x+"|"+ header, MainStart.myID);
-						if(q.poll(500, TimeUnit.MILLISECONDS)==null)// Make this infinite maybe
-						{
-							ftPane.showDeliveryStatus(false);
-						}
-						
-						else
-						{
-							ftPane.showDeliveryStatus(true);
-						}
-					}
-					catch(InterruptedException e)
+					person.sendFile(threadnumber+"|"+x+"|"+filename, MainStart.myID);
+					if(q.poll(500, TimeUnit.MILLISECONDS)==null)// Make this infinite maybe
 					{
 						ftPane.showDeliveryStatus(false);
-					}		
+					}
+					
+					else
+					{
+						ftPane.showDeliveryStatus(true);
+					}
 				}
+				catch(InterruptedException e)
+				{
+					ftPane.showDeliveryStatus(false);
+				}		
+			}
 
 		}
 		catch(IOException e)
