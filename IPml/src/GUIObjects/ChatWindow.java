@@ -3,6 +3,7 @@
  */
 package GUIObjects;
 import globalfunctions.Contact;
+import globalfunctions.FileDrop;
 
 import javax.swing.JFrame;
 
@@ -94,6 +95,18 @@ public class ChatWindow extends BasicWindow
 		vsbar.setUnitIncrement(16);
 		
 		txtMessage = new JTextArea();
+		new FileDrop(txtMessage, new FileDrop.Listener()
+		{
+			public void filesDropped(File[] files)
+			{
+				 for(File f : files) {
+		            	Path filepath = f.toPath();
+			            SendMessage SM = new SendMessage(person, filepath);
+						new Thread(SM).start();
+		            }
+			}
+			
+		});
 		txtMessage.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke("ENTER"), "SendMessage");
 		txtMessage.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke("shift ENTER"), "NewLine");
 		txtMessage.getActionMap().put("NewLine", new AbstractAction(){
