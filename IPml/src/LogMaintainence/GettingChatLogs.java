@@ -35,65 +35,65 @@ public class GettingChatLogs extends Object{
 		if(chatFilePath.exists())
 		{
 			try {
-				Object obj = parser.parse(new FileReader(chatFilePath));
-				JSONObject logInfo = (JSONObject)obj;											 
+					Object obj = parser.parse(new FileReader(chatFilePath));
+					JSONObject logInfo = (JSONObject)obj;											 
 				               
-				long sessionValue = (long)logInfo.get("lastUpdatedSession");
+					long sessionValue = (long)logInfo.get("lastUpdatedSession");
 				
-				sessionTraversalCount = sessionValue;
+					sessionTraversalCount = sessionValue;
 				
-				JSONObject oldSessionObject = (JSONObject)logInfo.get("session");
-				JSONArray oldMessageArray;
-				int i=1;
-				while(i<=sessionTraversalCount)
-				{
-					//System.out.println("session : "+i);
+					JSONObject oldSessionObject = (JSONObject)logInfo.get("session");
+					JSONArray oldMessageArray;
+					int i=1;
+					while(i<=sessionTraversalCount)
+					{
+						//System.out.println("session : "+i);
 					
-					oldMessageArray = (JSONArray)oldSessionObject.get(""+i);
+						oldMessageArray = (JSONArray)oldSessionObject.get(""+i);
 					
-					Iterator<JSONObject> oldMessageIterator = oldMessageArray.iterator();
-					while (oldMessageIterator.hasNext()) 
-					{        
-						JSONObject messageObject = (JSONObject)oldMessageIterator.next();
-						if(messageObject.get("userId").equals(myId))
-						{
-							String s1 = new String(messageObject.get("userName")+": "+messageObject.get("messageText"));
-							ChatWindowPanelSender cwsp = new ChatWindowPanelSender(s1, messageObject.get("timeStamp").toString());
-							person.getWindow().chatconsole(cwsp);
+						Iterator<JSONObject> oldMessageIterator = oldMessageArray.iterator();
+						while (oldMessageIterator.hasNext()) 
+						{        
+							JSONObject messageObject = (JSONObject)oldMessageIterator.next();
+							if(messageObject.get("userId").equals(myId))
+							{
+								String s1 = new String(messageObject.get("userName")+": "+messageObject.get("messageText"));
+								ChatWindowPanelSender cwsp = new ChatWindowPanelSender(s1, messageObject.get("timeStamp").toString());
+								person.getWindow().chatconsole(cwsp);
 							
-						}
-						else
-						{
-							String s1 = new String(messageObject.get("userName")+": "+messageObject.get("messageText"));
-							ChatWindowPanelReceiver cwrp = new ChatWindowPanelReceiver(s1, messageObject.get("timeStamp").toString());
-							person.getWindow().chatconsole(cwrp);
+							}
+							else
+							{
+								String s1 = new String(messageObject.get("userName")+": "+messageObject.get("messageText"));
+								ChatWindowPanelReceiver cwrp = new ChatWindowPanelReceiver(s1, messageObject.get("timeStamp").toString());
+								person.getWindow().chatconsole(cwrp);
 
-						}
+							}
 					 
+						}
+						System.out.println();
+						i++;
 					}
-					System.out.println();
-					i++;
-				}
 			
-				}
+					}
 		
-				catch (FileNotFoundException e) 
-				{
-					e.printStackTrace();
-				} 
-				catch (IOException e)
-				{
-					e.printStackTrace();
-				} 
-				catch (ParseException e) 
-				{
-					e.printStackTrace();
-				}	
+					catch (FileNotFoundException e) 
+					{
+						e.printStackTrace();
+					} 
+					catch (IOException e)
+					{
+						e.printStackTrace();
+					} 
+					catch (ParseException e) 
+					{
+						e.printStackTrace();
+					}	
+				}
+			else
+			{
+				//System.out.println("No chats exist\n");
 			}
-		else
-		{
-			System.out.println("No chats exist\n");
 		}
-	}
 
 }
