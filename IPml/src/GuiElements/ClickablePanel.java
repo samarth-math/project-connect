@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.border.MatteBorder;
 
 
 public class ClickablePanel extends JPanel{
@@ -20,6 +21,7 @@ public class ClickablePanel extends JPanel{
 	private String html; //use html in tool tip
 	
 	 public ClickablePanel(Contact sperson){
+	 	setBorder(new MatteBorder(3, 0, 0, 0, (Color) new Color(70, 130, 180)));
 		
 		//set all properties of the panel here
 		setMaximumSize(new Dimension(30000,50));

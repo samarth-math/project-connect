@@ -72,22 +72,21 @@ public class ChatWindow extends BasicWindow
 			  }
 			});
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);	
 		
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{5,620, 0,20, 0, 5};
-		gbl_contentPane.rowHeights = new int[]{5, 440, 50};
-		gbl_contentPane.columnWeights = new double[]{0, 1.0, 0.0, 0, 0.0};
+		gbl_contentPane.columnWidths = new int[]{5,620,20, 5};
+		gbl_contentPane.rowHeights = new int[]{5, 420, 75};
+		gbl_contentPane.columnWeights = new double[]{0, 1.0, 0.0, 0.0};
 		gbl_contentPane.rowWeights = new double[]{0, 1.0, 0};
 		contentPane.setLayout(gbl_contentPane);
 		
 		JScrollPane scroll1 = new JScrollPane(history);
 		scroll1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		GridBagConstraints scrollConstraints = new GridBagConstraints();
-		scrollConstraints.insets = new Insets(0, 0, 5, 5);
+		scrollConstraints.insets = new Insets(0, 0, 5, 0);
 		scrollConstraints.fill = GridBagConstraints.BOTH;
-		scrollConstraints.gridwidth=3;
+		scrollConstraints.gridwidth=2;
 		scrollConstraints.gridx = 1;
 		scrollConstraints.gridy = 1;
 		contentPane.add(scroll1, scrollConstraints);
@@ -183,14 +182,15 @@ public class ChatWindow extends BasicWindow
 			}
 		});
 		
+		GridBagConstraints gbc_btnFile = new GridBagConstraints();
+		gbc_btnFile.insets = new Insets(0, 0, 0, 5);
+		gbc_btnFile.gridx = 2;
+		gbc_btnFile.gridy = 2;
+		contentPane.add(btnFile, gbc_btnFile);
 		
 		setVisible(true);
 		txtMessage.requestFocusInWindow();
-		GridBagConstraints gbc_btnFile = new GridBagConstraints();
-		gbc_btnFile.insets = new Insets(0, 0, 0, 5);
-		gbc_btnFile.gridx = 3;
-		gbc_btnFile.gridy = 2;
-		contentPane.add(btnFile, gbc_btnFile);
+		
 			
 		
 	}
