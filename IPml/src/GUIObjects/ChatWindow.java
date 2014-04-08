@@ -145,7 +145,7 @@ public class ChatWindow extends BasicWindow
 );
 		JScrollPane scroll2 = new JScrollPane(txtMessage);
 		GridBagConstraints gbc_txtMessage = new GridBagConstraints();
-		gbc_txtMessage.insets = new Insets(0, 0, 0, 5);
+		gbc_txtMessage.insets = new Insets(0, 0, 10, 5);
 		gbc_txtMessage.fill = GridBagConstraints.BOTH;
 		gbc_txtMessage.gridx = 1;
 		gbc_txtMessage.gridy = 2;
@@ -153,19 +153,14 @@ public class ChatWindow extends BasicWindow
 		txtMessage.setColumns(10);
 		
 		JButton btnFile = new JButton("File");
+		btnFile.setSize(30, 15);
 		
 		btnFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				try {
-			        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			    }catch(Exception ex) {
-			        ex.printStackTrace();
-			    }
-				
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.setMultiSelectionEnabled(true);
-				fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				int returnVal = fileChooser.showOpenDialog(getParent());
 
 		        if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -184,9 +179,40 @@ public class ChatWindow extends BasicWindow
 		
 		GridBagConstraints gbc_btnFile = new GridBagConstraints();
 		gbc_btnFile.insets = new Insets(0, 0, 0, 5);
+		gbc_btnFile.anchor = GridBagConstraints.NORTH;
 		gbc_btnFile.gridx = 2;
 		gbc_btnFile.gridy = 2;
 		contentPane.add(btnFile, gbc_btnFile);
+		
+		
+
+		JButton btnFolder = new JButton("Folder");
+		
+		btnFolder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+								
+				JFileChooser folderChooser = new JFileChooser();
+				folderChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				int returnVal = folderChooser.showOpenDialog(getParent());
+
+		        if (returnVal == JFileChooser.APPROVE_OPTION) {
+		        	File directory = folderChooser.getSelectedFile();
+		        	System.out.println("Directory... " + directory.getAbsolutePath());
+		        	Path filepath = directory.toPath();
+			        SendMessage SM = new SendMessage(person, filepath);
+					new Thread(SM).start();
+		        } else {
+/*************************** //What to do if the person closes the file chooser****/
+		        }
+			}
+		});
+		
+		GridBagConstraints gbc_btnFolder = new GridBagConstraints();
+		gbc_btnFolder.insets = new Insets(0, 0, 0, 5);
+		//gbc_btnDirectory.anchor = GridBagConstraints.SOUTH;
+		gbc_btnFolder.gridx = 2;
+		gbc_btnFolder.gridy = 2;
+		contentPane.add(btnFolder,gbc_btnFolder);
 		
 		setVisible(true);
 		txtMessage.requestFocusInWindow();

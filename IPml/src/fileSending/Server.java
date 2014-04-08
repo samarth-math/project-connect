@@ -74,8 +74,16 @@ public void receiveFile(Socket socket,String SaveAsPath,FileTransferPanel ftp) t
 	    int minus = 45;
 	    int newline = 10;
 	    int endOfStream = -1;
-		boolean entry = false; 
-	
+		boolean entry = false;
+		boolean flag_directory = false;
+		String SaveAs = SaveAsPath.trim();
+		
+		System.out.println("Save As "  + SaveAs);
+		
+		int index = SaveAsPath.lastIndexOf('\\');
+		SaveAs = SaveAsPath.substring(0,index);
+		
+		
 		InputStream is = socket.getInputStream();
 		while(true) {
 			
@@ -91,7 +99,7 @@ public void receiveFile(Socket socket,String SaveAsPath,FileTransferPanel ftp) t
 		// do while loop is used to extract the file header		
 		int current=0; // current represents number of byte read in each step
 		boolean flag = false; // flag will be set when '-' is encountered which is the separator in file header
-		System.out.println("Inside receiver.java");
+		//System.out.println("Inside receiver.java");
 		char pathType = ' ';
 		do {
 			current = is.read(header);
@@ -130,30 +138,32 @@ public void receiveFile(Socket socket,String SaveAsPath,FileTransferPanel ftp) t
 		}
 		if(entry==false) {
 			splitPath(filePath);
-			fileName = rootPath[rootPath.length-1].trim();
+			fileName = rootPath[rootPath.length-1];
 			entry=true;
 		}
 		else {
-			
-			//String f[] = filePath.split("[\\\\]");
 			String f[] = filePath.split(fileSeparator);
 			fileName =  f[f.length-1];
 		}
-
-		System.out.println("File Name " + fileName + " File Size " + fileSize) ;
+		fileName = fileName.trim();
+		
 		
 		fileS.trim();
 		fileSize = Long.parseLong(fileS);
 		if(!checkPath(filePath)) {
 			fileName = relativePath(filePath) ;
 		}
-		
+		if(flag_directory == true) {
+			
+			SaveAsPath = SaveAs + fileName;
+		}
 		System.out.println("Debugging inside Receiver.java SaveAsPath..." + SaveAsPath);
 		
-		File file = new File(SaveAsPath) ;
+		File file = new File(SaveAsPath.trim()) ;
 		boolean status = false;
 		
 		if(pathType == 'd') { 
+			flag_directory = true;
 			status =  file.mkdir();
 			if(!status) {
 				System.out.println("Directory Creation failed for directory " + SaveAsPath);
@@ -164,8 +174,9 @@ public void receiveFile(Socket socket,String SaveAsPath,FileTransferPanel ftp) t
 			if(!file.exists()) 
 				file.createNewFile();
 		}
-		
-		FileOutputStream fos = new FileOutputStream(SaveAsPath,false);
+		//System.out.println("Inside Server Saveaspath " + SaveAs.trim() + "File Name " + fileName);
+		//System.out.println("Inside Server Saveaspath " + SaveAsPath);
+		FileOutputStream fos = new FileOutputStream(SaveAsPath.trim(),false);
 		BufferedOutputStream bos = new BufferedOutputStream(fos); 			
 		
 		// Contents of file is read and stored in bytearray which will then be written to file location
