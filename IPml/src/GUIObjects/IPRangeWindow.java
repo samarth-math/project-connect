@@ -17,22 +17,24 @@ import javax.swing.JList;
 import java.awt.Color;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.MatteBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class IPRangeWindow extends JFrame {
 
 	
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField from1;
+	private JTextField from2;
 	private JTextField from3;
 	private JTextField from4;
 	private JTextField to1;
 	private JTextField to2;
 	private JTextField to3;
 	private JTextField to4;
-	private final JList rangeList = new JList();
-
+	private JList rangeList = new JList();
+	private String f1, f2, f3, f4, t1, t2, t3, t4;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -49,7 +51,8 @@ public class IPRangeWindow extends JFrame {
 
 	
 	public IPRangeWindow() {
-		setTitle("Specify IP Range");
+		setResizable(false);
+		setTitle("Specify IP Range to detect");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		setSize(480, 500);
@@ -60,13 +63,13 @@ public class IPRangeWindow extends JFrame {
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]{82,35,35,35,35,16,35,35,35,35,70,30};
-		gbl_contentPane.rowHeights = new int[]{40, 85, 30, 55, 80, 80, 40, 40, 50};
+		gbl_contentPane.rowHeights = new int[]{40, 85, 30, 80, 80, 80, 15, 40, 50};
 		gbl_contentPane.columnWeights = new double[]{1.0};
 		gbl_contentPane.rowWeights = new double[]{Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
-		textField.setColumns(10);
+		from1.setColumns(10);
 		
-		JTextField from1 = new JTextField();
+		from1 = new JTextField();
 		GridBagConstraints gbc_from1 = new GridBagConstraints();
 		gbc_from1.anchor = GridBagConstraints.SOUTH;
 		gbc_from1.insets = new Insets(0, 0, 5, 5);
@@ -75,7 +78,7 @@ public class IPRangeWindow extends JFrame {
 		gbc_from1.gridy = 1;
 		contentPane.add(from1, gbc_from1);
 		
-		JTextField from2 = new JTextField();
+		from2 = new JTextField();
 		GridBagConstraints gbc_from2 = new GridBagConstraints();
 		gbc_from2.anchor = GridBagConstraints.SOUTH;
 		gbc_from2.insets = new Insets(0, 0, 5, 5);
@@ -83,7 +86,7 @@ public class IPRangeWindow extends JFrame {
 		gbc_from2.gridx = 2;
 		gbc_from2.gridy = 1;
 		contentPane.add(from2, gbc_from2);
-		textField_1.setColumns(10);
+		from2.setColumns(10);
 		
 		from3 = new JTextField();
 		GridBagConstraints gbc_from3 = new GridBagConstraints();
@@ -158,6 +161,7 @@ public class IPRangeWindow extends JFrame {
 		gbc_toLabel.gridx = 7;
 		gbc_toLabel.gridy = 2;
 		contentPane.add(toLabel, gbc_toLabel);
+		
 		GridBagConstraints gbc_rangeList = new GridBagConstraints();
 		gbc_rangeList.fill = GridBagConstraints.BOTH;
 		gbc_rangeList.gridheight = 4;
@@ -165,6 +169,7 @@ public class IPRangeWindow extends JFrame {
 		gbc_rangeList.insets = new Insets(0, 0, 5, 5);
 		gbc_rangeList.gridx = 1;
 		gbc_rangeList.gridy = 3;
+		
 		rangeList.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.WHITE));
 		rangeList.setSelectedIndex(0);
 		rangeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -172,7 +177,24 @@ public class IPRangeWindow extends JFrame {
 		contentPane.add(rangeList, gbc_rangeList);
 		
 		JButton addButton = new JButton("Add");
+		addButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				f1 = from1.getText();
+				f2 = from2.getText();
+				f3 = from3.getText();
+				f4 = from4.getText();
+				t1 = to1.getText();
+				t2 = to2.getText();
+				t3 = to3.getText();
+				t4 = to4.getText();
+				System.out.print(f1+", "+f2+", "+f3+", "+f4+", "+t1+", "+t2+", "+t3+", "+t4);
+				//rangeList.addElement(""+f1+"."+f2+"."+f3+"."+f4+" | "+t1+"."+t2+"."+t3+"."+t4);
+			}
+		});
 		GridBagConstraints gbc_addButton = new GridBagConstraints();
+		gbc_addButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_addButton.insets = new Insets(0, 0, 5, 5);
 		gbc_addButton.gridx = 10;
 		gbc_addButton.gridy = 3;
@@ -187,6 +209,7 @@ public class IPRangeWindow extends JFrame {
 		
 		JButton editButton = new JButton("Edit");
 		GridBagConstraints gbc_editButton = new GridBagConstraints();
+		gbc_editButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_editButton.insets = new Insets(0, 0, 5, 5);
 		gbc_editButton.gridx = 10;
 		gbc_editButton.gridy = 5;
