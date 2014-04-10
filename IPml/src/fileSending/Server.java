@@ -77,10 +77,19 @@ public void receiveFile(Socket socket,String SaveAsPath,FileTransferPanel ftp) t
 		boolean entry = false;
 		boolean flag_directory = false;
 		String SaveAs = SaveAsPath.trim();
+		String fileSep = "//";
 		
-		System.out.println("Save As "  + SaveAs);
-		
-		int index = SaveAsPath.lastIndexOf('\\');
+		for(int i=0;i<SaveAsPath.length();i++) {
+			if(SaveAsPath.charAt(i)=='/') {
+				fileSep = "/";
+				break;
+			}
+			if(SaveAsPath.charAt(i)=='\\') {
+				fileSep = "\\";
+				break;
+			}
+		}
+		int index = SaveAsPath.lastIndexOf(fileSep);
 		SaveAs = SaveAsPath.substring(0,index);
 		
 		
@@ -157,7 +166,6 @@ public void receiveFile(Socket socket,String SaveAsPath,FileTransferPanel ftp) t
 			
 			SaveAsPath = SaveAs + fileName;
 		}
-		System.out.println("Debugging inside Receiver.java SaveAsPath..." + SaveAsPath);
 		
 		File file = new File(SaveAsPath.trim()) ;
 		boolean status = false;
@@ -251,10 +259,7 @@ public void receiveFile(Socket socket,String SaveAsPath,FileTransferPanel ftp) t
     }
     return path.delete();
  }
-/*	public static void main(String args[])  {
-		int portNumber = 6666;
-		new Thread(new Server(portNumber)).start();
-	}*/
+
 }
 	
 
