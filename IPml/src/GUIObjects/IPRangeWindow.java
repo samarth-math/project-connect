@@ -67,7 +67,7 @@ public class IPRangeWindow extends JFrame {
 		gbl_contentPane.columnWeights = new double[]{1.0};
 		gbl_contentPane.rowWeights = new double[]{Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
-		from1.setColumns(10);
+		
 		
 		from1 = new JTextField();
 		GridBagConstraints gbc_from1 = new GridBagConstraints();
@@ -76,6 +76,7 @@ public class IPRangeWindow extends JFrame {
 		gbc_from1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_from1.gridx = 1;
 		gbc_from1.gridy = 1;
+		from1.setColumns(10);
 		contentPane.add(from1, gbc_from1);
 		
 		from2 = new JTextField();
