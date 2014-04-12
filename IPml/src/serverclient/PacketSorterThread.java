@@ -122,6 +122,20 @@ public class PacketSorterThread implements Runnable {
 	        	ReceiveMessage RM = new ReceiveMessage(packdetails, address, t);
 	        	new Thread(RM).start();
 	        }
+	        else if (packdetails[0].equals("BM"))//Broadcast Message
+	        {/*packdetails[1]=mac of person received from
+	           packdetails[2]=Message*/
+	        	Timestamp t =new Timestamp(new Date().getTime());
+	        	if (packdetails.length>3)
+	        	{
+	        		for(int i=3;i<packdetails.length;i++)
+	        		{
+	        			packdetails[2]+= "|"+packdetails[i];
+	        		}
+	        	}
+	        	ReceiveMessage RM = new ReceiveMessage(packdetails, address, t);
+	        	new Thread(RM).start();
+	        }
 	        else if(packdetails[0].equals("S"))// implies, SendFile  type packet
 	        {/*packdetails[1]=mac of person received from
 	           packdetails[2]=threadnumber of sending thread
@@ -165,6 +179,7 @@ public class PacketSorterThread implements Runnable {
 	        	if (ftps!=null)
 	        		ftps.onReject();
 	        }
+	        
 	        else if (packdetails[0].equals("A"))// Catching Acknowledgement
 	        {/*packdetails[1]=Thread Number */
 	        	BlockingQueue<Character> q = (BlockingQueue<Character>) MainStart.threadsync.remove(packdetails[1]);

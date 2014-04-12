@@ -2,6 +2,9 @@ package globalfunctions;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.*;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -9,10 +12,13 @@ import javax.swing.SwingUtilities;
 
 import serverclient.MainStart;
 import GUIObjects.ChatWindow;
+import GuiElements.BroadCastSender;
 import LogMaintainence.ChatLogging;
 import LogMaintainence.GettingChatLogs;
 
 public class Contact {
+	
+	
 	private InetAddress ip;
 	private int port;
 	private String mac;
@@ -93,28 +99,28 @@ public class Contact {
 	{
 		return username;
 	}
-	/*public static void sendToAll(String Message, String senderid)
+	
+	
+	
+	public static void sendToAll(String Message)
 	{
 		byte[] buf = new byte[1024];
-		buf = new String("M|"+senderid+"|"+Message).getBytes();
-		
-		InetAddress ipall=null;
-		try {
-			ipall = InetAddress.getByName("255.255.255.255");
-		} catch (UnknownHostException e1) {
-			// Unable to broadcast - figure out course of action
-			e1.printStackTrace();
-		}
-		DatagramPacket packet = new DatagramPacket(buf, buf.length, ipall, 3333);
-		DatagramSocket socket = MainStart.socket;
-   		try {
-			socket.send(packet);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}*/
+		buf = new String("BM|"+MainStart.myID+"|"+Message).getBytes();
+		Timestamp t =new Timestamp(new Date().getTime());
+		MainStart.mainWindow.broadcastConsole(new BroadCastSender(Message,  new SimpleDateFormat("HH:mm:ss").format(t)));
+		for (String key : MainStart.people.keySet()) {
+			Contact person = (Contact) MainStart.people.get(key);
+		  
+		  	DatagramPacket packet = new DatagramPacket(buf, buf.length, person.getIP() , 3333);
+			DatagramSocket socket = MainStart.socket;
+	   		try {
+				socket.send(packet);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		  }
+	}
 	public void sendMessage(String Message, String senderid) throws SocketException, IOException
 	{
 		byte[] buf = new byte[1024];

@@ -1,10 +1,13 @@
 package serverclient;
 
 import globalfunctions.Contact;
+
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.net.InetAddress;
+
 import GUIObjects.ChatWindow;
+import GuiElements.BroadCastReceiver;
 import GuiElements.ChatWindowPanelReceiver;
 import GuiElements.FileTransferPanel;
 
@@ -23,15 +26,14 @@ public class ReceiveMessage implements Runnable
 	@Override
 	public void run()
 	{/*packdetails[1]=mac
-        packdetails[2]=threadnumber of sending thread
+        packdetails[2]=threadnumber of sending thread // Not used here
          */
 		Thread.currentThread().setName("ReceiveMessageThread");
 		Contact person = (Contact) MainStart.people.get(packdetails[1]);
 		if(packdetails[0].equals("M")) {
 			//packdetails[3]=message
 			ChatWindowPanelReceiver MessagePane = new ChatWindowPanelReceiver(new String(person.getUserName()+":"+packdetails[3]), new SimpleDateFormat("HH:mm:ss").format(t));
-			ChatWindow cw = person.getWindow();
-			cw.chatconsole(MessagePane);
+			person.getWindow().chatconsole(MessagePane);
 			try {
 				person.getBlockingQ().put(packdetails[1]+"|"+person.getUserName()+"|"+ new SimpleDateFormat("HH:mm:ss").format(t)+"|"+packdetails[3]);
 			} catch (InterruptedException e) {
@@ -45,6 +47,12 @@ public class ReceiveMessage implements Runnable
 			int sendPanelId = Integer.parseInt(packdetails[3]);
 			FileTransferPanel ftPane = new FileTransferPanel(person,packdetails[4],sendPanelId, new SimpleDateFormat("HH:mm:ss").format(t));
 			person.getWindow().chatconsole(ftPane);
+		}
+		else if (packdetails[0].equals("BM"))
+		{//packdetails[1] = mac id of sender
+		 //packdetails[2] = message
+			BroadCastReceiver bcr = new BroadCastReceiver(new String(person.getUserName()+":"+packdetails[2]), new SimpleDateFormat("HH:mm:ss").format(t));
+			MainStart.mainWindow.broadcastConsole(bcr);
 		}
 		
 	}
