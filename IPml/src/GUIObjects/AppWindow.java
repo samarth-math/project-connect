@@ -34,6 +34,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.nio.file.Path;
 
@@ -55,24 +56,29 @@ public class AppWindow extends BasicWindow
 		splitPane.setDividerLocation(280);
 		getContentPane().add(splitPane, BorderLayout.CENTER);
 		
-		final JList<Contact> list = new JList<Contact>(model);
+		JList<Contact> list = new JList<Contact>(model);
 	    ListCellRenderer<Contact> renderer = new AppWindowListCellRenderer();
 	    list.setCellRenderer(renderer);
 		
 		JScrollPane scrollPane = new JScrollPane(list);
 		splitPane.setLeftComponent(scrollPane);
 		
-	    list.addMouseListener(new MouseAdapter() {
-		      public void mouseClicked(MouseEvent mouseEvent) {
-			        if (mouseEvent.getClickCount() == 2) {
-			          int index = list.getSelectedIndex();
-			          if (index >= 0) {
-			            Contact person = (Contact) list.getModel().getElementAt(index);
-			            person.startChat();
-			          }
-			        }
-		      }
-		});
+		
+		 		  MouseListener ml = new MouseAdapter() {
+		 		      public void mouseClicked(MouseEvent mouseEvent) {
+		 		        @SuppressWarnings("unchecked")
+						JList<Contact> theList = (JList<Contact>) mouseEvent.getSource();
+		 		        if (mouseEvent.getClickCount() == 2) {
+		 		          int index = theList.getSelectedIndex();
+		 		          if (index >= 0) {
+		 		            Contact person = (Contact) theList.getModel().getElementAt(index);
+		 		            person.startChat();
+		 		          }
+		 		        }
+		 		      }
+		 		 };
+	    
+			    list.addMouseListener(ml);
 	    
 	    JPanel bChat = new JPanel();
 		splitPane.setRightComponent(bChat);
