@@ -1,22 +1,31 @@
 package GUIObjects;
 
+import globalfunctions.JTextFieldLimit;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.GridBagLayout;
+
 import javax.swing.JButton;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
 import javax.swing.JList;
+
 import java.awt.Color;
+
 import javax.swing.ListSelectionModel;
 import javax.swing.border.MatteBorder;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -78,6 +87,7 @@ public class IPRangeWindow extends JFrame {
 		gbc_from1.gridy = 1;
 		from1.setColumns(10);
 		contentPane.add(from1, gbc_from1);
+		from1.setDocument(new JTextFieldLimit(3));
 		
 		from2 = new JTextField();
 		GridBagConstraints gbc_from2 = new GridBagConstraints();
@@ -86,8 +96,9 @@ public class IPRangeWindow extends JFrame {
 		gbc_from2.fill = GridBagConstraints.HORIZONTAL;
 		gbc_from2.gridx = 2;
 		gbc_from2.gridy = 1;
-		contentPane.add(from2, gbc_from2);
 		from2.setColumns(10);
+		contentPane.add(from2, gbc_from2);
+		from2.setDocument(new JTextFieldLimit(3));
 		
 		from3 = new JTextField();
 		GridBagConstraints gbc_from3 = new GridBagConstraints();
@@ -96,8 +107,9 @@ public class IPRangeWindow extends JFrame {
 		gbc_from3.fill = GridBagConstraints.HORIZONTAL;
 		gbc_from3.gridx = 3;
 		gbc_from3.gridy = 1;
-		contentPane.add(from3, gbc_from3);
 		from3.setColumns(10);
+		contentPane.add(from3, gbc_from3);
+		from3.setDocument(new JTextFieldLimit(3));
 		
 		from4 = new JTextField();
 		GridBagConstraints gbc_from4 = new GridBagConstraints();
@@ -106,8 +118,9 @@ public class IPRangeWindow extends JFrame {
 		gbc_from4.fill = GridBagConstraints.HORIZONTAL;
 		gbc_from4.gridx = 4;
 		gbc_from4.gridy = 1;
-		contentPane.add(from4, gbc_from4);
 		from4.setColumns(10);
+		contentPane.add(from4, gbc_from4);
+		from4.setDocument(new JTextFieldLimit(3));
 		
 		to1 = new JTextField();
 		GridBagConstraints gbc_to1 = new GridBagConstraints();
@@ -118,6 +131,7 @@ public class IPRangeWindow extends JFrame {
 		gbc_to1.gridy = 1;
 		contentPane.add(to1, gbc_to1);
 		to1.setColumns(10);
+		to1.setDocument(new JTextFieldLimit(3));
 		
 		to2 = new JTextField();
 		GridBagConstraints gbc_to2 = new GridBagConstraints();
@@ -128,6 +142,8 @@ public class IPRangeWindow extends JFrame {
 		gbc_to2.gridy = 1;
 		contentPane.add(to2, gbc_to2);
 		to2.setColumns(10);
+		to2.setDocument(new JTextFieldLimit(3));
+		
 		
 		to3 = new JTextField();
 		GridBagConstraints gbc_to3 = new GridBagConstraints();
@@ -138,6 +154,7 @@ public class IPRangeWindow extends JFrame {
 		gbc_to3.gridy = 1;
 		contentPane.add(to3, gbc_to3);
 		to3.setColumns(10);
+		to3.setDocument(new JTextFieldLimit(3));
 		
 		to4 = new JTextField();
 		GridBagConstraints gbc_to4 = new GridBagConstraints();
@@ -148,6 +165,7 @@ public class IPRangeWindow extends JFrame {
 		gbc_to4.gridy = 1;
 		contentPane.add(to4, gbc_to4);
 		to4.setColumns(10);
+		to2.setDocument(new JTextFieldLimit(3));
 		
 		JLabel fromLabel = new JLabel("From");
 		GridBagConstraints gbc_fromLabel = new GridBagConstraints();
