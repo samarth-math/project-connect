@@ -59,7 +59,7 @@ public class PacketSorterThread implements Runnable {
 	        InetAddress address = packet.getAddress();
 	        int port = packet.getPort();
 	        
-	        if(packdetails[0].equals("D") && !packdetails[2].equals(MainStart.myID))	// if it's a Detection Packet	                
+	        if(packdetails[0].equals("D"))// && !packdetails[2].equals(MainStart.myID))	// if it's a Detection Packet	                
 	        {/* packdetails[0] - if Detection Packet
 	             * packdetails[1] - if sent by Server or client
 	             * packdetails[2] - Mac Address

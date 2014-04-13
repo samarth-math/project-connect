@@ -104,6 +104,8 @@ public class AppWindow extends BasicWindow
 			public void actionPerformed(ActionEvent e)
 			{
 				clearlist();
+				ShoutThread S = new ShoutThread();
+				new Thread(S).start();
 			}
 		});
 
@@ -280,8 +282,8 @@ public class AppWindow extends BasicWindow
 		mntmRefreshf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clearlist();
-				//ShoutThread S = new ShoutThread();
-				//new Thread(S).start();
+				ShoutThread S = new ShoutThread();
+				new Thread(S).start();
 			}
 		});
 		mnSettings.add(mntmRefreshf);
@@ -316,22 +318,14 @@ public class AppWindow extends BasicWindow
 		} );
 	}
 
-	public void addnewperson(final Contact person) // ListenThread can call to add more people as they join
-	{
-		java.awt.EventQueue.invokeLater(new Runnable() {
-		    public void run() {
-		    	model.addElement(person);
-				revalidate();
-		    }
-		} );	
+	public void addnewperson(Contact person) // ListenThread can call to add more people as they join
+	{	    	
+		model.addElement(person);
 	}
 	private void clearlist()
 	{
 		model.clear();
 		MainStart.people.clear();
-		ShoutThread S = new ShoutThread();
-		new Thread(S).start();
-
 	}
 	
 	public int getListIndex(Contact person)
