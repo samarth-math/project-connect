@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import serverclient.MainStart;
 import GuiElements.FileTransferPanel;
 
@@ -17,8 +20,8 @@ public class Server implements Runnable{
 	private String[] rootPath;
 	private String fileSeparator;
 	private String SaveAsPath;
-	public float i;
-	public float max;
+	private float i;
+	private float max;
 	private FileTransferPanel ftp;
 	public boolean stop = false;
 	public Server(int portNumber, FileTransferPanel ftp,String SaveAsPath) {
@@ -182,8 +185,7 @@ public void receiveFile(Socket socket,String SaveAsPath,FileTransferPanel ftp) t
 			if(!file.exists()) 
 				file.createNewFile();
 		}
-		//System.out.println("Inside Server Saveaspath " + SaveAs.trim() + "File Name " + fileName);
-		//System.out.println("Inside Server Saveaspath " + SaveAsPath);
+	
 		FileOutputStream fos = new FileOutputStream(SaveAsPath.trim(),false);
 		BufferedOutputStream bos = new BufferedOutputStream(fos); 			
 		
@@ -214,8 +216,10 @@ public void receiveFile(Socket socket,String SaveAsPath,FileTransferPanel ftp) t
 		
 		if(stop)
 		{
-			ftp.showMsg("File Transfer Cancelled");
-			//deleteRecursive(SaveAsPath;) code to delete downloaded files so far.
+			ftp.showMsg("File Transfer Cancelled");		
+			File f = new File(SaveAsPath);
+			deleteRecursive(f);// code to delete downloaded files so far.
+			break;
 		}
 		else
 		{

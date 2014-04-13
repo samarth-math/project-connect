@@ -127,18 +127,19 @@ public class FileTransferPanel extends JPanel{
 			            File file = fileChooser.getSelectedFile();
 			            SaveAsPath = file.getAbsolutePath();	
 			            System.out.println("SaveAsPath inside Filetransferpanel..." + SaveAsPath);
+			            serverThread = new Server(6666, ftp,SaveAsPath);
+						new Thread(serverThread).start();
+						try {
+								person.sendAcceptFile(sendPanelId, all);
+								onAcceptUI();
+						} catch (SocketException exc) {
+							// Do stuff
+							
+						} catch (IOException exc) {
+							// Do stuff
+						}
 			        }
-				serverThread = new Server(6666, ftp,SaveAsPath);
-				new Thread(serverThread).start();
-				try {
-						person.sendAcceptFile(sendPanelId, all);
-						onAcceptUI();
-				} catch (SocketException exc) {
-					// Do stuff
-					
-				} catch (IOException exc) {
-					// Do stuff
-				}
+				
 
 			}
 		});
@@ -177,6 +178,8 @@ public class FileTransferPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				//CANCEL FUNCTIONALITY
 				serverThread.stop=true;
+				btnCancel.setVisible(false);
+				progBar.setVisible(false);
 			}
 		});
 		
