@@ -188,8 +188,6 @@ public class AppWindow extends BasicWindow
 		            	Contact.sendToAll(filepath);
 		            }
 		            
-		        } else {
-/*************************** //What to do if the person closes the file chooser****/
 		        }
 			}
 		});
@@ -217,8 +215,6 @@ public class AppWindow extends BasicWindow
 		        	System.out.println("Directory... " + directory.getAbsolutePath());
 		        	Path filepath = directory.toPath();
 		        	Contact.sendToAll(filepath);
-		        } else {
-/*************************** //What to do if the person closes the file chooser****/
 		        }
 			}
 		});
@@ -250,6 +246,7 @@ public class AppWindow extends BasicWindow
 		JMenuItem mntmRefreshf = new JMenuItem("Refresh (F5)");
 		mntmRefreshf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				clearlist();
 				ShoutThread S = new ShoutThread();
 				new Thread(S).start();
 			}
@@ -292,5 +289,10 @@ public class AppWindow extends BasicWindow
 				revalidate();
 		    }
 		} );	
+	}
+	private void clearlist()
+	{
+		model.clear();
+		MainStart.people.clear();
 	}
 }
