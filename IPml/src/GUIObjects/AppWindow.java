@@ -44,7 +44,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-public class AppWindow extends BasicWindow
+public class AppWindow extends JFrame
 {
 	private static final long serialVersionUID = 1L;
 	private Box history = Box.createVerticalBox();
@@ -62,30 +62,56 @@ public class AppWindow extends BasicWindow
 		splitPane.setDividerLocation(280);
 		getContentPane().add(splitPane, BorderLayout.CENTER);
 		
-		JList<Contact> list = new JList<Contact>(model);
+		final JList<Contact> list = new JList<Contact>(model);
 	    ListCellRenderer<Contact> renderer = new AppWindowListCellRenderer();
 	    list.setCellRenderer(renderer);
 		
 		JScrollPane scrollPane = new JScrollPane(list);
 		splitPane.setLeftComponent(scrollPane);
-		
-		
-		 		  MouseListener ml = new MouseAdapter() {
-		 		      public void mouseClicked(MouseEvent mouseEvent) {
+  
+	    list.addMouseListener(new MouseAdapter() {
+	 		      public void mouseClicked(MouseEvent mouseEvent) {
 		 		        @SuppressWarnings("unchecked")
-						JList<Contact> theList = (JList<Contact>) mouseEvent.getSource();
-		 		        if (mouseEvent.getClickCount() == 2) {
-		 		          int index = theList.getSelectedIndex();
-		 		          if (index >= 0) {
-		 		            Contact person = (Contact) theList.getModel().getElementAt(index);
-		 		            person.startChat();
-		 		          }
-		 		        }
-		 		      }
-		 		 };
+				JList<Contact> theList = (JList<Contact>) mouseEvent.getSource();
+ 		        if (mouseEvent.getClickCount() == 2) {
+ 		          int index = theList.getSelectedIndex();
+ 		          if (index >= 0) {
+ 		            Contact person = (Contact) theList.getModel().getElementAt(index);
+ 		            person.startChat();
+ 		          }
+ 		        }
+ 		      }
+ 		 });
 	    
-			    list.addMouseListener(ml);
-	    
+		list.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke("ENTER"), "StartChat");
+		list.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke("F5"), "Refresh");
+		
+		list.getActionMap().put("StartChat", new AbstractAction(){
+			private static final long serialVersionUID = 1L;
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+			      int index = list.getSelectedIndex();
+ 		          if (index >= 0) {
+ 		            Contact person = (Contact) list.getModel().getElementAt(index);
+ 		            person.startChat();
+ 		          }
+			}
+		});
+		
+		list.getActionMap().put("Refresh", new AbstractAction(){
+			private static final long serialVersionUID = 1L;
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				clearlist();
+				ShoutThread S = new ShoutThread();
+				new Thread(S).start();
+			}
+		});
+
+		
+		
 	    JPanel bChat = new JPanel();
 		splitPane.setRightComponent(bChat);
 		
@@ -252,6 +278,8 @@ public class AppWindow extends BasicWindow
 			}
 		});
 		mnSettings.add(mntmRefreshf);
+		
+		
 		
 		JMenuItem mntmDetectIp = new JMenuItem("Detect IP");
 		mntmDetectIp.addActionListener(new ActionListener() {
