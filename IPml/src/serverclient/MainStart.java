@@ -6,15 +6,20 @@
 
 package serverclient;
 import globalfunctions.Contact;
+
 import java.net.ServerSocket;
+
 import globalfunctions.IpAddress;
+
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.HashMap;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+
 import GUIObjects.AppWindow;
+import GuiElements.BroadCastFileSend;
 import GuiElements.FileTransferPanelS;
 
 public class MainStart 
@@ -27,6 +32,7 @@ public class MainStart
 	public static BlockingQueue<DatagramPacket> Q;
 	public static AppWindow mainWindow;
 	public static HashMap <Integer, FileTransferPanelS> fileSendPanels = new HashMap <Integer, FileTransferPanelS>();
+	public static HashMap <Integer, BroadCastFileSend> broadcastfspanels = new HashMap<Integer, BroadCastFileSend>();
 	public static ServerSocket ftpsocket;
 	public static void main(String[] args)
     {
