@@ -4,6 +4,7 @@
 package GUIObjects;
 import globalfunctions.Contact;
 import globalfunctions.FileDrop;
+import globalfunctions.JTextFieldLimit;
 
 import javax.swing.JFrame;
 
@@ -92,6 +93,7 @@ public class ChatWindow extends BasicWindow
 		vsbar.setUnitIncrement(16);
 		
 		txtMessage = new JTextArea();
+		txtMessage.setDocument(new JTextFieldLimit(2004));
 		new FileDrop(txtMessage, new FileDrop.Listener()
 		{
 			public void filesDropped(File[] files)

@@ -20,5 +20,10 @@ private int limit;
     if ((getLength() + str.length()) <= limit) {
       super.insertString(offset, str, attr);
     }
+    else
+    {
+    	super.insertString(offset,  "Message Truncated:\n"+str.substring(0,limit-19), attr);
+    }
+    
   }
 }

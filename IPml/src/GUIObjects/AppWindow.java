@@ -3,6 +3,7 @@ package GUIObjects;
 //import javax.swing.Box;
 import globalfunctions.Contact;
 import globalfunctions.FileDrop;
+import globalfunctions.JTextFieldLimit;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
@@ -140,6 +141,8 @@ public class AppWindow extends BasicWindow
 		vsbar.setUnitIncrement(16);
 		
 		final JTextArea txtMessage = new JTextArea();
+		
+		txtMessage.setDocument(new JTextFieldLimit(2004));
 		new FileDrop(txtMessage, new FileDrop.Listener()
 		{
 			public void filesDropped(File[] files)
