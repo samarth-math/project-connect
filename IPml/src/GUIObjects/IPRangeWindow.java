@@ -2,13 +2,10 @@ package GUIObjects;
 
 import globalfunctions.JTextFieldLimit;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
 import java.awt.GridBagLayout;
 
 import javax.swing.JButton;
@@ -16,9 +13,9 @@ import javax.swing.JButton;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
-import javax.swing.JTextPane;
 import javax.swing.JList;
 
 import java.awt.Color;
@@ -42,7 +39,7 @@ public class IPRangeWindow extends JFrame {
 	private JTextField to2;
 	private JTextField to3;
 	private JTextField to4;
-	private JList rangeList = new JList();
+	private DefaultListModel<String> jmodel = new DefaultListModel<String>();
 	private String f1, f2, f3, f4, t1, t2, t3, t4;
 	
 	public static void main(String[] args) {
@@ -86,8 +83,8 @@ public class IPRangeWindow extends JFrame {
 		gbc_from1.gridx = 1;
 		gbc_from1.gridy = 1;
 		from1.setColumns(10);
-		contentPane.add(from1, gbc_from1);
 		from1.setDocument(new JTextFieldLimit(3));
+		contentPane.add(from1, gbc_from1);
 		
 		from2 = new JTextField();
 		GridBagConstraints gbc_from2 = new GridBagConstraints();
@@ -96,8 +93,8 @@ public class IPRangeWindow extends JFrame {
 		gbc_from2.fill = GridBagConstraints.HORIZONTAL;
 		gbc_from2.gridx = 2;
 		gbc_from2.gridy = 1;
-		from2.setColumns(10);
 		contentPane.add(from2, gbc_from2);
+		from2.setColumns(10);
 		from2.setDocument(new JTextFieldLimit(3));
 		
 		from3 = new JTextField();
@@ -107,8 +104,8 @@ public class IPRangeWindow extends JFrame {
 		gbc_from3.fill = GridBagConstraints.HORIZONTAL;
 		gbc_from3.gridx = 3;
 		gbc_from3.gridy = 1;
-		from3.setColumns(10);
 		contentPane.add(from3, gbc_from3);
+		from3.setColumns(10);
 		from3.setDocument(new JTextFieldLimit(3));
 		
 		from4 = new JTextField();
@@ -118,8 +115,8 @@ public class IPRangeWindow extends JFrame {
 		gbc_from4.fill = GridBagConstraints.HORIZONTAL;
 		gbc_from4.gridx = 4;
 		gbc_from4.gridy = 1;
-		from4.setColumns(10);
 		contentPane.add(from4, gbc_from4);
+		from4.setColumns(10);
 		from4.setDocument(new JTextFieldLimit(3));
 		
 		to1 = new JTextField();
@@ -144,7 +141,6 @@ public class IPRangeWindow extends JFrame {
 		to2.setColumns(10);
 		to2.setDocument(new JTextFieldLimit(3));
 		
-		
 		to3 = new JTextField();
 		GridBagConstraints gbc_to3 = new GridBagConstraints();
 		gbc_to3.anchor = GridBagConstraints.SOUTH;
@@ -165,7 +161,7 @@ public class IPRangeWindow extends JFrame {
 		gbc_to4.gridy = 1;
 		contentPane.add(to4, gbc_to4);
 		to4.setColumns(10);
-		to2.setDocument(new JTextFieldLimit(3));
+		to4.setDocument(new JTextFieldLimit(3));
 		
 		JLabel fromLabel = new JLabel("From");
 		GridBagConstraints gbc_fromLabel = new GridBagConstraints();
@@ -189,9 +185,11 @@ public class IPRangeWindow extends JFrame {
 		gbc_rangeList.gridx = 1;
 		gbc_rangeList.gridy = 3;
 		
+		final JList<String> rangeList = new JList<String>(jmodel);
 		rangeList.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.WHITE));
 		rangeList.setSelectedIndex(0);
 		rangeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		rangeList.setLayoutOrientation(JList.VERTICAL_WRAP);
 		rangeList.setBackground(Color.WHITE);
 		contentPane.add(rangeList, gbc_rangeList);
 		
@@ -208,8 +206,21 @@ public class IPRangeWindow extends JFrame {
 				t2 = to2.getText();
 				t3 = to3.getText();
 				t4 = to4.getText();
-				System.out.print(f1+", "+f2+", "+f3+", "+f4+", "+t1+", "+t2+", "+t3+", "+t4);
-				//rangeList.addElement(""+f1+"."+f2+"."+f3+"."+f4+" | "+t1+"."+t2+"."+t3+"."+t4);
+				
+				if(t1.isEmpty() || t2.isEmpty() || t3.isEmpty() || t4.isEmpty() || f1.isEmpty() || f2.isEmpty() || f3.isEmpty() || f4.isEmpty())
+					;
+				else
+				{
+					jmodel.addElement(""+f1+"."+f2+"."+f3+"."+f4+" | "+t1+"."+t2+"."+t3+"."+t4);
+					from1.setText("");
+					from2.setText("");
+					from3.setText("");
+					from4.setText("");
+					to1.setText("");
+					to2.setText("");
+					to3.setText("");
+					to4.setText("");
+				}
 			}
 		});
 		GridBagConstraints gbc_addButton = new GridBagConstraints();
@@ -220,6 +231,22 @@ public class IPRangeWindow extends JFrame {
 		contentPane.add(addButton, gbc_addButton);
 		
 		JButton deleteButton = new JButton("Delete");
+		deleteButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				int index = rangeList.getSelectedIndex();
+				if(index>=0)
+				{	
+					jmodel.remove(index);
+				}
+				else
+					;
+
+			    
+			    
+			}
+		});
 		GridBagConstraints gbc_deleteButton = new GridBagConstraints();
 		gbc_deleteButton.insets = new Insets(0, 0, 5, 5);
 		gbc_deleteButton.gridx = 10;
@@ -227,6 +254,38 @@ public class IPRangeWindow extends JFrame {
 		contentPane.add(deleteButton, gbc_deleteButton);
 		
 		JButton editButton = new JButton("Edit");
+		editButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				String chosen = rangeList.getSelectedValue();
+				int index = rangeList.getSelectedIndex();
+				
+				if(index>=0)
+				{
+					jmodel.remove(index);
+					
+					String IPItems[] = chosen.split("\\|");
+				
+					String from = IPItems[0].trim();
+					String to = IPItems[1].trim();
+				
+					String fromArray[] = from.split("\\.");
+					String toArray[] = to.split("\\.");
+				
+					from1.setText(fromArray[0]);
+					from2.setText(fromArray[1]);
+					from3.setText(fromArray[2]);
+					from4.setText(fromArray[3]);
+					to1.setText(toArray[0]);
+					to2.setText(toArray[1]);
+					to3.setText(toArray[2]);
+					to4.setText(toArray[3]);
+					
+				}
+					
+			}
+		});
 		GridBagConstraints gbc_editButton = new GridBagConstraints();
 		gbc_editButton.fill = GridBagConstraints.HORIZONTAL;
 		gbc_editButton.insets = new Insets(0, 0, 5, 5);
