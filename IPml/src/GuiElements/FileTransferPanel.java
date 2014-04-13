@@ -6,22 +6,14 @@ package GuiElements;
 import fileSending.Server;
 import fileSending.TestPane;
 import globalfunctions.Contact;
-
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
-
 import java.awt.GridBagLayout;
-
 import javax.swing.JLabel;
-
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-
 import javax.swing.JButton;
-
 import java.awt.Color;
-import serverclient.MainStart;
-
 import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
@@ -29,8 +21,8 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.SocketException;
-
 import javax.swing.border.MatteBorder;
+
 public class FileTransferPanel extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
@@ -42,24 +34,25 @@ public class FileTransferPanel extends JPanel{
 	private JPanel panel_1;
 	private JLabel lblStatus;
 	
-	public FileTransferPanel(Contact person, String filename, int sendPanelId, String timeStamp) {
+	public FileTransferPanel(Contact person, String filename, int sendPanelId, String timeStamp, boolean all) {
 		
 		setBackground(Color.WHITE);
-		setMaximumSize(new Dimension(3000,1000));
-		setPreferredSize(new Dimension(500,120));
-		setBorder(new MatteBorder(0, 3, 0, 0, (Color) new Color(0, 0, 102)));
+		setPreferredSize(new Dimension(400,120));
+		setBorder(new MatteBorder(0, 5, 0, 0, (Color) new Color(0, 0, 102)));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{360,70,70};
 		gridBagLayout.rowHeights = new int[]{55,25};
 		gridBagLayout.columnWeights = new double[]{1.0};
 		gridBagLayout.rowWeights = new double[]{1.0, 0.0};
 		setLayout(gridBagLayout);
-		createInsidePanel(person,filename,sendPanelId,timeStamp);
+		createInsidePanel(person,filename,sendPanelId,timeStamp,all);
 		
 	}
 
 	
-	private void createInsidePanel(final Contact person, final String filename, final int sendPanelId, final String timeStamp){
+	private void createInsidePanel(final Contact person, final String filename, final int sendPanelId, final String timeStamp, final boolean all){
+		
+		
 		JPanel panel = new JPanel();
 		panel.setBorder(null);
 		panel.setBackground(Color.WHITE);
@@ -138,8 +131,8 @@ public class FileTransferPanel extends JPanel{
 				serverThread = new Server(6666, ftp,SaveAsPath);
 				new Thread(serverThread).start();
 				try {
-					person.sendAcceptFile(MainStart.myID,sendPanelId);
-					onAcceptUI();
+						person.sendAcceptFile(sendPanelId, all);
+						onAcceptUI();
 				} catch (SocketException exc) {
 					// Do stuff
 					
@@ -161,7 +154,7 @@ public class FileTransferPanel extends JPanel{
 		btnReject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					person.sendRejectFile(MainStart.myID, sendPanelId);
+					person.sendRejectFile(sendPanelId);
 					onRejectUI();
 				} catch (SocketException exc) {
 					// Do stuff
@@ -213,7 +206,6 @@ public class FileTransferPanel extends JPanel{
 		lblStatus.setText(msg);
 		revalidate();
 	}
-	
 	private void onAcceptUI(){
 		java.awt.EventQueue.invokeLater(new Runnable() {
 		    public void run() {
@@ -237,8 +229,6 @@ public class FileTransferPanel extends JPanel{
 		    }
 		} );
 	}
-
-	
 	public TestPane getprogbar()
 	{
 		return progBar;
