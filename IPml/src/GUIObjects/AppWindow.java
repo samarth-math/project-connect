@@ -105,8 +105,6 @@ public class AppWindow extends BasicWindow
 			public void actionPerformed(ActionEvent e)
 			{
 				clearlist();
-				ShoutThread S = new ShoutThread();
-				new Thread(S).start();
 			}
 		});
 
@@ -123,7 +121,7 @@ public class AppWindow extends BasicWindow
 	    bChat.setLayout(gbl_bChat);
 	    
 		for (String key : MainStart.people.keySet()) {
-			  Contact person = (Contact) MainStart.people.get(key);
+			  Contact person = MainStart.people.get(key);
 			  model.addElement(person);
 		}
 		
@@ -275,8 +273,8 @@ public class AppWindow extends BasicWindow
 		mntmRefreshf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clearlist();
-				ShoutThread S = new ShoutThread();
-				new Thread(S).start();
+				//ShoutThread S = new ShoutThread();
+				//new Thread(S).start();
 			}
 		});
 		mnSettings.add(mntmRefreshf);
@@ -324,6 +322,9 @@ public class AppWindow extends BasicWindow
 	{
 		model.clear();
 		MainStart.people.clear();
+		ShoutThread S = new ShoutThread();
+		new Thread(S).start();
+
 	}
 	
 	public int getListIndex(Contact person)
@@ -332,7 +333,11 @@ public class AppWindow extends BasicWindow
 	}
 	public void removeFromList(Contact person)
 	{
-		if(model.indexOf(person)!=-1)
-		model.remove(model.indexOf(person));
+		int index = model.indexOf(person);
+		System.out.println(person.getUserName()+" is at index " +model.indexOf(person));
+		if(index!=-1)
+		{
+			model.remove(index);
+		}
 	}
 }

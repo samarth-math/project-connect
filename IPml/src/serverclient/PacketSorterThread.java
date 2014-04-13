@@ -59,7 +59,7 @@ public class PacketSorterThread implements Runnable {
 	        InetAddress address = packet.getAddress();
 	        int port = packet.getPort();
 	        
-	        if(packdetails[0].equals("D"))	// if it's a Detection Packet	                
+	        if(packdetails[0].equals("D") && !packdetails[2].equals(MainStart.myID))	// if it's a Detection Packet	                
 	        {/* packdetails[0] - if Detection Packet
 	             * packdetails[1] - if sent by Server or client
 	             * packdetails[2] - Mac Address
@@ -71,15 +71,37 @@ public class PacketSorterThread implements Runnable {
 	        	//Save Packet
 	        	Contact person = new Contact(packdetails[2], packdetails[3], packdetails[4], packdetails[5], address, port);
 	        	//person.printall();
-	        	Contact person1 = MainStart.people.get(packdetails[2]);
-	        	if (person1==null)
-	        	{
-	        		MainStart.people.put(packdetails[2], person);
-	        		if(MainStart.mainWindow!=null)
-	        		MainStart.mainWindow.addnewperson(MainStart.people.get(packdetails[2]));
-	        		
+	        	System.out.println("Printing HashMap");
+	        	for (String key : MainStart.people.keySet()) {
+	  			  Contact person2 = MainStart.people.get(key);
+	  			 person2.printall(); 
 	        	}
-	     
+	        	Contact person1 = MainStart.people.get(packdetails[2]);
+	        	
+	        	if(person1!=null)
+	        	{
+	        		System.out.println(person1.getUserName() +" is the old person");
+	        		System.out.println(person.getUserName()+" is the person packet received");
+		        	if(MainStart.mainWindow!=null)
+		        	{
+			        	MainStart.mainWindow.removeFromList(MainStart.people.get(packdetails[2]));
+			        	MainStart.people.put(packdetails[2], person);
+			        	MainStart.mainWindow.addnewperson(MainStart.people.get(packdetails[2]));
+		        	}
+		        	
+	        	}
+	        	else
+	        	{
+	        		System.out.println("Person is null");
+	        		System.out.println(person.getUserName()+" is the person packet received");
+	        		
+		        	if(MainStart.mainWindow!=null)
+		        	{
+			        	MainStart.mainWindow.addnewperson(person);
+		        	}
+		        	MainStart.people.put(packdetails[2], person);
+	        	}
+	        	System.out.println("--------------------------------------------------\n\n");
 	        	
 	        	if (packdetails[1].equals("C"))// If packet came from client, send it a response
 	           	{

@@ -29,6 +29,7 @@ public class Contact {
 	private String username;
 	private ChatWindow cw=null;
 	private BlockingQueue<String> bq = null;
+	private int listIndex;
 	
 	public Contact(String mac, String OS, String Host, String username, InetAddress ip, int port)
 	{
@@ -75,6 +76,10 @@ public class Contact {
 	{
 		bq=new ArrayBlockingQueue<String>(15);
 	}
+	public void setBlockinQNull()
+	{
+		bq=null;
+	}
 	public BlockingQueue<String> getBlockingQ()
 	{
 		return bq;
@@ -102,7 +107,14 @@ public class Contact {
 		return username;
 	}
 	
-	
+	public int getListIndex()
+	{
+		return listIndex;
+	}
+	public void setIndex(int listIndex)
+	{
+		this.listIndex = listIndex;
+	}
 	
 	public static void sendToAll(String Message)
 	{
@@ -214,7 +226,7 @@ public class Contact {
 	}
 	public void printall()
 	{
-		System.out.print(mac+"\n"+OS+"\n"+Host+"\n"+username+"\n"+ip.getHostAddress()+"\n\n\n");
+		System.out.print(mac+"\n"+OS+"\n"+Host+"\n"+username+"\n"+ip.getHostAddress()+"\n"+port+"\n"+cw+"\n"+bq+"\n\n");
 	}
 	 @Override
 	    public boolean equals(Object someone)//To do a deep comparison

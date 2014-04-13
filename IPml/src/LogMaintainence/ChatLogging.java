@@ -12,6 +12,8 @@ import org.json.simple.parser.ParseException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import serverclient.MainStart;
+
 
 
 public class ChatLogging implements Runnable
@@ -120,7 +122,9 @@ public class ChatLogging implements Runnable
 				}
 			}
 			writeLogToFile();
-		}	
+		}
+		bq=null;
+		MainStart.people.get(userId).setBlockinQNull();
 	}
 		
 	
