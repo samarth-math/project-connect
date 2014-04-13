@@ -40,7 +40,7 @@ public class SendMessage implements Runnable
 			Timestamp t =new Timestamp(new Date().getTime());
 			if(Message!=null)  {
 				
-				ChatWindowPanelSender MessagePane = new ChatWindowPanelSender(new String(MainStart.myUserName+":"+Message), new SimpleDateFormat("HH:mm:ss").format(t));
+				ChatWindowPanelSender MessagePane = new ChatWindowPanelSender(new String(Message), new SimpleDateFormat("HH:mm:ss").format(t));
 				person.getWindow().chatconsole(MessagePane);
 				try
 				{
