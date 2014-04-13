@@ -232,6 +232,21 @@ public class FileTransferPanel extends JPanel{
 		    }
 		} );
 	}
+	public void onCompleteUI(){
+		java.awt.EventQueue.invokeLater(new Runnable() {
+		    public void run() {
+		    	lblStatus.setText("File Transfer Completed");
+				btnAccept.setVisible(false);
+				btnReject.setVisible(false);
+				btnCancel.setVisible(false);
+				progBar.setVisible(false);
+				revalidate();
+				repaint();
+		    }
+		} );
+	}
+	
+	
 	public TestPane getprogbar()
 	{
 		return progBar;
