@@ -17,6 +17,7 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -27,6 +28,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.ScrollPaneConstants;
 
 import serverclient.MainStart;
+import serverclient.ShoutThread;
 import GUIObjects.AppWindowListCellRenderer;
 
 import java.awt.GridBagLayout;
@@ -37,6 +39,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.nio.file.Path;
+
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 public class AppWindow extends BasicWindow
 {
@@ -223,6 +229,42 @@ public class AppWindow extends BasicWindow
 		gbc_btnFolder.gridx = 1;
 		gbc_btnFolder.gridy = 1;
 		bChat.add(btnFolder,gbc_btnFolder);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu mnSettings = new JMenu("Settings");
+		menuBar.add(mnSettings);
+		
+		JMenuItem mntmSpecifyIpRange = new JMenuItem("Specify IP Range");
+		mnSettings.add(mntmSpecifyIpRange);
+		
+		JMenuItem mntmChangeDisplayName = new JMenuItem("Change Display Name");
+		mntmChangeDisplayName.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		mnSettings.add(mntmChangeDisplayName);
+		
+		JMenuItem mntmRefreshf = new JMenuItem("Refresh (F5)");
+		mntmRefreshf.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ShoutThread S = new ShoutThread();
+				new Thread(S).start();
+			}
+		});
+		mnSettings.add(mntmRefreshf);
+		
+		JMenuItem mntmDetectIp = new JMenuItem("Detect IP");
+		mntmDetectIp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String ip = (String)JOptionPane.showInputDialog("Detect IP");
+				ShoutThread S = new ShoutThread(ip,ip);
+				new Thread(S).start();
+			}
+		});
+		mnSettings.add(mntmDetectIp);
 		
 		setVisible(true);
 		
