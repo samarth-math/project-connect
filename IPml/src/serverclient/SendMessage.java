@@ -45,7 +45,7 @@ public class SendMessage implements Runnable
 				try
 				{
 					
-					person.sendMessage(threadnumber+"|"+Message, MainStart.myID);
+					person.sendMessage(threadnumber+"|"+Message);
 					if(q.poll(500, TimeUnit.MILLISECONDS)==null)
 					{
 						MessagePane.showDeliveryStatus(false);
@@ -64,14 +64,15 @@ public class SendMessage implements Runnable
 			}
 			else {
 				String filename = filepath.getFileName().toString();
-				FileTransferPanelS ftPane = new FileTransferPanelS(filename,new SimpleDateFormat("HH:mm:ss").format(t),filepath);
+				//long filesize = filepath.toFile().length();
+				FileTransferPanelS ftPane = new FileTransferPanelS(filepath,new SimpleDateFormat("HH:mm:ss").format(t));
 				int x = ftPane.getIndex();
 				MainStart.fileSendPanels.put(x,ftPane);
 				person.getWindow().chatconsole(ftPane);
 				try
 				{
 					
-					person.sendFile(threadnumber+"|"+x+"|"+filename, MainStart.myID);
+					person.sendFile(threadnumber+"|"+x+"|"+filename);
 					if(q.poll(500, TimeUnit.MILLISECONDS)==null)// Make this infinite maybe
 					{
 						ftPane.showDeliveryStatus(false);

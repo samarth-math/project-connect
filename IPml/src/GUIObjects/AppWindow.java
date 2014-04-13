@@ -115,9 +115,7 @@ public class AppWindow extends BasicWindow
 			{
 				 for(File f : files) {
 		            	Path filepath = f.toPath();
-		            	//Contact.sendtoall
-			           // SendMessage SM = new SendMessage(person, filepath);
-						//new Thread(SM).start();
+		            	Contact.sendToAll(filepath);
 		            }
 			}
 			
@@ -181,8 +179,7 @@ public class AppWindow extends BasicWindow
 		            File[] file = fileChooser.getSelectedFiles();
 		            for(File f : file) {
 		            	Path filepath = f.toPath();
-			           // SendMessage SM = new SendMessage(person, filepath);
-						//new Thread(SM).start();
+		            	Contact.sendToAll(filepath);
 		            }
 		            
 		        } else {
@@ -213,8 +210,7 @@ public class AppWindow extends BasicWindow
 		        	File directory = folderChooser.getSelectedFile();
 		        	System.out.println("Directory... " + directory.getAbsolutePath());
 		        	Path filepath = directory.toPath();
-			     //   SendMessage SM = new SendMessage(person, filepath);
-				//	new Thread(SM).start();
+		        	Contact.sendToAll(filepath);
 		        } else {
 /*************************** //What to do if the person closes the file chooser****/
 		        }

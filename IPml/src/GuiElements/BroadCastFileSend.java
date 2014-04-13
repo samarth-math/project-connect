@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.nio.file.Path;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,9 +16,17 @@ import javax.swing.border.MatteBorder;
 public class BroadCastFileSend extends JPanel{
 
 	private static final long serialVersionUID = 1L;
+	private static int totalNum;
+	private int index;
+	private Path filepath;
+	
+	public BroadCastFileSend(Path filepath, String timeStamp) {
 
-	public BroadCastFileSend(String inputText, String timeStamp) {
-
+		this.filepath = filepath;
+		String filename=filepath.getFileName().toString();
+		totalNum++;
+		index=totalNum;
+		
 		setBackground(Color.WHITE);
 		setBorder(new MatteBorder(0, 3, 0, 0,(Color) new Color(0, 204, 204)));
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -26,18 +35,17 @@ public class BroadCastFileSend extends JPanel{
 		gridBagLayout.columnWeights = new double[]{1.0};
 		gridBagLayout.rowWeights = new double[]{1.0, 0.0};
 		setLayout(gridBagLayout);
-		createInsidePanel(inputText, timeStamp);
-		
+		createInsidePanel(filename, timeStamp);
 	}
 	
-	private void createInsidePanel(String inputText, String timeStamp){
+	private void createInsidePanel(String filename, String timeStamp){
 		
 		
 		JTextPane txtpnMessage = new JTextPane();
 		
 		txtpnMessage.setEditable(false);
 		txtpnMessage.setBackground(Color.WHITE);
-		txtpnMessage.setText(inputText);
+		txtpnMessage.setText(filename);
 		
 		GridBagConstraints gbc_txtpnMessage = new GridBagConstraints();
 		gbc_txtpnMessage.fill = GridBagConstraints.BOTH;
@@ -57,5 +65,14 @@ public class BroadCastFileSend extends JPanel{
 		add(lblTimestamp, gbc_lblTimestamp);
 
 
+	}
+	public int getIndex()
+	{
+		System.out.println("This is the index " + index);
+		return index;
+	}
+	public Path getFilePath()
+	{
+		return filepath;
 	}
 }

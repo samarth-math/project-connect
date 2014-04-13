@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.concurrent.BlockingQueue;
 
+import GuiElements.BroadCastFileSend;
 import GuiElements.FileTransferPanelS;
 
 public class PacketSorterThread implements Runnable {
@@ -136,6 +137,22 @@ public class PacketSorterThread implements Runnable {
 	        	ReceiveMessage RM = new ReceiveMessage(packdetails, address, t);
 	        	new Thread(RM).start();
 	        }
+	        else if (packdetails[0].equals("BS"))//Broadcast File
+	        {//packdetails[1] = id of person received from
+	        // packdetails[2] = sender panel id (to extract filepath from)
+	        // packdetails[3] = filename
+	        	Timestamp t =new Timestamp(new Date().getTime());
+	        	if (packdetails.length>4)
+	        	{
+	        		for(int i=4;i<packdetails.length;i++)
+	        		{
+	        			packdetails[3]+= "|"+packdetails[i];
+	        		}
+	        	}
+	        	ReceiveMessage RM = new ReceiveMessage(packdetails, address, t);
+	        	new Thread(RM).start();
+	        	
+	        }
 	        else if(packdetails[0].equals("S"))// implies, SendFile  type packet
 	        {/*packdetails[1]=mac of person received from
 	           packdetails[2]=threadnumber of sending thread
@@ -166,6 +183,17 @@ public class PacketSorterThread implements Runnable {
 	        	ftps.onAcceptance();
 	        	Path filepath = ftps.getFilePath();
 	        	Client obj = new Client(address.getHostAddress(),6666,filepath,ftps);
+					(new Thread(obj)).start();
+	        	
+	        }
+	        else if(packdetails[0].equals("BR"))// implies, Accepting File type packet
+	        {/*packdetails[1]=mac of person received from
+		       packdetails[2]=sendPanelId 
+	          */
+	        	int sendPId = Integer.parseInt(packdetails[2]);
+	        	BroadCastFileSend bcfs = MainStart.broadcastfspanels.get(sendPId);
+	        	Path filepath = bcfs.getFilePath();
+	        	Client obj = new Client(address.getHostAddress(),6666,filepath);
 					(new Thread(obj)).start();
 	        	
 	        }

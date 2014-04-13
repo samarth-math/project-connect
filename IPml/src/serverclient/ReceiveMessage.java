@@ -5,8 +5,6 @@ import globalfunctions.Contact;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.net.InetAddress;
-
-import GUIObjects.ChatWindow;
 import GuiElements.BroadCastReceiver;
 import GuiElements.ChatWindowPanelReceiver;
 import GuiElements.FileTransferPanel;
@@ -25,12 +23,12 @@ public class ReceiveMessage implements Runnable
 	}
 	@Override
 	public void run()
-	{/*packdetails[1]=mac
-        packdetails[2]=threadnumber of sending thread // Not used here
-         */
+	{//packdetails[1]=mac
+       
 		Thread.currentThread().setName("ReceiveMessageThread");
 		Contact person = (Contact) MainStart.people.get(packdetails[1]);
 		if(packdetails[0].equals("M")) {
+			//packdetails[2]=threadnumber of sending thread
 			//packdetails[3]=message
 			ChatWindowPanelReceiver MessagePane = new ChatWindowPanelReceiver(new String(person.getUserName()+":"+packdetails[3]), new SimpleDateFormat("HH:mm:ss").format(t));
 			person.getWindow().chatconsole(MessagePane);
@@ -42,17 +40,24 @@ public class ReceiveMessage implements Runnable
 					
 		}
 		else if(packdetails[0].equals("S")) {
+			//packdetails[2]=threadnumber of sending thread
 			//packdetails[3]=sendingPanelId
 			//packdetails[4]=filename
 			int sendPanelId = Integer.parseInt(packdetails[3]);
-			FileTransferPanel ftPane = new FileTransferPanel(person,packdetails[4],sendPanelId, new SimpleDateFormat("HH:mm:ss").format(t));
+			FileTransferPanel ftPane = new FileTransferPanel(person,packdetails[4],sendPanelId, new SimpleDateFormat("HH:mm:ss").format(t),false);
 			person.getWindow().chatconsole(ftPane);
 		}
 		else if (packdetails[0].equals("BM"))
-		{//packdetails[1] = mac id of sender
-		 //packdetails[2] = message
+		{//packdetails[2] = message
 			BroadCastReceiver bcr = new BroadCastReceiver(new String(person.getUserName()+":"+packdetails[2]), new SimpleDateFormat("HH:mm:ss").format(t));
 			MainStart.mainWindow.broadcastConsole(bcr);
+		}
+		else if (packdetails[0].equals("BS"))
+		{//packdetails[2]=sendingPanelId
+		 //packdetails[3]=filename
+			int sendPanelId = Integer.parseInt(packdetails[2]);
+			FileTransferPanel ftPane = new FileTransferPanel(person,packdetails[3],sendPanelId, new SimpleDateFormat("HH:mm:ss").format(t), true);
+			MainStart.mainWindow.broadcastConsole(ftPane);
 		}
 		
 	}

@@ -8,7 +8,6 @@ import java.io.*;
 import java.net.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
 import GuiElements.FileTransferPanelS;
 
 
@@ -27,6 +26,11 @@ public class Client implements Runnable {
 	 this.filePath = filePath;
 	 this.ftps=ftps;
  }
+	public Client(String ip, int pNumber, Path filePath) {
+		 this.ipAddress = ip;
+		 this.portNumber = pNumber;
+		 this.filePath = filePath;
+	 }
  
 	public void run() {
 		
@@ -125,6 +129,7 @@ public class Client implements Runnable {
 		int read = 0;
 		long leftBytes = fileSize; // number of bytes remaining to be written to socket stream
 		
+		if(ftps!=null)
 		ftps.getprogbar().startProgress(fileSize, this);
 		
 		while (leftBytes>0) {
@@ -138,6 +143,8 @@ public class Client implements Runnable {
 			os.write(bytearray,0,read);
 			bytesSent=bytesSent+read;
 		}
+		
+		if(ftps!=null)
 		ftps.showMsg("File Transfer Complete");
 		os.flush();
 		bufferedinput.close();

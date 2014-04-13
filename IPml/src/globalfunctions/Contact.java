@@ -2,6 +2,7 @@ package globalfunctions;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.*;
+import java.nio.file.Path;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,6 +13,7 @@ import javax.swing.SwingUtilities;
 
 import serverclient.MainStart;
 import GUIObjects.ChatWindow;
+import GuiElements.BroadCastFileSend;
 import GuiElements.BroadCastSender;
 import LogMaintainence.ChatLogging;
 import LogMaintainence.GettingChatLogs;
@@ -111,7 +113,7 @@ public class Contact {
 		for (String key : MainStart.people.keySet()) {
 			Contact person = (Contact) MainStart.people.get(key);
 		  
-		  	DatagramPacket packet = new DatagramPacket(buf, buf.length, person.getIP() , 3333);
+		  	DatagramPacket packet = new DatagramPacket(buf, buf.length, person.getIP() , person.getPort() );
 			DatagramSocket socket = MainStart.socket;
 	   		try {
 				socket.send(packet);
@@ -121,37 +123,67 @@ public class Contact {
 			}
 		  }
 	}
-	public void sendMessage(String Message, String senderid) throws SocketException, IOException
+	
+	public static void sendToAll(Path filepath)
+	{
+		String filename = filepath.getFileName().toString();
+		//long filesize = filepath.toFile().length();
+		Timestamp t =new Timestamp(new Date().getTime());
+		BroadCastFileSend bcfs = new BroadCastFileSend(filepath,new SimpleDateFormat("HH:mm:ss").format(t));
+		int x = bcfs.getIndex();
+		MainStart.broadcastfspanels.put(x,bcfs);
+		MainStart.mainWindow.broadcastConsole(bcfs);
+
+		byte[] buf = new byte[1024];
+		buf = new String("BS|"+MainStart.myID+"|"+x+"|"+filename).getBytes();
+		
+		for (String key : MainStart.people.keySet()) {
+			Contact person = (Contact) MainStart.people.get(key);
+		  
+		  	DatagramPacket packet = new DatagramPacket(buf, buf.length, person.getIP() , person.getPort());
+			DatagramSocket socket = MainStart.socket;
+	   		try {
+				socket.send(packet);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	public void sendMessage(String Message) throws SocketException, IOException
 	{
 		byte[] buf = new byte[1024];
-		buf = new String("M|"+senderid+"|"+Message).getBytes();
+		buf = new String("M|"+MainStart.myID+"|"+Message).getBytes();
 		
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, ip, port);
 		DatagramSocket socket = MainStart.socket;
    		socket.send(packet);
 	}
 	
-	public void sendFile(String header, String senderid) throws SocketException, IOException
+	public void sendFile(String header) throws SocketException, IOException
 	{
 		byte[] buf = new byte[1024];
-		buf = new String("S|"+senderid+"|"+header).getBytes();
-		System.out.println("Send File " + new String(buf,"UTF8"));
+		buf = new String("S|"+MainStart.myID+"|"+header).getBytes();
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, ip, port);
 		DatagramSocket socket = MainStart.socket;
    		socket.send(packet);
 	}
-	public void sendAcceptFile(String senderid, int sendPanelId) throws SocketException, IOException
+	public void sendAcceptFile(int sendPanelId, boolean all) throws SocketException, IOException
 	{
 		byte[] buf = new byte[1024];
-		buf = new String("R|"+senderid+"|"+sendPanelId).getBytes();
+		if(!all)
+			buf = new String("R|"+MainStart.myID+"|"+sendPanelId).getBytes();
+		else
+			buf = new String("BR|"+MainStart.myID+"|"+sendPanelId).getBytes();
+		
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, ip, port);
 		DatagramSocket socket = MainStart.socket;
    		socket.send(packet);
 	}
-	public void sendRejectFile(String senderid, int sendPanelId) throws SocketException, IOException
+	public void sendRejectFile(int sendPanelId) throws SocketException, IOException
 	{
 		byte[] buf = new byte[1024];
-		buf = new String("N|"+senderid+"|"+sendPanelId).getBytes();
+		buf = new String("N|"+MainStart.myID+"|"+sendPanelId).getBytes();
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, ip, port);
 		DatagramSocket socket = MainStart.socket;
    		socket.send(packet);
@@ -175,6 +207,10 @@ public class Contact {
 	public InetAddress getIP()
 	{
 		return ip;
+	}
+	public int getPort()
+	{
+		return port;
 	}
 	public void printall()
 	{
