@@ -2,8 +2,6 @@ package GUIObjects;
 
 import globalfunctions.JTextFieldLimit;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -28,7 +26,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -49,24 +46,18 @@ public class IPRangeWindow extends JFrame {
 	private JTextField to4;
 	private DefaultListModel<String> jmodel = new DefaultListModel<String>();
 	private String f1, f2, f3, f4, t1, t2, t3, t4;
-	private static File rangeFile;
+	public static File rangeFile;
 	
-	public static void main(String[] args) 
-	{
-		EventQueue.invokeLater(new Runnable()
-		{
-			public void run() 
-			{
-				IPRangeWindow frame = new IPRangeWindow();
-				frame.setVisible(true);
-				
-				ArrayList<String> result = IPRangeWindow.getIPRanges();
-			}
-		});
-	}
-
+	
 	public static ArrayList<String> getIPRanges() 
 	{
+		String oldPathString = System.getProperty("user.dir");
+		String newPathString = oldPathString+"/rangelist";
+		
+		File newPath = new File(newPathString);
+		newPath.mkdirs();
+		rangeFile = new File(newPath,"IPRange");
+		
 		ArrayList <String>range = new ArrayList<String>();
 		if(rangeFile.exists())
 		{
@@ -90,16 +81,10 @@ public class IPRangeWindow extends JFrame {
 	
 	public IPRangeWindow() 
 	{
-		String oldPathString = System.getProperty("user.dir");
-		String newPathString = oldPathString+"/rangelist";
-		
-		File newPath = new File(newPathString);
-		newPath.mkdirs();
-		rangeFile = new File(newPath,"IPRange");
 		
 		setResizable(false);
 		setTitle("Specify IP Range to detect");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		
 		setSize(480, 500);
 		setLocationRelativeTo(null);

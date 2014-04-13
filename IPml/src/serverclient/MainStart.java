@@ -14,11 +14,13 @@ import globalfunctions.IpAddress;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 import GUIObjects.AppWindow;
+import GUIObjects.IPRangeWindow;
 import GuiElements.BroadCastFileSend;
 import GuiElements.FileTransferPanelS;
 
@@ -58,13 +60,26 @@ public class MainStart
 		} );
 
 			PacketSorterThread PS = new PacketSorterThread(Q);
-			ShoutThread S = new ShoutThread();//"172.22.30.19", "172.22.30.21");
 			ListenThread L =  new ListenThread(Q);
 						
 			new Thread(PS).start();
 			new Thread(L).start();
-			new Thread(S).start();
-		
+			
+			ShoutThread S0 = new ShoutThread();    
+			new Thread(S0).start();
+			
+			ArrayList<String> result = IPRangeWindow.getIPRanges();
+			if(!result.isEmpty())
+			{
+				String parts[];
+				for(String ipset : result)
+				{
+					parts = ipset.split("\\|");
+					System.out.println("Shouting for.. "+parts[0]+" to "+parts[1]);
+					ShoutThread S = new ShoutThread(parts[0],parts[1]);     //"172.22.30.19", "172.22.30.21");
+					new Thread(S).start();
+				}
+			}
 			try
 	        {
 	        	Thread.sleep(3000);

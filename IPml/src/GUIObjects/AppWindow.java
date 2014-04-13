@@ -39,7 +39,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.nio.file.Path;
-
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -261,6 +260,14 @@ public class AppWindow extends BasicWindow
 		menuBar.add(mnSettings);
 		
 		JMenuItem mntmSpecifyIpRange = new JMenuItem("Specify IP Range");
+		mntmSpecifyIpRange.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				IPRangeWindow frame = new IPRangeWindow();
+				frame.setVisible(true);
+			}
+		});
 		mnSettings.add(mntmSpecifyIpRange);
 		
 		JMenuItem mntmChangeDisplayName = new JMenuItem("Change Display Name");
