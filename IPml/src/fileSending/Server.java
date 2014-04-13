@@ -223,7 +223,7 @@ public void receiveFile(Socket socket,String SaveAsPath,FileTransferPanel ftp) t
 		}
 		else
 		{
-			ftp.showMsg("File Transfer Complete");
+			ftp.onCompleteUI();
 		}
 		
 		System.out.println("Finished Receiving File...");
