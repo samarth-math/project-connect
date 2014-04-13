@@ -36,7 +36,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.nio.file.Path;
 
@@ -44,7 +43,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-public class AppWindow extends JFrame
+public class AppWindow extends BasicWindow
 {
 	private static final long serialVersionUID = 1L;
 	private Box history = Box.createVerticalBox();
@@ -322,5 +321,15 @@ public class AppWindow extends JFrame
 	{
 		model.clear();
 		MainStart.people.clear();
+	}
+	
+	public int getListIndex(Contact person)
+	{
+		return model.indexOf(person);
+	}
+	public void removeFromList(Contact person)
+	{
+		if(model.indexOf(person)!=-1)
+		model.remove(model.indexOf(person));
 	}
 }
