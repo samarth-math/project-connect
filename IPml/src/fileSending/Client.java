@@ -72,7 +72,7 @@ public class Client implements Runnable {
 		//String fileName = filePath.getFileName().toString().trim();
 		File f = new File(filePath.toString());
 		long fileSize= f.length();
-		int chunkSize = 1024*1024;
+		int chunkSize = 256*1024;
 
 		//System.out.println("Inside Client.java (sendFile Method) File Size is " + fileSize + " file Name " + fileName + "FIle path " + fileName+"*");
 		

@@ -192,7 +192,7 @@ public void receiveFile(Socket socket,String SaveAsPath,FileTransferPanel ftp) t
 		// Contents of file is read and stored in bytearray which will then be written to file location
 		bytesRead=0;
 		int currentTotal = 0;
-		int chunkSize=1024*1024; // chunkSize bytes are read in each step
+		int chunkSize=256*1024; // chunkSize bytes are read in each step
 		long leftBytes = fileSize; // Number of bytes left to be written
 		
 		max = leftBytes;

@@ -202,6 +202,21 @@ public class FileTransferPanel extends JPanel{
 		add(lblTimestamp, gbc_lblTimestamp);
 	
 	
+		if(all)
+		{
+			JLabel lblUsername = new JLabel("Sent By "+person.getUserName());
+			lblUsername.setFont(new Font("Ubuntu Light", Font.BOLD, 14));
+			lblUsername.setBackground(Color.WHITE);
+			
+			GridBagConstraints gbc_lblUsername = new GridBagConstraints();
+			gbc_lblUsername.insets = new Insets(0, 3, 0, 0);
+			gbc_lblUsername.gridx = 0;
+			gbc_lblUsername.gridy = 1;
+			gbc_lblUsername.gridwidth=3;
+			gbc_lblUsername.anchor = GridBagConstraints.WEST;
+			add(lblUsername, gbc_lblUsername);
+		
+		}
 	}//constructor ends here
 	
 	public void showMsg(String msg)
