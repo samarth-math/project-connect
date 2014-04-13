@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import java.awt.GridBagLayout;
 
 import javax.swing.JButton;
@@ -25,6 +26,13 @@ import javax.swing.border.MatteBorder;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class IPRangeWindow extends JFrame {
 
@@ -41,22 +49,54 @@ public class IPRangeWindow extends JFrame {
 	private JTextField to4;
 	private DefaultListModel<String> jmodel = new DefaultListModel<String>();
 	private String f1, f2, f3, f4, t1, t2, t3, t4;
+	private static File rangeFile;
 	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					IPRangeWindow frame = new IPRangeWindow();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+	public static void main(String[] args) 
+	{
+		EventQueue.invokeLater(new Runnable()
+		{
+			public void run() 
+			{
+				IPRangeWindow frame = new IPRangeWindow();
+				frame.setVisible(true);
+				
+				ArrayList<String> result = IPRangeWindow.getIPRanges();
 			}
 		});
 	}
 
+	public static ArrayList<String> getIPRanges() 
+	{
+		ArrayList <String>range = new ArrayList<String>();
+		if(rangeFile.exists())
+		{
+			BufferedReader reader = null;
+			try 
+			{
+				reader = new BufferedReader(new FileReader(rangeFile));
+				String line = null;
+				while ((line = reader.readLine()) != null) 
+				{
+					range.add(line);
+				}	
+			}
+			catch (Exception e) 
+			{
+				e.printStackTrace();
+			}
+		}	
+		return range;
+	}
 	
-	public IPRangeWindow() {
+	public IPRangeWindow() 
+	{
+		String oldPathString = System.getProperty("user.dir");
+		String newPathString = oldPathString+"/rangelist";
+		
+		File newPath = new File(newPathString);
+		newPath.mkdirs();
+		rangeFile = new File(newPath,"IPRange");
+		
 		setResizable(false);
 		setTitle("Specify IP Range to detect");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -193,6 +233,31 @@ public class IPRangeWindow extends JFrame {
 		rangeList.setBackground(Color.WHITE);
 		contentPane.add(rangeList, gbc_rangeList);
 		
+		//***************************************************************
+		// code that gets IP range list from file on the storage on startup
+		
+		if(rangeFile.exists())
+		{
+			BufferedReader reader = null;
+			String lineparts[];
+			try 
+			{
+				reader = new BufferedReader(new FileReader(rangeFile));
+				String line = null;
+				while ((line = reader.readLine()) != null) 
+				{
+					lineparts = line.split("\\|");
+					line = lineparts[0]+" | "+lineparts[1];
+					jmodel.addElement(line);
+				}	
+			}
+			catch (Exception e) 
+			{
+				e.printStackTrace();
+			}
+		}				
+		//**********************************************************************
+
 		JButton addButton = new JButton("Add");
 		addButton.addActionListener(new ActionListener() 
 		{
@@ -239,12 +304,7 @@ public class IPRangeWindow extends JFrame {
 				if(index>=0)
 				{	
 					jmodel.remove(index);
-				}
-				else
-					;
-
-			    
-			    
+				}    
 			}
 		});
 		GridBagConstraints gbc_deleteButton = new GridBagConstraints();
@@ -294,6 +354,44 @@ public class IPRangeWindow extends JFrame {
 		contentPane.add(editButton, gbc_editButton);
 		
 		JButton applyButton = new JButton("Apply");
+		applyButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				
+				int size = jmodel.getSize();
+				if(size>0)
+				{
+					String allRanges = "";
+					for(int w=0;w<size;w++)
+					{
+						String tempItem  = jmodel.getElementAt(w);
+						
+						String tempIPItems[] = tempItem.split("\\|");
+						
+						String tempfrom = tempIPItems[0].trim();
+						String tempto = tempIPItems[1].trim();
+						
+						tempItem = tempfrom+"|"+tempto;
+						allRanges += tempItem+"\n";
+					}
+					try 
+					{	
+						rangeFile.createNewFile();
+						FileWriter FileWriter = new FileWriter(rangeFile);				
+						FileWriter.write(allRanges);
+						FileWriter.flush();
+						FileWriter.close();
+					}
+					catch (IOException e1)
+					{
+						e1.printStackTrace();
+					}
+				}
+				
+				
+			}
+		});
 		GridBagConstraints gbc_applyButton = new GridBagConstraints();
 		gbc_applyButton.gridwidth = 5;
 		gbc_applyButton.insets = new Insets(0, 0, 5, 5);
