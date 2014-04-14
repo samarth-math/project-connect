@@ -20,16 +20,13 @@ public class PacketSorterThread implements Runnable {
 	private BlockingQueue<DatagramPacket> bq;
 	private DatagramSocket socket;
     private String id;
-    private String user;
     private byte[] buf;
 	
 	PacketSorterThread(BlockingQueue<DatagramPacket> bq)
 	{
 		this.socket=MainStart.socket;
 		this.bq = bq;
-        this.id=MainStart.myID;
-        this.user = MainStart.myUserName;
-		
+        this.id=MainStart.myID;		
 	}
 
 	
@@ -67,46 +64,21 @@ public class PacketSorterThread implements Runnable {
 	             * packdetails[4] - HostName
 	             * packdetails[5] - Username*/
 	
-	        	
+	        	for(int i = 0; i<packdetails.length;i++)
+	        	System.out.println(packdetails[i]);
 	        	//Save Packet
 	        	Contact person = new Contact(packdetails[2], packdetails[3], packdetails[4], packdetails[5], address, port);
-	        	//person.printall();
-	        	System.out.println("Printing HashMap");
-	        	for (String key : MainStart.people.keySet()) {
-	  			  Contact person2 = MainStart.people.get(key);
-	  			 person2.printall(); 
-	        	}
-	        	Contact person1 = MainStart.people.get(packdetails[2]);
-	        	
-	        	if(person1!=null)
+	        	Contact person1 = MainStart.people.put(packdetails[2], person);
+	        	if(MainStart.mainWindow!=null)
 	        	{
-	        		System.out.println(person1.getUserName() +" is the old person");
-	        		System.out.println(person.getUserName()+" is the person packet received");
-		        	if(MainStart.mainWindow!=null)
-		        	{
-			        	MainStart.mainWindow.removeFromList(MainStart.people.get(packdetails[2]));
-			        	MainStart.people.put(packdetails[2], person);
-			        	MainStart.mainWindow.addnewperson(MainStart.people.get(packdetails[2]));
-		        	}
-		        	
+		        	MainStart.mainWindow.removeFromList(person1);
+		        	MainStart.mainWindow.addnewperson(MainStart.people.get(packdetails[2]));
 	        	}
-	        	else
-	        	{
-	        		System.out.println("Person is null");
-	        		System.out.println(person.getUserName()+" is the person packet received");
-	        		
-		        	if(MainStart.mainWindow!=null)
-		        	{
-			        	MainStart.mainWindow.addnewperson(person);
-		        	}
-		        	MainStart.people.put(packdetails[2], person);
-	        	}
-	        	System.out.println("--------------------------------------------------\n\n");
-	        	
+
 	        	if (packdetails[1].equals("C"))// If packet came from client, send it a response
 	           	{
 	            	// figure out response
-	                String PString = new String("D|S|"+id+"|"+System.getProperty("os.name")+"|"+InetAddress.getLocalHost().getHostName()+"|"+user);
+	                String PString = new String("D|S|"+id+"|"+System.getProperty("os.name")+"|"+InetAddress.getLocalHost().getHostName()+"|"+MainStart.myUserName);
 	                buf = PString.getBytes();		
 	                // send the response to the client at "address" and "port"
 	                packet = new DatagramPacket(buf, buf.length, address, port);

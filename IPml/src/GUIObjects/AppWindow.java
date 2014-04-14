@@ -298,6 +298,7 @@ public class AppWindow extends BasicWindow
 					}
 				MainStart.myUserName=username;
 				clearlist();
+				//System.out.println(MainStart.myUserName+ "is the value in mainstart username");
 				}
 				
 			}
@@ -342,7 +343,7 @@ public class AppWindow extends BasicWindow
 		} );
 	}
 
-	public void addnewperson(Contact person) // ListenThread can call to add more people as they join
+	public void addnewperson(Contact person) // sorting can call to add more people as they join
 	{	    	
 		model.addElement(person);
 	}
@@ -359,10 +360,9 @@ public class AppWindow extends BasicWindow
 	}
 	public void removeFromList(Contact person)
 	{
-		int index = model.indexOf(person);
-		if(index!=-1)
+		if(person!=null && model.indexOf(person)!=-1)
 		{
-			model.remove(index);
+			model.remove(model.indexOf(person));
 		}
 	}
 }

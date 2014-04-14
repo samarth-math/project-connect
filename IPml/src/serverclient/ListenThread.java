@@ -22,11 +22,12 @@ public class ListenThread implements Runnable
     public void run()
     {
     	Thread.currentThread().setName("ListenThread");
-    	
+    	byte[] buf;
+    	DatagramPacket packet;
         while (true) 
 	            {
-        			byte[] buf = new byte[1024];
-        			DatagramPacket packet = new DatagramPacket(buf, buf.length);
+        			buf = new byte[1024];
+        			packet = new DatagramPacket(buf, buf.length);
         			// receive request
 		            try {
 						socket.receive(packet);

@@ -13,7 +13,7 @@ public class ShoutThread implements Runnable
 	protected String macadd;
 	protected String ipadd1=null;
 	protected String ipadd2=null;
-	protected String user;
+	//protected String user;
 	
 	public ShoutThread(String ipadd1, String ipadd2)
 	{
@@ -21,7 +21,7 @@ public class ShoutThread implements Runnable
 		this.macadd=MainStart.myID;
 		this.ipadd1=ipadd1;
 		this.ipadd2=ipadd2;
-		this.user = MainStart.myUserName;
+		//this.user = MainStart.myUserName;
 		this.socket= MainStart.socket;
 	}
 	public ShoutThread()
@@ -29,7 +29,7 @@ public class ShoutThread implements Runnable
 		// get a datagram socket
 		this.socket = MainStart.socket;
 		this.macadd=MainStart.myID;
-		this.user = MainStart.myUserName;;
+		//this.user = MainStart.myUserName;;
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class ShoutThread implements Runnable
 				for (long ip1=IpAddress.ipToLong(InetAddress.getByName(ipadd1));ip1<=IpAddress.ipToLong(InetAddress.getByName(ipadd2));ip1++)
 				{// send request
 			        byte[] buf = new byte[256];
-			        buf= new String("D|C|"+macadd+"|"+System.getProperty("os.name")+"|"+InetAddress.getLocalHost().getHostName()+"|"+user).getBytes();
+			        buf= new String("D|C|"+macadd+"|"+System.getProperty("os.name")+"|"+InetAddress.getLocalHost().getHostName()+"|"+MainStart.myUserName).getBytes();
 			        InetAddress address = IpAddress.LongToip(ip1);
 			        DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 3333);
 			        socket.send(packet);
@@ -52,7 +52,7 @@ public class ShoutThread implements Runnable
 			else
 			{
 			   byte[] buf = new byte[256];
-			   buf= new String("D|C|"+macadd+"|"+System.getProperty("os.name")+"|"+InetAddress.getLocalHost().getHostName()+"|"+user).getBytes();
+			   buf= new String("D|C|"+macadd+"|"+System.getProperty("os.name")+"|"+InetAddress.getLocalHost().getHostName()+"|"+MainStart.myUserName).getBytes();
 		       InetAddress address = InetAddress.getByName("255.255.255.255");
 		       DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 3333);
 		       socket.send(packet);
