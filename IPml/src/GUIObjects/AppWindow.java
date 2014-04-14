@@ -48,6 +48,7 @@ import java.nio.file.Path;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import java.awt.Color;
 
 public class AppWindow extends BasicWindow
 {
@@ -120,7 +121,7 @@ public class AppWindow extends BasicWindow
 		
 	    GridBagLayout gbl_bChat = new GridBagLayout();
 	    gbl_bChat.columnWidths = new int[]{330,20};
-	    gbl_bChat.rowHeights = new int[]{50,51};
+	    gbl_bChat.rowHeights = new int[]{50,55};
 	    gbl_bChat.columnWeights = new double[]{Double.MIN_VALUE};
 	    gbl_bChat.rowWeights = new double[]{1.0,0.0};
 	    bChat.setLayout(gbl_bChat);
@@ -128,8 +129,7 @@ public class AppWindow extends BasicWindow
 		for (String key : MainStart.people.keySet()) {
 			  Contact person = MainStart.people.get(key);
 			  model.addElement(person);
-		}
-		
+		}		
 		
 		JScrollPane scroll1 = new JScrollPane(history);
 		scroll1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -142,6 +142,7 @@ public class AppWindow extends BasicWindow
 		bChat.add(scroll1, scrollConstraints);
 		JScrollBar vsbar = scroll1.getVerticalScrollBar();
 		vsbar.setUnitIncrement(16);
+		scroll1.getViewport().setBackground(new Color(220,220,250));
 		
 		final JTextArea txtMessage = new JTextArea();
 		
@@ -220,6 +221,7 @@ public class AppWindow extends BasicWindow
 		});
 		
 		GridBagConstraints gbc_btnFile = new GridBagConstraints();
+		gbc_btnFile.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnFile.insets = new Insets(0, 0, 0, 0);
 		gbc_btnFile.anchor = GridBagConstraints.NORTH;
 		gbc_btnFile.gridx = 1;
@@ -251,6 +253,7 @@ public class AppWindow extends BasicWindow
 		gbc_btnFolder.anchor = GridBagConstraints.SOUTH;
 		gbc_btnFolder.gridx = 1;
 		gbc_btnFolder.gridy = 1;
+		gbc_btnFolder.fill = GridBagConstraints.HORIZONTAL;
 		bChat.add(btnFolder,gbc_btnFolder);
 		
 		JMenuBar menuBar = new JMenuBar();

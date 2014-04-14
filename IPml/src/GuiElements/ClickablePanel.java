@@ -73,7 +73,7 @@ public class ClickablePanel extends JPanel{
 	     @Override
 	     protected void paintComponent(Graphics g) {
 	         super.paintComponent(g);
-	         g.drawImage(image, 0, 0, null); // see javadoc for more info on the parameters            
+	         g.drawImage(image, 3, 5, null); // see javadoc for more info on the parameters            
 	     }
 	 
 	 
