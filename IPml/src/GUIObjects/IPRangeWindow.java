@@ -1,6 +1,7 @@
 package GUIObjects;
 
 import globalfunctions.JTextFieldLimit;
+import globalfunctions.TextFieldCheck;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -22,6 +23,8 @@ import java.awt.Color;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.MatteBorder;
 
+import serverclient.MainStart;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
@@ -30,6 +33,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.awt.Font;
 
 public class IPRangeWindow extends JFrame {
 
@@ -47,10 +51,13 @@ public class IPRangeWindow extends JFrame {
 	private DefaultListModel<String> jmodel = new DefaultListModel<String>();
 	private String f1, f2, f3, f4, t1, t2, t3, t4;
 	public static File rangeFile;
+	private JLabel errorLabel;
 	
 	
 	public static ArrayList<String> getIPRanges() 
 	{
+		
+		
 		String oldPathString = System.getProperty("user.dir");
 		String newPathString = oldPathString+"/rangelist";
 		
@@ -86,14 +93,14 @@ public class IPRangeWindow extends JFrame {
 		setTitle("Specify IP Range to detect");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		
-		setSize(480, 500);
+		setSize(520, 500);
 		setLocationRelativeTo(null);
 		
 		contentPane = new JPanel();
 		//contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{82,35,35,35,35,16,35,35,35,35,70,30};
+		gbl_contentPane.columnWidths = new int[]{82,40,40,40,40,16,40,40,40,40,70,30};
 		gbl_contentPane.rowHeights = new int[]{40, 85, 30, 80, 80, 80, 15, 40, 50};
 		gbl_contentPane.columnWeights = new double[]{1.0};
 		gbl_contentPane.rowWeights = new double[]{Double.MIN_VALUE};
@@ -188,6 +195,16 @@ public class IPRangeWindow extends JFrame {
 		to4.setColumns(10);
 		to4.setDocument(new JTextFieldLimit(3));
 		
+		errorLabel = new JLabel("");
+		errorLabel.setForeground(Color.RED);
+		errorLabel.setFont(new Font("Dialog", Font.PLAIN, 8));
+		GridBagConstraints gbc_errorLabel = new GridBagConstraints();
+		gbc_errorLabel.anchor = GridBagConstraints.SOUTH;
+		gbc_errorLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_errorLabel.gridx = 10;
+		gbc_errorLabel.gridy = 1;
+		contentPane.add(errorLabel, gbc_errorLabel);
+		
 		JLabel fromLabel = new JLabel("From");
 		GridBagConstraints gbc_fromLabel = new GridBagConstraints();
 		gbc_fromLabel.insets = new Insets(0, 0, 5, 5);
@@ -257,8 +274,10 @@ public class IPRangeWindow extends JFrame {
 				t3 = to3.getText();
 				t4 = to4.getText();
 				
-				if(t1.isEmpty() || t2.isEmpty() || t3.isEmpty() || t4.isEmpty() || f1.isEmpty() || f2.isEmpty() || f3.isEmpty() || f4.isEmpty())
-					;
+				if(t1.isEmpty() || t2.isEmpty() || t3.isEmpty() || t4.isEmpty() || f1.isEmpty() || f2.isEmpty() || f3.isEmpty() || f4.isEmpty() || !TextFieldCheck.isInt(t1) || !TextFieldCheck.isInt(t2) || !TextFieldCheck.isInt(t3) || !TextFieldCheck.isInt(t4) || !TextFieldCheck.isInt(f1) || !TextFieldCheck.isInt(f2) || !TextFieldCheck.isInt(f3) || !TextFieldCheck.isInt(f4))
+				{
+					errorLabel.setText("Invalid entry!");
+				}
 				else
 				{
 					jmodel.addElement(""+f1+"."+f2+"."+f3+"."+f4+" | "+t1+"."+t2+"."+t3+"."+t4);
@@ -270,6 +289,7 @@ public class IPRangeWindow extends JFrame {
 					to2.setText("");
 					to3.setText("");
 					to4.setText("");
+					errorLabel.setText("");
 				}
 			}
 		});
@@ -373,7 +393,7 @@ public class IPRangeWindow extends JFrame {
 						e1.printStackTrace();
 					}
 				}
-				
+				MainStart.setRanges();
 				
 			}
 		});

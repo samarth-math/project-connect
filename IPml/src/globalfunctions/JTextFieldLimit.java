@@ -22,7 +22,8 @@ private int limit;
     }
     else
     {
-    	super.insertString(offset,  "Message Truncated:\n"+str.substring(0,limit-19), attr);
+    	if(limit>25)
+    		super.insertString(offset,  "Message Truncated:\n"+str.substring(0,limit-19), attr);
     }
     
   }
