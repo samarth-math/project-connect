@@ -130,6 +130,7 @@ public class AppWindow extends BasicWindow
 			  Contact person = MainStart.people.get(key);
 			  model.addElement(person);
 		}		
+		history.setBackground(new Color(240, 248, 255));
 		
 		JScrollPane scroll1 = new JScrollPane(history);
 		scroll1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
