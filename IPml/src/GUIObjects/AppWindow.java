@@ -264,8 +264,14 @@ public class AppWindow extends BasicWindow
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				IPRangeWindow frame = new IPRangeWindow();
-				frame.setVisible(true);
+				java.awt.EventQueue.invokeLater(new Runnable() 
+				{
+				    public void run() 
+				    {
+				    	IPRangeWindow frame = new IPRangeWindow();
+						frame.setVisible(true);
+				    }
+				} );
 			}
 		});
 		mnSettings.add(mntmSpecifyIpRange);
