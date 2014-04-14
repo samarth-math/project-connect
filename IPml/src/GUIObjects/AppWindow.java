@@ -30,7 +30,7 @@ import javax.swing.ScrollPaneConstants;
 
 import serverclient.MainStart;
 import serverclient.ShoutThread;
-import GUIObjects.AppWindowListCellRenderer;
+import GuiElements.AppWindowListCellRenderer;
 
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
