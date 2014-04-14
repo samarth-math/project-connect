@@ -1,4 +1,4 @@
-package GUIObjects;
+package GuiElements;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -7,8 +7,6 @@ import globalfunctions.Contact;
 
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
-
-import GuiElements.ClickablePanel;
 
 public class AppWindowListCellRenderer extends ClickablePanel implements ListCellRenderer<Contact> {
  	private static final long serialVersionUID = 1L;
