@@ -12,6 +12,8 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JPanel;
 
+import java.awt.FileDialog;
+import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Rectangle;
@@ -158,22 +160,18 @@ public class ChatWindow extends BasicWindow
 		btnFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.setMultiSelectionEnabled(true);
-				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				int returnVal = fileChooser.showOpenDialog(getParent());
+				FileDialog fileDialog = new FileDialog((Frame) getParent(),"Select a file which you want to send");
+				fileDialog.setVisible(true);
+				fileDialog.setMultipleMode(true);
+				
+	            File files [] = fileDialog.getFiles();
+	            
+	            for(File f : files) {
+	            	Path filepath = f.toPath();
+		            SendMessage SM = new SendMessage(person, filepath);
+					new Thread(SM).start();
+	            }
 
-		        if (returnVal == JFileChooser.APPROVE_OPTION) {
-		            File[] file = fileChooser.getSelectedFiles();
-		            for(File f : file) {
-		            	Path filepath = f.toPath();
-			            SendMessage SM = new SendMessage(person, filepath);
-						new Thread(SM).start();
-		            }
-		            
-		        } else {
-/*************************** //What to do if the person closes the file chooser****/
-		        }
 			}
 		});
 		
@@ -189,8 +187,9 @@ public class ChatWindow extends BasicWindow
 		JButton btnFolder = new JButton("Folder");
 		
 		btnFolder.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent e) {
-								
+				
 				JFileChooser folderChooser = new JFileChooser();
 				folderChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				int returnVal = folderChooser.showOpenDialog(getParent());
@@ -205,6 +204,7 @@ public class ChatWindow extends BasicWindow
 /*************************** //What to do if the person closes the file chooser****/
 		        }
 			}
+			
 		});
 		
 		GridBagConstraints gbc_btnFolder = new GridBagConstraints();

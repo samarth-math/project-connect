@@ -6,6 +6,8 @@ import globalfunctions.FileDrop;
 import globalfunctions.JTextFieldLimit;
 
 import java.awt.BorderLayout;
+import java.awt.FileDialog;
+import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Rectangle;
@@ -205,19 +207,15 @@ public class AppWindow extends BasicWindow
 		btnFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.setMultiSelectionEnabled(true);
-				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				int returnVal = fileChooser.showOpenDialog(getParent());
-
-		        if (returnVal == JFileChooser.APPROVE_OPTION) {
-		            File[] file = fileChooser.getSelectedFiles();
-		            for(File f : file) {
+				FileDialog fileDialog = new FileDialog((Frame) getParent(),"Select a file which you want to send");
+				fileDialog.setVisible(true);
+				fileDialog.setMultipleMode(true);
+						      
+				File files [] = fileDialog.getFiles();
+		            for(File f : files) {
 		            	Path filepath = f.toPath();
 		            	Contact.sendToAll(filepath);
 		            }
-		            
-		        }
 			}
 		});
 		
