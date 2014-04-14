@@ -2,14 +2,23 @@ package GuiElements;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 import globalfunctions.Contact;
 
+import javax.imageio.ImageIO;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
 public class AppWindowListCellRenderer extends ClickablePanel implements ListCellRenderer<Contact> {
  	private static final long serialVersionUID = 1L;
+ 	
+ 	
+ 	
+ 	
 	@Override
 	public Component getListCellRendererComponent(
 			JList<? extends Contact> list, Contact person, int index,
@@ -22,19 +31,28 @@ public class AppWindowListCellRenderer extends ClickablePanel implements ListCel
         Color foreground;
 
         // check if this cell is selected
-        if (isSelected) {
+        if (isSelected) 
+        {
             background = new Color(200, 250, 250);
             foreground = Color.BLUE;
-
+            this.setSize(255, 60);
+        }
         // unselected
-        } else {
+        else 
+        {
             background = Color.WHITE;
             foreground = Color.BLACK;
+            this.setSize(251, 50);
         };
 
         setBackground(background);
         setForeground(foreground);
 
+        setImage();
+        
+        
+        
+        
         return this;
     }
 }
