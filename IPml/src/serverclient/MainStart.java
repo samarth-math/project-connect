@@ -36,6 +36,8 @@ public class MainStart
 	public static HashMap <Integer, FileTransferPanelS> fileSendPanels = new HashMap <Integer, FileTransferPanelS>();
 	public static HashMap <Integer, BroadCastFileSend> broadcastfspanels = new HashMap<Integer, BroadCastFileSend>();
 	public static ServerSocket ftpsocket;
+	private static ArrayList<String> result;
+	
 	public static void main(String[] args)
     {
 		
@@ -64,29 +66,30 @@ public class MainStart
 						
 			new Thread(PS).start();
 			new Thread(L).start();
+			setRanges();
+			Shout();
 			
-			ShoutThread S0 = new ShoutThread();    
-			new Thread(S0).start();
-			
-			ArrayList<String> result = IPRangeWindow.getIPRanges();
-			if(!result.isEmpty())
-			{
-				String parts[];
-				for(String ipset : result)
-				{
-					parts = ipset.split("\\|");
-					System.out.println("Shouting for.. "+parts[0]+" to "+parts[1]);
-					ShoutThread S = new ShoutThread(parts[0],parts[1]);     //"172.22.30.19", "172.22.30.21");
-					new Thread(S).start();
-				}
-			}
-			try
-	        {
-	        	Thread.sleep(3000);
-	        }
-	        catch(Exception E)
-	        {
-	        	System.out.print("Wokenup");
-	        }
     }
+	
+	public static void setRanges()
+	{
+		result = IPRangeWindow.getIPRanges();
+	}
+	public static void Shout()
+	{
+		ShoutThread S0 = new ShoutThread();    
+		new Thread(S0).start();
+		
+		if(!result.isEmpty())
+		{
+			String parts[];
+			for(String ipset : result)
+			{
+				parts = ipset.split("\\|");
+				ShoutThread S = new ShoutThread(parts[0],parts[1]);
+				new Thread(S).start();
+			}
+		}
+	}
+	
 }

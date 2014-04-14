@@ -86,14 +86,14 @@ public class IPRangeWindow extends JFrame {
 		setTitle("Specify IP Range to detect");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		
-		setSize(520, 500);
+		setSize(480, 500);
 		setLocationRelativeTo(null);
 		
 		contentPane = new JPanel();
 		//contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{82,40,40,40,40,16,40,40,40,40,70,30};
+		gbl_contentPane.columnWidths = new int[]{82,35,35,35,35,16,35,35,35,35,70,30};
 		gbl_contentPane.rowHeights = new int[]{40, 85, 30, 80, 80, 80, 15, 40, 50};
 		gbl_contentPane.columnWeights = new double[]{1.0};
 		gbl_contentPane.rowWeights = new double[]{Double.MIN_VALUE};

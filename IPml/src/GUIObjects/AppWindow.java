@@ -38,7 +38,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Path;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -104,8 +108,6 @@ public class AppWindow extends BasicWindow
 			public void actionPerformed(ActionEvent e)
 			{
 				clearlist();
-				ShoutThread S = new ShoutThread();
-				new Thread(S).start();
 			}
 		});
 
@@ -264,10 +266,8 @@ public class AppWindow extends BasicWindow
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				java.awt.EventQueue.invokeLater(new Runnable() 
-				{
-				    public void run() 
-				    {
+				java.awt.EventQueue.invokeLater(new Runnable() {
+				    public void run() {
 				    	IPRangeWindow frame = new IPRangeWindow();
 						frame.setVisible(true);
 				    }
@@ -279,6 +279,26 @@ public class AppWindow extends BasicWindow
 		JMenuItem mntmChangeDisplayName = new JMenuItem("Change Display Name");
 		mntmChangeDisplayName.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String username = null;
+				File path = new File(System.getProperty("user.dir"));
+				File namefile = new File(path,"username");
+				username = (String)JOptionPane.showInputDialog("Enter Username");
+				if (username!=null && !username.isEmpty())
+				{
+					FileOutputStream fos;			
+					try {
+						fos = new FileOutputStream(namefile);
+						fos.write(username.getBytes());
+						fos.close();
+					} catch (FileNotFoundException e1) {
+						e1.printStackTrace();
+					}
+	    			catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				MainStart.myUserName=username;
+				clearlist();
+				}
 				
 			}
 		});
@@ -288,8 +308,6 @@ public class AppWindow extends BasicWindow
 		mntmRefreshf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clearlist();
-				ShoutThread S = new ShoutThread();
-				new Thread(S).start();
 			}
 		});
 		mnSettings.add(mntmRefreshf);
@@ -332,6 +350,7 @@ public class AppWindow extends BasicWindow
 	{
 		model.clear();
 		MainStart.people.clear();
+		MainStart.Shout();
 	}
 	
 	public int getListIndex(Contact person)
@@ -341,7 +360,6 @@ public class AppWindow extends BasicWindow
 	public void removeFromList(Contact person)
 	{
 		int index = model.indexOf(person);
-		System.out.println(person.getUserName()+" is at index " +model.indexOf(person));
 		if(index!=-1)
 		{
 			model.remove(index);
