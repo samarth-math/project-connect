@@ -250,8 +250,8 @@ public class AppWindow extends BasicWindow
 		});
 		
 		GridBagConstraints gbc_btnFolder = new GridBagConstraints();
-		gbc_btnFolder.insets = new Insets(0, 0, 0, 0);
-		gbc_btnFolder.anchor = GridBagConstraints.SOUTH;
+		gbc_btnFolder.insets = new Insets(27, 0, 0, 0);
+		//gbc_btnFolder.anchor = GridBagConstraints.SOUTH;
 		gbc_btnFolder.gridx = 1;
 		gbc_btnFolder.gridy = 1;
 		gbc_btnFolder.fill = GridBagConstraints.HORIZONTAL;

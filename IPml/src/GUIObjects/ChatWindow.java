@@ -209,7 +209,7 @@ public class ChatWindow extends BasicWindow
 		});
 		
 		GridBagConstraints gbc_btnFolder = new GridBagConstraints();
-		gbc_btnFolder.insets = new Insets(0, 0, 0, 5);
+		gbc_btnFolder.insets = new Insets(10, 0, 0, 5);
 		gbc_btnFolder.gridx = 2;
 		gbc_btnFolder.gridy = 2;
 		contentPane.add(btnFolder,gbc_btnFolder);
