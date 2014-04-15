@@ -18,7 +18,7 @@ public class ChatWindowPanelReceiver extends JPanel{
 	public ChatWindowPanelReceiver(String inputText, String timeStamp) {
 
 		setBackground(Color.WHITE);
-		setBorder(new MatteBorder(0, 3, 0, 0, Color.RED));
+		setBorder(new MatteBorder(0, 3, 0, 0, (Color) new Color(255, 0, 0)));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{500};
 		gridBagLayout.rowHeights = new int[]{45,25};
