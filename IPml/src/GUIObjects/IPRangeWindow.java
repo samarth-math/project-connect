@@ -52,6 +52,7 @@ public class IPRangeWindow extends JFrame {
 	private String f1, f2, f3, f4, t1, t2, t3, t4;
 	public static File rangeFile;
 	private JLabel errorLabel;
+	private JLabel alertForApply;
 	
 	
 	public static ArrayList<String> getIPRanges() 
@@ -290,6 +291,7 @@ public class IPRangeWindow extends JFrame {
 					to3.setText("");
 					to4.setText("");
 					errorLabel.setText("");
+					alertForApply.setText("Apply changes");
 				}
 			}
 		});
@@ -309,6 +311,7 @@ public class IPRangeWindow extends JFrame {
 				if(index>=0)
 				{	
 					jmodel.remove(index);
+					alertForApply.setText("Apply changes");
 				}    
 			}
 		});
@@ -394,15 +397,25 @@ public class IPRangeWindow extends JFrame {
 					}
 				}
 				MainStart.setRanges();
-				
+				alertForApply.setText("");
 			}
 		});
 		GridBagConstraints gbc_applyButton = new GridBagConstraints();
-		gbc_applyButton.gridwidth = 5;
+		gbc_applyButton.gridwidth = 4;
 		gbc_applyButton.insets = new Insets(0, 0, 5, 5);
-		gbc_applyButton.gridx = 3;
+		gbc_applyButton.gridx = 4;
 		gbc_applyButton.gridy = 7;
 		contentPane.add(applyButton, gbc_applyButton);
+		
+		alertForApply = new JLabel("");
+		alertForApply.setForeground(new Color(30, 144, 255));
+		alertForApply.setFont(new Font("Dialog", Font.PLAIN, 9));
+		GridBagConstraints gbc_alertForApply = new GridBagConstraints();
+		gbc_alertForApply.gridwidth = 2;
+		gbc_alertForApply.insets = new Insets(0, 0, 5, 5);
+		gbc_alertForApply.gridx = 8;
+		gbc_alertForApply.gridy = 7;
+		contentPane.add(alertForApply, gbc_alertForApply);
 	}
 
 }
