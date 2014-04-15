@@ -46,7 +46,7 @@ public class SendMessage implements Runnable
 				{
 					
 					person.sendMessage(threadnumber+"|"+Message);
-					if(q.poll(500, TimeUnit.MILLISECONDS)==null)
+					if(q.poll(1000, TimeUnit.MILLISECONDS)==null)
 					{
 						MessagePane.showDeliveryStatus(false);
 					}
@@ -73,7 +73,7 @@ public class SendMessage implements Runnable
 				{
 					
 					person.sendFile(threadnumber+"|"+x+"|"+filename);
-					if(q.poll(500, TimeUnit.MILLISECONDS)==null)// Make this infinite maybe
+					if(q.poll(1000, TimeUnit.MILLISECONDS)==null)// Make this infinite maybe
 					{
 						ftPane.showDeliveryStatus(false);
 					}
