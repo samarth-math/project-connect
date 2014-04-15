@@ -18,8 +18,8 @@ public class BroadCastSender extends JPanel{
 
 	public BroadCastSender(String inputText, String timeStamp) {
 
-		setBackground(Color.WHITE);
-		setBorder(new MatteBorder(0, 3, 0, 0, (Color) new Color(0, 100, 0)));
+		setBackground(new Color(240, 255, 240));
+		setBorder(new MatteBorder(0, 3, 0, 0, (Color) new Color(0, 255, 0)));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{500};
 		gridBagLayout.rowHeights = new int[]{45,25};
@@ -34,9 +34,10 @@ public class BroadCastSender extends JPanel{
 		
 		
 		JTextPane txtpnMessage = new JTextPane();
+		txtpnMessage.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
 		
 		txtpnMessage.setEditable(false);
-		txtpnMessage.setBackground(Color.WHITE);
+		txtpnMessage.setBackground(new Color(240, 255, 240));
 		txtpnMessage.setText(inputText);
 		
 		GridBagConstraints gbc_txtpnMessage = new GridBagConstraints();

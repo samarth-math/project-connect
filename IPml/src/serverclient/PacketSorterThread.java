@@ -64,8 +64,6 @@ public class PacketSorterThread implements Runnable {
 	             * packdetails[4] - HostName
 	             * packdetails[5] - Username*/
 	
-	        	for(int i = 0; i<packdetails.length;i++)
-	        	System.out.println(packdetails[i]);
 	        	//Save Packet
 	        	Contact person = new Contact(packdetails[2], packdetails[3], packdetails[4], packdetails[5], address, port);
 	        	Contact person1 = MainStart.people.put(packdetails[2], person);
@@ -120,16 +118,19 @@ public class PacketSorterThread implements Runnable {
 	        else if (packdetails[0].equals("BM"))//Broadcast Message
 	        {/*packdetails[1]=mac of person received from
 	           packdetails[2]=Message*/
-	        	Timestamp t =new Timestamp(new Date().getTime());
-	        	if (packdetails.length>3)
+	        	if(!packdetails[1].equals(MainStart.myID))
 	        	{
-	        		for(int i=3;i<packdetails.length;i++)
-	        		{
-	        			packdetails[2]+= "|"+packdetails[i];
-	        		}
+		        	Timestamp t =new Timestamp(new Date().getTime());
+		        	if (packdetails.length>3)
+		        	{
+		        		for(int i=3;i<packdetails.length;i++)
+		        		{
+		        			packdetails[2]+= "|"+packdetails[i];
+		        		}
+		        	}
+		        	ReceiveMessage RM = new ReceiveMessage(packdetails, address, t);
+		        	new Thread(RM).start();
 	        	}
-	        	ReceiveMessage RM = new ReceiveMessage(packdetails, address, t);
-	        	new Thread(RM).start();
 	        }
 	        else if (packdetails[0].equals("BS"))//Broadcast File
 	        {//packdetails[1] = id of person received from

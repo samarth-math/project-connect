@@ -17,13 +17,13 @@ public class ChatWindowPanelSender extends JPanel{
 
 	public ChatWindowPanelSender(String inputText, String timeStamp) {
 	
-		setBackground(new Color(230, 230, 250));
+		setBackground(new Color(240, 255, 240));
 		setBorder(new MatteBorder(0, 3, 0, 0, (Color) new Color(0, 255, 0)));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{500};
 		gridBagLayout.rowHeights = new int[]{45,25};
 		gridBagLayout.columnWeights = new double[]{1.0};
-		gridBagLayout.rowWeights = new double[]{0.0};
+		gridBagLayout.rowWeights = new double[]{1.0,0.0};
 		setLayout(gridBagLayout);
 		createInsidePanel(inputText, timeStamp);
 		
@@ -33,8 +33,9 @@ public class ChatWindowPanelSender extends JPanel{
 		
 		
 		JTextPane txtpnMessage = new JTextPane();
+		txtpnMessage.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
 		txtpnMessage.setEditable(false);
-		txtpnMessage.setBackground(new Color(230, 230, 250));
+		txtpnMessage.setBackground(new Color(240, 255, 240));
 		txtpnMessage.setText(inputText);
 		
 		GridBagConstraints gbc_txtpnMessage = new GridBagConstraints();
@@ -46,7 +47,6 @@ public class ChatWindowPanelSender extends JPanel{
 		
 		JLabel lblTimestamp = new JLabel(timeStamp);
 		lblTimestamp.setFont(new Font("Ubuntu Light", Font.PLAIN, 10));
-		lblTimestamp.setBackground(Color.WHITE);
 		
 		GridBagConstraints gbc_lblTimestamp = new GridBagConstraints();
 		gbc_lblTimestamp.gridx = 0;

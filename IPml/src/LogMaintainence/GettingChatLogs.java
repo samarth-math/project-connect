@@ -57,15 +57,13 @@ public class GettingChatLogs extends Object{
 							JSONObject messageObject = (JSONObject)oldMessageIterator.next();
 							if(messageObject.get("userId").equals(myId))
 							{
-								String s1 = new String(messageObject.get("userName")+": "+messageObject.get("messageText"));
-								ChatWindowPanelSender cwsp = new ChatWindowPanelSender(s1, messageObject.get("timeStamp").toString());
+								ChatWindowPanelSender cwsp = new ChatWindowPanelSender(messageObject.get("messageText").toString(), messageObject.get("timeStamp").toString());
 								person.getWindow().chatconsole(cwsp);
 							
 							}
 							else
 							{
-								String s1 = new String(messageObject.get("userName")+": "+messageObject.get("messageText"));
-								ChatWindowPanelReceiver cwrp = new ChatWindowPanelReceiver(s1, messageObject.get("timeStamp").toString());
+								ChatWindowPanelReceiver cwrp = new ChatWindowPanelReceiver(messageObject.get("messageText").toString(), messageObject.get("timeStamp").toString());
 								person.getWindow().chatconsole(cwrp);
 
 							}

@@ -16,7 +16,7 @@ public class BroadCastReceiver extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 
-	public BroadCastReceiver(String inputText, String timeStamp) {
+	public BroadCastReceiver(String userName, String inputText, String timeStamp) {
 
 		setBackground(Color.WHITE);
 		setBorder(new MatteBorder(0, 3, 0, 0, Color.RED));
@@ -34,6 +34,7 @@ public class BroadCastReceiver extends JPanel{
 		
 		
 		JTextPane txtpnMessage = new JTextPane();
+		txtpnMessage.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
 		
 		txtpnMessage.setEditable(false);
 		txtpnMessage.setBackground(Color.WHITE);

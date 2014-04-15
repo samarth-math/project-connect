@@ -30,7 +30,7 @@ public class ReceiveMessage implements Runnable
 		if(packdetails[0].equals("M")) {
 			//packdetails[2]=threadnumber of sending thread
 			//packdetails[3]=message
-			ChatWindowPanelReceiver MessagePane = new ChatWindowPanelReceiver(new String(packdetails[3]), new SimpleDateFormat("HH:mm:ss").format(t));
+			ChatWindowPanelReceiver MessagePane = new ChatWindowPanelReceiver(packdetails[3], new SimpleDateFormat("HH:mm:ss").format(t));
 			person.getWindow().chatconsole(MessagePane);
 			try {
 				person.getBlockingQ().put(packdetails[1]+"|"+person.getUserName()+"|"+ new SimpleDateFormat("HH:mm:ss").format(t)+"|"+packdetails[3]);
@@ -49,7 +49,7 @@ public class ReceiveMessage implements Runnable
 		}
 		else if (packdetails[0].equals("BM"))
 		{//packdetails[2] = message
-			BroadCastReceiver bcr = new BroadCastReceiver(new String(person.getUserName()+":"+packdetails[2]), new SimpleDateFormat("HH:mm:ss").format(t));
+			BroadCastReceiver bcr = new BroadCastReceiver(person.getUserName(),packdetails[2], new SimpleDateFormat("HH:mm:ss").format(t));
 			MainStart.mainWindow.broadcastConsole(bcr);
 		}
 		else if (packdetails[0].equals("BS"))

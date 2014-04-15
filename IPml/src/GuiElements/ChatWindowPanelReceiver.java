@@ -33,6 +33,7 @@ public class ChatWindowPanelReceiver extends JPanel{
 		
 		
 		JTextPane txtpnMessage = new JTextPane();
+		txtpnMessage.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
 		
 		txtpnMessage.setEditable(false);
 		txtpnMessage.setBackground(Color.WHITE);
