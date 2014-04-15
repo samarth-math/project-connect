@@ -176,8 +176,9 @@ public class ChatWindow extends BasicWindow
 		});
 		
 		GridBagConstraints gbc_btnFile = new GridBagConstraints();
-		gbc_btnFile.insets = new Insets(0, 0, 0, 5);
 		gbc_btnFile.anchor = GridBagConstraints.NORTH;
+		gbc_btnFile.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnFile.insets = new Insets(0, 0, 0, 5);
 		gbc_btnFile.gridx = 2;
 		gbc_btnFile.gridy = 2;
 		contentPane.add(btnFile, gbc_btnFile);
@@ -209,7 +210,6 @@ public class ChatWindow extends BasicWindow
 		
 		GridBagConstraints gbc_btnFolder = new GridBagConstraints();
 		gbc_btnFolder.insets = new Insets(0, 0, 0, 5);
-		//gbc_btnDirectory.anchor = GridBagConstraints.SOUTH;
 		gbc_btnFolder.gridx = 2;
 		gbc_btnFolder.gridy = 2;
 		contentPane.add(btnFolder,gbc_btnFolder);
