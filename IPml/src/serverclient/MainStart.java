@@ -6,9 +6,6 @@
 
 package serverclient;
 import globalfunctions.Contact;
-import globalfunctions.Misc;
-
-import java.io.File;
 import java.net.ServerSocket;
 
 import globalfunctions.IpAddress;
