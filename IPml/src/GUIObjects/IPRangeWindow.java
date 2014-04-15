@@ -368,7 +368,7 @@ public class IPRangeWindow extends JFrame {
 			{
 				
 				int size = jmodel.getSize();
-				if(size>0)
+				if(size>=0)
 				{
 					String allRanges = "";
 					for(int w=0;w<size;w++)
@@ -390,6 +390,7 @@ public class IPRangeWindow extends JFrame {
 						FileWriter.write(allRanges);
 						FileWriter.flush();
 						FileWriter.close();
+						MainStart.setRanges();
 					}
 					catch (IOException e1)
 					{

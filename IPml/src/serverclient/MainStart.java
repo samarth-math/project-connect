@@ -6,7 +6,9 @@
 
 package serverclient;
 import globalfunctions.Contact;
+import globalfunctions.Misc;
 
+import java.io.File;
 import java.net.ServerSocket;
 
 import globalfunctions.IpAddress;
@@ -68,7 +70,6 @@ public class MainStart
 			new Thread(L).start();
 			setRanges();
 			Shout();
-			
     }
 	
 	public static void setRanges()

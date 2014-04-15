@@ -1,10 +1,13 @@
 package serverclient;
 
 import globalfunctions.Contact;
+import globalfunctions.Misc;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.io.File;
 import java.net.InetAddress;
+
 import GuiElements.BroadCastReceiver;
 import GuiElements.ChatWindowPanelReceiver;
 import GuiElements.FileTransferPanel;
@@ -45,6 +48,11 @@ public class ReceiveMessage implements Runnable
 			//packdetails[4]=filename
 			int sendPanelId = Integer.parseInt(packdetails[3]);
 			FileTransferPanel ftPane = new FileTransferPanel(person,packdetails[4],sendPanelId, new SimpleDateFormat("HH:mm:ss").format(t),false);
+			if (person.getWindow().getFocusOwner()==null)
+			{
+				File soundfile = new File("Boo_Wendy.wav");
+				Misc.playSound(soundfile);
+			}
 			person.getWindow().chatconsole(ftPane);
 		}
 		else if (packdetails[0].equals("BM"))
