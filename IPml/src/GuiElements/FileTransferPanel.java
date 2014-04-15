@@ -180,6 +180,13 @@ public class FileTransferPanel extends JPanel{
 				serverThread.stop=true;
 				btnCancel.setVisible(false);
 				progBar.setVisible(false);
+				try {
+					person.sendRejectFile(sendPanelId);
+				} catch (SocketException e1) {
+					//e1.printStackTrace();
+				} catch (IOException e1) {
+					//e1.printStackTrace();
+				}
 			}
 		});
 		

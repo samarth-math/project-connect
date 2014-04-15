@@ -27,8 +27,7 @@ public class FileTransferPanelS extends JPanel{
 	//private TitledBorder t = new TitledBorder(new LineBorder(new Color(192, 192, 192)), null,TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(128, 128, 128));
 	
 	public FileTransferPanelS(Path filepath, String timeStamp){
-		
-		String filename =filepath.getFileName().toString();
+		String filename =filepath.getFileName().toString();		
 		this.filepath = filepath;
 		totalNum++;
 		index=totalNum;		
