@@ -161,8 +161,8 @@ public class ChatWindow extends BasicWindow
 			public void actionPerformed(ActionEvent e) {
 				
 				FileDialog fileDialog = new FileDialog((Frame) getParent(),"Select a file which you want to send");
-				fileDialog.setVisible(true);
 				fileDialog.setMultipleMode(true);
+				fileDialog.setVisible(true);
 				
 	            File files [] = fileDialog.getFiles();
 	            
