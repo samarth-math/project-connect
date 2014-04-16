@@ -6,21 +6,29 @@ package GuiElements;
 import fileSending.Server;
 import fileSending.TestPane;
 import globalfunctions.Contact;
-import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
 import java.awt.GridBagLayout;
+
 import javax.swing.JLabel;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
 import javax.swing.JButton;
+
 import java.awt.Color;
+import java.awt.FileDialog;
 import java.awt.Font;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.io.File;
 import java.io.IOException;
 import java.net.SocketException;
+
 import javax.swing.border.MatteBorder;
 
 public class FileTransferPanel extends JPanel{
@@ -114,34 +122,24 @@ public class FileTransferPanel extends JPanel{
 		btnAccept = new JButton("Accept");
 		btnAccept.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.setVisible(true);
-				fileChooser.setDialogTitle("Select a location to save the file");
-				fileChooser.setSelectedFile(new File(filename));
-				int returnVal = fileChooser.showSaveDialog(getParent());
+				JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(ftp);	
 				
-				
-				//int returnVal = fileChooser.showOpenDialog(getParent());
-				String SaveAsPath="";
-			        if (returnVal == JFileChooser.APPROVE_OPTION) {
-			            File file = fileChooser.getSelectedFile();
-			            SaveAsPath = file.getAbsolutePath();	
-			            System.out.println("SaveAsPath inside Filetransferpanel..." + SaveAsPath);
-			            serverThread = new Server(6666, ftp,SaveAsPath);
-						new Thread(serverThread).start();
-						try {
-								person.sendAcceptFile(sendPanelId, all);
-								onAcceptUI();
-						} catch (SocketException exc) {
-							// Do stuff
-							
-						} catch (IOException exc) {
-							// Do stuff
-						}
-			        }
-				
-
-			}
+				FileDialog fileDialog = new FileDialog((Frame) topFrame,"Select File To Send",FileDialog.SAVE);
+				fileDialog.setFile(filename);
+				fileDialog.setVisible(true);
+				String SaveAsPath=fileDialog.getDirectory()+fileDialog.getFile();
+		            serverThread = new Server(6666, ftp,SaveAsPath);
+					new Thread(serverThread).start();
+					try {
+							person.sendAcceptFile(sendPanelId, all);
+							onAcceptUI();
+					} catch (SocketException exc) {
+						// Do stuff
+						
+					} catch (IOException exc) {
+						// Do stuff
+					}
+		        }
 		});
 		GridBagConstraints gbc_btnAccept = new GridBagConstraints();
 		gbc_btnAccept.insets = new Insets(0, 0, 5, 5);

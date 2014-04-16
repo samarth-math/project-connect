@@ -160,14 +160,16 @@ public class ChatWindow extends BasicWindow
 		btnFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				FileDialog fileDialog = new FileDialog((Frame) getParent(),"Select a file which you want to send");
+				FileDialog fileDialog = new FileDialog((Frame) getParent(),"Select File To Send");
 				fileDialog.setMultipleMode(true);
 				fileDialog.setVisible(true);
 				
 	            File files [] = fileDialog.getFiles();
-	            
+	            String Direct = fileDialog.getDirectory();
 	            for(File f : files) {
+	            	System.out.println(Direct);
 	            	Path filepath = f.toPath();
+	            	System.out.println(filepath.getParent());
 		            SendMessage SM = new SendMessage(person, filepath);
 					new Thread(SM).start();
 	            }

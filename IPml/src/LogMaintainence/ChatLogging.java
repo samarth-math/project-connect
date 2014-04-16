@@ -20,7 +20,6 @@ public class ChatLogging implements Runnable
 {
 	private JSONObject mainObject;
 	
-	private File path;
 	private File jsonFilePath;
 	private String fileName;
 	private int totalUsers;

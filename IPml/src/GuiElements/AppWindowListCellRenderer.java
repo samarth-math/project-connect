@@ -2,14 +2,7 @@ package GuiElements;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
 import globalfunctions.Contact;
-
-import javax.imageio.ImageIO;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
