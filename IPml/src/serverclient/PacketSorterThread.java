@@ -152,8 +152,9 @@ public class PacketSorterThread implements Runnable {
 	        {/*packdetails[1]=mac of person received from
 	           packdetails[2]=threadnumber of sending thread
 	           packdetails[3]=FileTransferPanelS index
-	           packdetails[4]=filesize
+	           packdetails[4]=fileSize
 	           packdetails[5]=filename*/
+	        	System.out.println("File Size " + packdetails[4]);
 	        	Timestamp t =new Timestamp(new Date().getTime());
 	        	//Send Acknowledgment
 	        	String PString = new String("A|"+packdetails[2]);
