@@ -53,9 +53,10 @@ public class ReceiveMessage implements Runnable
 		else if(packdetails[0].equals("S")) {
 			//packdetails[2]=threadnumber of sending thread
 			//packdetails[3]=sendingPanelId
-			//packdetails[4]=filename
+			//packdetails[4]=filesize
+			//packdetails[5]=filename
 			int sendPanelId = Integer.parseInt(packdetails[3]);
-			FileTransferPanel ftPane = new FileTransferPanel(person,packdetails[4],sendPanelId, new SimpleDateFormat("HH:mm:ss").format(t),false);
+			FileTransferPanel ftPane = new FileTransferPanel(person,packdetails[5],packdetails[4],sendPanelId, new SimpleDateFormat("HH:mm:ss").format(t),false);
 			person.getWindow().chatconsole(ftPane);
 		}
 		else if (packdetails[0].equals("BM"))
