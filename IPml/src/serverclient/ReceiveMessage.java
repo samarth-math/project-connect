@@ -56,14 +56,14 @@ public class ReceiveMessage implements Runnable
 			//packdetails[4]=filesize
 			//packdetails[5]=filename
 			int sendPanelId = Integer.parseInt(packdetails[3]);
+			if(person.getWindow().getFocusOwner()==null)
+				Misc.playSound("pindrop.wav");
 			FileTransferPanel ftPane = new FileTransferPanel(person,packdetails[5],packdetails[4],sendPanelId, new SimpleDateFormat("HH:mm:ss").format(t),false);
 			person.getWindow().chatconsole(ftPane);
 		}
 		else if (packdetails[0].equals("BM"))
 		{//packdetails[2] = message
 			BroadCastReceiver bcr = new BroadCastReceiver(person.getUserName(),packdetails[2], new SimpleDateFormat("HH:mm:ss").format(t));
-			if(MainStart.mainWindow.getFocusOwner()==null)
-				Misc.playSound("pindrop.wav");
 			MainStart.mainWindow.broadcastConsole(bcr);
 		}
 		else if (packdetails[0].equals("BS"))
