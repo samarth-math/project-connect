@@ -4,6 +4,7 @@ package GUIObjects;
 import globalfunctions.Contact;
 import globalfunctions.FileDrop;
 import globalfunctions.JTextFieldLimit;
+
 import java.awt.BorderLayout;
 import java.awt.FileDialog;
 import java.awt.Frame;
@@ -14,6 +15,7 @@ import java.awt.Rectangle;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -42,6 +44,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Path;
 
 import javax.swing.JMenuBar;
@@ -58,8 +61,11 @@ public class AppWindow extends BasicWindow
 
 	public AppWindow()
 	{
-		
-		setTitle("IPConnect");
+	 	URL icon = getClass( ).getResource("/images/cartman.jpg");
+	 	ImageIcon img = new ImageIcon(icon);
+	 	setIconImage(img.getImage());
+	 	
+		setTitle("IPTalk");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setSize(350, 600);
