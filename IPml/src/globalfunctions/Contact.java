@@ -96,6 +96,7 @@ public class Contact {
 			public void run()
 			{
 				cw = getWindow();
+				cw.toFront();
 			}
 		};
 		Chat.start();

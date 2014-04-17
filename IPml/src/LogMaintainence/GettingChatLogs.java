@@ -21,7 +21,7 @@ public class GettingChatLogs extends Object{
 		String chatFileName = userId+".json";             // file name based on userId
 		
 		String oldPathString = System.getProperty("user.dir");
-		String newPathString = oldPathString+"/chatlogs";
+		String newPathString = oldPathString+"/.ipconnect/chatlogs";
 		
 		File newPath = new File(newPathString);
 		File chatFilePath = new File(newPath,chatFileName);

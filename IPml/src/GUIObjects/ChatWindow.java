@@ -5,6 +5,7 @@ package GUIObjects;
 import globalfunctions.Contact;
 import globalfunctions.FileDrop;
 import globalfunctions.JTextFieldLimit;
+import globalfunctions.Misc;
 
 import javax.swing.JFrame;
 
@@ -137,6 +138,10 @@ public class ChatWindow extends BasicWindow
 							new Thread(SM).start();
 							message = message.substring(1003);
 						}
+					if (message.equals("boo wendy"))
+						Misc.playSound("Boo_Wendy.wav");
+					if(message.equals("respect my authority"))
+						Misc.playSound("authoritah.wav");
 					SendMessage SM = new SendMessage(person, message);
 					new Thread(SM).start();
 					txtMessage.setText("");
@@ -203,8 +208,6 @@ public class ChatWindow extends BasicWindow
 		        	Path filepath = directory.toPath();
 			        SendMessage SM = new SendMessage(person, filepath);
 					new Thread(SM).start();
-		        } else {
-/*************************** //What to do if the person closes the file chooser****/
 		        }
 			}
 			

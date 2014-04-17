@@ -22,7 +22,7 @@ public class BroadCastReceiver extends JPanel{
 		setBorder(new MatteBorder(0, 3, 0, 0, Color.RED));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{500};
-		gridBagLayout.rowHeights = new int[]{45,25};
+		gridBagLayout.rowHeights = new int[]{10,10};
 		gridBagLayout.columnWeights = new double[]{1.0};
 		gridBagLayout.rowWeights = new double[]{1.0, 0.0};
 		setLayout(gridBagLayout);

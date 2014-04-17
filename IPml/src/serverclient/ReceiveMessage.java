@@ -5,7 +5,7 @@ import globalfunctions.Misc;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.io.File;
+
 import java.net.InetAddress;
 
 import GuiElements.BroadCastReceiver;
@@ -33,7 +33,15 @@ public class ReceiveMessage implements Runnable
 		if(packdetails[0].equals("M")) {
 			//packdetails[2]=threadnumber of sending thread
 			//packdetails[3]=message
+			if(packdetails[3].equals("boo wendy"))
+				Misc.playSound("Boo_Wendy.wav");
+			if(packdetails[3].equals("respect my authority"))
+				Misc.playSound("authoritah.wav");
 			ChatWindowPanelReceiver MessagePane = new ChatWindowPanelReceiver(packdetails[3], new SimpleDateFormat("HH:mm:ss").format(t));
+			if (person.getWindow().getFocusOwner()==null)
+			{
+				Misc.playSound("blop.wav");
+			}
 			person.getWindow().chatconsole(MessagePane);
 			try {
 				person.getBlockingQ().put(packdetails[1]+"|"+person.getUserName()+"|"+ new SimpleDateFormat("HH:mm:ss").format(t)+"|"+packdetails[3]);
@@ -48,16 +56,13 @@ public class ReceiveMessage implements Runnable
 			//packdetails[4]=filename
 			int sendPanelId = Integer.parseInt(packdetails[3]);
 			FileTransferPanel ftPane = new FileTransferPanel(person,packdetails[4],sendPanelId, new SimpleDateFormat("HH:mm:ss").format(t),false);
-			if (person.getWindow().getFocusOwner()==null)
-			{
-				File soundfile = new File("Boo_Wendy.wav");
-				Misc.playSound(soundfile);
-			}
 			person.getWindow().chatconsole(ftPane);
 		}
 		else if (packdetails[0].equals("BM"))
 		{//packdetails[2] = message
 			BroadCastReceiver bcr = new BroadCastReceiver(person.getUserName(),packdetails[2], new SimpleDateFormat("HH:mm:ss").format(t));
+			if(MainStart.mainWindow.getFocusOwner()==null)
+				Misc.playSound("pindrop.wav");
 			MainStart.mainWindow.broadcastConsole(bcr);
 		}
 		else if (packdetails[0].equals("BS"))
@@ -65,6 +70,8 @@ public class ReceiveMessage implements Runnable
 		 //packdetails[3]=filename
 			int sendPanelId = Integer.parseInt(packdetails[2]);
 			FileTransferPanel ftPane = new FileTransferPanel(person,packdetails[3],sendPanelId, new SimpleDateFormat("HH:mm:ss").format(t), true);
+			if(MainStart.mainWindow.getFocusOwner()==null)
+				Misc.playSound("longpop.wav");
 			MainStart.mainWindow.broadcastConsole(ftPane);
 		}
 		

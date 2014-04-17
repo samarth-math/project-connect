@@ -41,7 +41,7 @@ public class AppWindowListCellRenderer extends ClickablePanel implements ListCel
         setBackground(background);
         setForeground(foreground);
 
-        setImage();
+        //setImage();
         
         
         

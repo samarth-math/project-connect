@@ -4,7 +4,6 @@ package GUIObjects;
 import globalfunctions.Contact;
 import globalfunctions.FileDrop;
 import globalfunctions.JTextFieldLimit;
-
 import java.awt.BorderLayout;
 import java.awt.FileDialog;
 import java.awt.Frame;
@@ -48,6 +47,7 @@ import java.nio.file.Path;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+
 import java.awt.Color;
 
 public class AppWindow extends BasicWindow
@@ -58,6 +58,7 @@ public class AppWindow extends BasicWindow
 
 	public AppWindow()
 	{
+		
 		setTitle("IPConnect");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
