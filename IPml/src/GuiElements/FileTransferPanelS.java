@@ -37,7 +37,7 @@ public class FileTransferPanelS extends JPanel{
 		setBorder(new MatteBorder(0, 3, 0, 0, (Color) new Color(0, 204, 204)));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{500};
-		gridBagLayout.rowHeights = new int[]{45,25};
+		gridBagLayout.rowHeights = new int[]{30,25};
 		gridBagLayout.columnWeights = new double[]{1.0};
 		gridBagLayout.rowWeights = new double[]{1.0, 0.0};
 		setLayout(gridBagLayout);
@@ -59,23 +59,11 @@ public class FileTransferPanelS extends JPanel{
 		gbc_panel.gridy = 0;
 		add(panel, gbc_panel);
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{360};
-		gbl_panel.rowHeights = new int[]{35,10};
+		gbl_panel.columnWidths = new int[]{200};
+		gbl_panel.rowHeights = new int[]{20,10};
 		gbl_panel.columnWeights = new double[]{1.0};
 		gbl_panel.rowWeights = new double[]{1.0};
 		panel.setLayout(gbl_panel);
-		
-		/*//the filename label is here
-		lbl_fileName = new JLabel("<html>"+filename+"</html>");
-		//lbl_fileName.setMinimumSize(new Dimension(300, 50));
-		GridBagConstraints gbc_lbl_fileName = new GridBagConstraints();
-		gbc_lbl_fileName.anchor = GridBagConstraints.WEST;
-		gbc_lbl_fileName.insets = new Insets(0, 0, 5, 0);
-		gbc_lbl_fileName.gridx = 0;
-		gbc_lbl_fileName.gridy = 0;
-		lbl_fileName.setBorder(new TitledBorder(null, "<html>Awaiting response</html>",TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(128, 128, 128)));
-		lbl_fileName.setFont(new Font("Ubuntu", Font.PLAIN, 14));
-		panel.add(lbl_fileName, gbc_lbl_fileName);*/
 		
 		progBar = new TestPane();
 		progBar.setVisible(false);

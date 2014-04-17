@@ -135,13 +135,14 @@ public class PacketSorterThread implements Runnable {
 	        else if (packdetails[0].equals("BS"))//Broadcast File
 	        {//packdetails[1] = id of person received from
 	        // packdetails[2] = sender panel id (to extract filepath from)
-	        // packdetails[3] = filename
+	        // packdetails[3] = filesize
+	        // packdetails[4] = filename
 	        	Timestamp t =new Timestamp(new Date().getTime());
-	        	if (packdetails.length>4)
+	        	if (packdetails.length>5)
 	        	{
-	        		for(int i=4;i<packdetails.length;i++)
+	        		for(int i=5;i<packdetails.length;i++)
 	        		{
-	        			packdetails[3]+= "|"+packdetails[i];
+	        			packdetails[4]+= "|"+packdetails[i];
 	        		}
 	        	}
 	        	ReceiveMessage RM = new ReceiveMessage(packdetails, address, t);
@@ -167,6 +168,13 @@ public class PacketSorterThread implements Runnable {
 	            {
 	            	System.err.print("Network Problem : Unable to send packets!");
 	            }
+	        	if (packdetails.length>6)
+	        	{
+	        		for(int i=6;i<packdetails.length;i++)
+	        		{
+	        			packdetails[5]+= "|"+packdetails[i];
+	        		}
+	        	}
 	        	ReceiveMessage RM = new ReceiveMessage(packdetails, address, t);
 	        	new Thread(RM).start();
 	        }
