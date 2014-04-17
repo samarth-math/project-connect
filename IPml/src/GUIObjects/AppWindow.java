@@ -144,7 +144,7 @@ public class AppWindow extends BasicWindow
 		bChat.add(scroll1, scrollConstraints);
 		JScrollBar vsbar = scroll1.getVerticalScrollBar();
 		vsbar.setUnitIncrement(16);
-		scroll1.getViewport().setBackground(new Color(220,220,250));
+		scroll1.getViewport().setBackground(new Color(220,250,220));
 		
 		final JTextArea txtMessage = new JTextArea();
 		

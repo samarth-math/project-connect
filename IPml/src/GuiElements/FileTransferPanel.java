@@ -103,15 +103,20 @@ gbc_panel_1.gridx = 0;
 gbc_panel_1.gridy = 0;
 panel.add(panel_1, gbc_panel_1);
 
-JLabel lblFile = new JLabel(filename + " (" + Long.parseLong(fileSize)/1000 + " Kb)");
+JLabel lblFile = new JLabel(filename);
 lblFile.setFont(new Font("Ubuntu", Font.PLAIN, 14));
-lblFile.setBounds(12, 12, 216, 28);
+lblFile.setBounds(12, 12, 177, 28);
 panel_1.add(lblFile);
 
 lblStatus = new JLabel("Receiving File");
 lblStatus.setForeground(new Color(128, 128, 128));
 lblStatus.setBounds(12, 0, 189, 15);
 panel_1.add(lblStatus);
+
+JLabel lblSize = new JLabel("(" + Long.parseLong(fileSize)/(1024*1024) + "Mb)");
+lblSize.setFont(new Font("Dialog", Font.PLAIN, 14));
+lblSize.setBounds(208, 12, 37, 23);
+panel_1.add(lblSize);
 GridBagConstraints gbc_progBar = new GridBagConstraints();
 gbc_progBar.anchor= GridBagConstraints.SOUTHWEST;
 gbc_progBar.gridx = 0;

@@ -140,7 +140,7 @@ public class Contact {
 	public static void sendToAll(Path filepath)
 	{
 		String filename = filepath.getFileName().toString();
-		//long filesize = filepath.toFile().length();
+		long filesize = filepath.toFile().length();
 		Timestamp t =new Timestamp(new Date().getTime());
 		BroadCastFileSend bcfs = new BroadCastFileSend(filepath,new SimpleDateFormat("HH:mm:ss").format(t));
 		int x = bcfs.getIndex();
@@ -148,7 +148,7 @@ public class Contact {
 		MainStart.mainWindow.broadcastConsole(bcfs);
 
 		byte[] buf = new byte[1024];
-		buf = new String("BS|"+MainStart.myID+"|"+x+"|"+filename).getBytes();
+		buf = new String("BS|"+MainStart.myID+"|"+x+"|"+filesize+"|"+filename).getBytes();
 		
 		for (String key : MainStart.people.keySet()) {
 			Contact person = (Contact) MainStart.people.get(key);
