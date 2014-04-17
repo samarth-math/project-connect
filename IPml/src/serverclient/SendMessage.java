@@ -54,7 +54,6 @@ public class SendMessage implements Runnable
 					
 					else
 					{
-						Misc.playSound("tick.wav");
 						MessagePane.showDeliveryStatus(true);
 						person.getBlockingQ().put(MainStart.myID+"|"+MainStart.myUserName+"|"+ new SimpleDateFormat("HH:mm:ss").format(t)+"|"+Message);
 					}
@@ -82,7 +81,6 @@ public class SendMessage implements Runnable
 					
 					else
 					{
-						Misc.playSound("tick.wav");
 						ftPane.showDeliveryStatus(true);
 					}
 				}

@@ -6,6 +6,7 @@
 
 package serverclient;
 import globalfunctions.Contact;
+
 import java.net.ServerSocket;
 
 import globalfunctions.IpAddress;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+
+import javax.swing.JOptionPane;
 
 import GUIObjects.AppWindow;
 import GUIObjects.IPRangeWindow;
@@ -44,14 +47,14 @@ public class MainStart
 		try {
 			socket = new DatagramSocket(3333);
 		} catch (SocketException e) {
-			System.err.print("Unable to initiate connection: Port maybe in use already");
+			JOptionPane.showMessageDialog(null,"Unable to connect : Port maybe in use already!","The Three Musketeers say",JOptionPane.ERROR_MESSAGE);
 			System.exit(0);
 		}
 		myID=IpAddress.IdentityMac();
 		myUserName = IpAddress.getUserName();
 		if (myID==null)
 			{
-				System.err.print("Network Problems detected!");
+				JOptionPane.showMessageDialog(null,"Network Problems we know not of detected","The Three Musketeers say",JOptionPane.ERROR_MESSAGE);
 				System.exit(0);
 			}
 		java.awt.EventQueue.invokeLater(new Runnable() {

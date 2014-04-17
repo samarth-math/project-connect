@@ -7,6 +7,9 @@ import java.io.*;
 import java.net.*;
 import java.nio.ByteBuffer;
 import java.util.Enumeration;
+
+import javax.swing.JOptionPane;
+
 import GUIObjects.usernameDialog;
 
 //import org.apache.commons.net.util.*; // Depends on apache commons-net-3.3 library
@@ -104,7 +107,7 @@ public class IpAddress
 			}
 			catch (SocketException soc)
 			{
-				System.err.println("Unable to find active network interface");
+				JOptionPane.showMessageDialog(null,"You're not connected to any network","The Three Musketeers say",JOptionPane.ERROR_MESSAGE);
 			}
 			catch(IOException ioe)
 			{
