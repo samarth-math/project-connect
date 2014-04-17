@@ -66,7 +66,7 @@ public class SendMessage implements Runnable
 			}
 			else {
 				String filename = filepath.getFileName().toString();
-				//long filesize = filepath.toFile().length();
+				long fileSize = filepath.toFile().length();
 				FileTransferPanelS ftPane = new FileTransferPanelS(filepath,new SimpleDateFormat("HH:mm:ss").format(t));
 				int x = ftPane.getIndex();
 				MainStart.fileSendPanels.put(x,ftPane);
@@ -74,7 +74,7 @@ public class SendMessage implements Runnable
 				try
 				{
 					
-					person.sendFile(threadnumber+"|"+x+"|"+filename);
+					person.sendFile(threadnumber+"|"+x+"|"+fileSize+"|"+filename);
 					if(q.poll(1000, TimeUnit.MILLISECONDS)==null)// Make this infinite maybe
 					{
 						ftPane.showDeliveryStatus(false);

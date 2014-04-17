@@ -67,9 +67,10 @@ public class ReceiveMessage implements Runnable
 		}
 		else if (packdetails[0].equals("BS"))
 		{//packdetails[2]=sendingPanelId
-		 //packdetails[3]=filename
+		 //packdetails[3]=fileSize
+ 		 //packdetails[4]=fileName
 			int sendPanelId = Integer.parseInt(packdetails[2]);
-			FileTransferPanel ftPane = new FileTransferPanel(person,packdetails[3],sendPanelId, new SimpleDateFormat("HH:mm:ss").format(t), true);
+			FileTransferPanel ftPane = new FileTransferPanel(person,packdetails[4],packdetails[3],sendPanelId, new SimpleDateFormat("HH:mm:ss").format(t), true);
 			if(MainStart.mainWindow.getFocusOwner()==null)
 				Misc.playSound("longpop.wav");
 			MainStart.mainWindow.broadcastConsole(ftPane);
