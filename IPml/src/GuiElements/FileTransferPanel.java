@@ -133,7 +133,7 @@ FileDialog fileDialog = new FileDialog((Frame) topFrame,"Select File To Send",Fi
 fileDialog.setFile(filename);
 fileDialog.setVisible(true);
 String SaveAsPath=fileDialog.getDirectory()+fileDialog.getFile();
-serverThread = new Server(6666, ftp,SaveAsPath);
+serverThread = new Server(3333, ftp,SaveAsPath);
 new Thread(serverThread).start();
 try {
 person.sendAcceptFile(sendPanelId, all);

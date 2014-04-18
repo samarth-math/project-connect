@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import javax.swing.JOptionPane;
+
 import serverclient.MainStart;
 import GuiElements.FileTransferPanel;
 
@@ -39,11 +41,7 @@ public class Server implements Runnable{
 		
 		try{
 			Socket socket1 = null;
-
-			System.out.println("Waiting for the connection... ");
-			
 			socket1 = serverSocket.accept();
-			System.out.println("Connection Accepted : socket" + socket1);
 			receiveFile(socket1,SaveAsPath,ftp);
 			socket1.close();
 						
@@ -52,10 +50,7 @@ public class Server implements Runnable{
 		}
 		
 		catch (Exception e) {
-			System.out.println("Error in Server!");
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		
+			//Error
 		}
 	}
 public float geti(){
@@ -109,7 +104,7 @@ public void receiveFile(Socket socket,String SaveAsPath,FileTransferPanel ftp) t
 		// do while loop is used to extract the file header		
 		int current=0; // current represents number of byte read in each step
 		boolean flag = false; // flag will be set when '-' is encountered which is the separator in file header
-		//System.out.println("Inside receiver.java");
+
 		char pathType = ' ';
 		do {
 			current = is.read(header);
@@ -175,7 +170,7 @@ public void receiveFile(Socket socket,String SaveAsPath,FileTransferPanel ftp) t
 			flag_directory = true;
 			status =  file.mkdir();
 			if(!status) {
-				System.out.println("Directory Creation failed for directory " + SaveAsPath);
+				JOptionPane.showMessageDialog(null,"Directory Creation failed for directory " + SaveAsPath,"The Three Musketeers say",JOptionPane.ERROR_MESSAGE);
 			}
 			continue;
 		}
@@ -223,8 +218,6 @@ public void receiveFile(Socket socket,String SaveAsPath,FileTransferPanel ftp) t
 		{
 			ftp.onCompleteUI();
 		}
-		
-		System.out.println("Finished Receiving File...");
 	}
 }
 

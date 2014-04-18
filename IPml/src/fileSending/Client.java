@@ -8,6 +8,9 @@ import java.io.*;
 import java.net.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import javax.swing.JOptionPane;
+
 import GuiElements.FileTransferPanelS;
 
 
@@ -35,17 +38,14 @@ public class Client implements Runnable {
 	public void run() {
 		
 		try {
-			
-			System.out.println("Inside Client.java->Initiating connection... " + ipAddress + " " + portNumber);
-			Socket socket = new Socket(ipAddress,portNumber);
-			System.out.println("Socket is "  + socket);		
+			Socket socket = new Socket(ipAddress,portNumber);		
 			OutputStream os=  socket.getOutputStream();
 						
 			send(socket,filePath, os);
 			socket.close();
 			
 		} catch(Exception e) {
-			System.out.println();
+			//Error
 		}
 	}
 	
@@ -58,7 +58,6 @@ public class Client implements Runnable {
 			sendFile(socket,filePath,os);
 			sendFolder(socket,filePath.toString(),os);
 		}
-			System.out.println("Closing the output stream");
 			socket.close();
 			os.close();
 	}
@@ -73,8 +72,6 @@ public class Client implements Runnable {
 		File f = new File(filePath.toString());
 		long fileSize= f.length();
 		int chunkSize = 256*1024;
-
-		//System.out.println("Inside Client.java (sendFile Method) File Size is " + fileSize + " file Name " + fileName + "FIle path " + fileName+"*");
 		
 		boolean flag=false;
 		char pathType= ' ';
@@ -93,7 +90,6 @@ public class Client implements Runnable {
 				pathType = 'd';
 			}
 		}
-		System.out.println("Inside Client.java... Path type " + pathType);
 		
 		/* File Header is of the format 
 		 * [f/d]*[file/directory Size]-[file/directory path][newline character]
@@ -106,9 +102,6 @@ public class Client implements Runnable {
 		byte [] fileHeader  = new byte[header.length()*2];
 		// Creation of file header
 		fileHeader = header.getBytes("UTF-8");
-		
-		//for(int i=0;i<fileHeader.length;i++)
-			//System.out.print("" + (char) fileHeader[i]);
 		
 		
 		if(pathType=='d') {
@@ -149,8 +142,6 @@ public class Client implements Runnable {
 		os.flush();
 		bufferedinput.close();
 		//don't close the outputstream here
-		
-		System.out.println("File Transfer Complete...");
 	}
 
 	public  void sendFolder(final Socket socket, String FilePath, OutputStream os) throws IOException  {
@@ -159,8 +150,7 @@ public class Client implements Runnable {
 	}
 	
 	public static void displayError(String errorMessage)  {
-		System.err.println(errorMessage);
-		System.exit(1);
+		JOptionPane.showMessageDialog(null,errorMessage,"The Three Musketeers say",JOptionPane.ERROR_MESSAGE);
 	}
 	
 	public void walk( String path, Socket socket, OutputStream os ) throws IOException {
