@@ -20,7 +20,7 @@ public class GettingChatLogs extends Object{
 	{
 		String chatFileName = userId+".json";             // file name based on userId
 		
-		String newPathString = MainStart.rootpath+"chatlogs";
+		String newPathString = MainStart.rootpath+"/chatlogs";
 		
 		File newPath = new File(newPathString);
 		File chatFilePath = new File(newPath,chatFileName);

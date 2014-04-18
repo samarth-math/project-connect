@@ -57,7 +57,7 @@ public class IPRangeWindow extends JFrame {
 	
 	public static ArrayList<String> getIPRanges() 
 	{
-		String newPathString = MainStart.rootpath+"rangelist";
+		String newPathString = MainStart.rootpath+"/rangelist";
 		
 		File newPath = new File(newPathString);
 		newPath.mkdirs();

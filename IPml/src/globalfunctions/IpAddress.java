@@ -68,6 +68,7 @@ public class IpAddress
 	public static String IdentityMac() //Returns the Mac address to be used as Identity
 	{
 		File path = new File(MainStart.rootpath);
+		path.mkdirs();
 		File authfile = new File(path,"auth.bin");
 		String mac=null;
 		try{
