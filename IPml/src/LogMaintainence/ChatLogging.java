@@ -40,8 +40,7 @@ public class ChatLogging implements Runnable
 	@SuppressWarnings("unchecked")
 	public void run() 
 	{
-		String oldPathString = System.getProperty("user.dir");
-		String newPathString = oldPathString+"/.ipconnect/chatlogs";
+		String newPathString = MainStart.rootpath+"chatlogs";
 		
 		File newPath = new File(newPathString);
 		newPath.mkdirs();

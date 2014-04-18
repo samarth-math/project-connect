@@ -10,6 +10,7 @@ import java.util.Enumeration;
 
 import javax.swing.JOptionPane;
 
+import serverclient.MainStart;
 import GUIObjects.usernameDialog;
 
 //import org.apache.commons.net.util.*; // Depends on apache commons-net-3.3 library
@@ -66,7 +67,7 @@ public class IpAddress
 	
 	public static String IdentityMac() //Returns the Mac address to be used as Identity
 	{
-		File path = new File(System.getProperty("user.dir"));
+		File path = new File(MainStart.rootpath);
 		File authfile = new File(path,"auth.bin");
 		String mac=null;
 		try{
@@ -119,7 +120,7 @@ public class IpAddress
 	public static String getUserName()
 	{
 		String username = null;
-		File path = new File(System.getProperty("user.dir"));
+		File path = new File(MainStart.rootpath);
 		File namefile = new File(path,"username");
 		try
 		{

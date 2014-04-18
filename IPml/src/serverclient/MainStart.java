@@ -39,6 +39,7 @@ public class MainStart
 	public static HashMap <Integer, BroadCastFileSend> broadcastfspanels = new HashMap<Integer, BroadCastFileSend>();
 	public static ServerSocket ftpsocket;
 	private static ArrayList<String> result;
+	public static String rootpath = System.getProperty("user.dir")+"/.iptalk/";
 	
 	public static void main(String[] args)
     {

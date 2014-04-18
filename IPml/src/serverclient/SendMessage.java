@@ -6,11 +6,9 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.*;
-
 import GuiElements.ChatWindowPanelSender;
 import GuiElements.FileTransferPanelS;
 import globalfunctions.Contact;
-import globalfunctions.Misc;
 
 public class SendMessage implements Runnable
 {
