@@ -67,7 +67,7 @@ public class AppWindow extends BasicWindow
 	 	
 		setTitle("IPTalk");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
+		setLocation(500, 70);
 		setSize(350, 600);
 		
 		JSplitPane splitPane = new JSplitPane();
@@ -111,7 +111,6 @@ public class AppWindow extends BasicWindow
  		          }
 			}
 		});
-		
 		list.getActionMap().put("Refresh", new AbstractAction(){
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -136,7 +135,10 @@ public class AppWindow extends BasicWindow
 		for (String key : MainStart.people.keySet()) {
 			  Contact person = MainStart.people.get(key);
 			  model.addElement(person);
-		}		
+		}
+		
+
+		setTitle("IPtalk ("+MainStart.people.size()+")");
 		history.setBackground(new Color(240, 248, 255));
 		
 		JScrollPane scroll1 = new JScrollPane(history);
@@ -355,12 +357,18 @@ public class AppWindow extends BasicWindow
 	public void addnewperson(Contact person) // sorting can call to add more people as they join
 	{	    	
 		model.addElement(person);
+		setTitle("IPtalk ("+MainStart.people.size()+")");
 	}
 	private void clearlist()
 	{
 		model.clear();
 		MainStart.people.clear();
 		MainStart.Shout();
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public int getListIndex(Contact person)

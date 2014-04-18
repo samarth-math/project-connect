@@ -43,7 +43,7 @@ public class MainStart
 	public static void main(String[] args)
     {
 		
-		Q = new ArrayBlockingQueue<DatagramPacket>(15);
+		Q = new ArrayBlockingQueue<DatagramPacket>(30);
 		try {
 			socket = new DatagramSocket(3333);
 		} catch (SocketException e) {
@@ -78,9 +78,6 @@ public class MainStart
 	}
 	public static void Shout()
 	{
-		ShoutThread S0 = new ShoutThread();    
-		new Thread(S0).start();
-		
 		if(!result.isEmpty())
 		{
 			String parts[];
@@ -91,6 +88,11 @@ public class MainStart
 				new Thread(S).start();
 			}
 		}
+		else
+		{
+			ShoutThread S0 = new ShoutThread();    
+			new Thread(S0).start();
+		}	
 	}
 	
 }

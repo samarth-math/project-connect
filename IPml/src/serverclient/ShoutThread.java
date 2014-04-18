@@ -40,25 +40,22 @@ public class ShoutThread implements Runnable
 		Thread.currentThread().setName("ShoutThread");
 		try
 		{
+		   byte[] buf = new byte[256];
+		   buf= new String("D|C|"+macadd+"|"+System.getProperty("os.name")+"|"+InetAddress.getLocalHost().getHostName()+"|"+MainStart.myUserName).getBytes();
+	       InetAddress address = InetAddress.getByName("255.255.255.255");
+	       DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 3333);
+	       socket.send(packet);
+	       
 			if(ipadd1!=null && ipadd2!=null)
 			{
 				for (long ip1=IpAddress.ipToLong(InetAddress.getByName(ipadd1));ip1<=IpAddress.ipToLong(InetAddress.getByName(ipadd2));ip1++)
 				{// send request
-			        byte[] buf = new byte[256];
 			        buf= new String("D|C|"+macadd+"|"+System.getProperty("os.name")+"|"+InetAddress.getLocalHost().getHostName()+"|"+MainStart.myUserName).getBytes();
-			        InetAddress address = IpAddress.LongToip(ip1);
-			        DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 3333);
+			        address = IpAddress.LongToip(ip1);
+			        packet = new DatagramPacket(buf, buf.length, address, 3333);
 			        socket.send(packet);
 				}
 			}
-			else
-			{
-			   byte[] buf = new byte[256];
-			   buf= new String("D|C|"+macadd+"|"+System.getProperty("os.name")+"|"+InetAddress.getLocalHost().getHostName()+"|"+MainStart.myUserName).getBytes();
-		       InetAddress address = InetAddress.getByName("255.255.255.255");
-		       DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 3333);
-		       socket.send(packet);
-             }
 		} 
 		catch (UnknownHostException e) 
 		{
@@ -67,7 +64,6 @@ public class ShoutThread implements Runnable
 		catch (IOException except)
         {
 			JOptionPane.showMessageDialog(null,"You're not connected to any network","The Three Musketeers say",JOptionPane.ERROR_MESSAGE);
-        	System.exit(0);
         }
      
     }
