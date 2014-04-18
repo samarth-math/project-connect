@@ -7,6 +7,8 @@ import globalfunctions.IpAddress;
 import java.io.*;
 import java.net.*;
 
+import javax.swing.JOptionPane;
+
 public class ShoutThread implements Runnable 
 {
 	protected DatagramSocket socket;
@@ -64,7 +66,7 @@ public class ShoutThread implements Runnable
 		}
 		catch (IOException except)
         {
-        	System.err.print("Network Problem : Unable to send packets!");
+			JOptionPane.showMessageDialog(null,"You're not connected to any network","The Three Musketeers say",JOptionPane.ERROR_MESSAGE);
         	System.exit(0);
         }
      
