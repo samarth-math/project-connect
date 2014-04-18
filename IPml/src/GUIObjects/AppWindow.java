@@ -61,7 +61,7 @@ public class AppWindow extends BasicWindow
 
 	public AppWindow()
 	{
-	 	URL icon = getClass( ).getResource("/images/cartman.jpg");
+	 	URL icon = getClass( ).getResource("/images/iptalk.png");
 	 	ImageIcon img = new ImageIcon(icon);
 	 	setIconImage(img.getImage());
 	 	
