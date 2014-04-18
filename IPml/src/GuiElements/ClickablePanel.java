@@ -25,8 +25,9 @@ public class ClickablePanel extends JPanel{
 	private JLabel username = new JLabel();	
 	private JLabel IPadd = new JLabel();//this holds the username
 	private BufferedImage image;
-	private JPanel colorbox;
 	private Color colors[]=new Color[8];
+	private Random r = new Random();
+	JPanel colorbox = new JPanel();
 	//private String html; //use html in tool tip
 	
 	 public ClickablePanel(){
@@ -37,10 +38,8 @@ public class ClickablePanel extends JPanel{
 		 setBackground(Color.WHITE);
 		 setLayout(null);
 		 
-		 colorbox = new JPanel();
+		 
 		 colorbox.setBounds(25, 12, 33, 32);
-		 Random r = new Random();
-		 colorbox.setBackground(colors[r.nextInt(8)]);
 		 add(colorbox);
 		 
 		/*JLabel username= new JLabel();
@@ -70,12 +69,10 @@ public class ClickablePanel extends JPanel{
 		 colors[6]= new Color(51,153,255);
 		 colors[7]= new Color(102,255,178);
 	 }
-	 public void setUser(Contact sperson)
+	 public void setUser(Contact person)
 	 {
-		Contact person=sperson;		
-
 		username.setAlignmentX(Component.CENTER_ALIGNMENT);
-		username.setBounds(115, 12, 138, 20);
+		username.setBounds(115, 12, 150, 20);
 		username.setForeground(Color.BLACK);
 		username.setText(person.getUserName());
 		add(username);
@@ -85,6 +82,10 @@ public class ClickablePanel extends JPanel{
 		IPadd.setForeground(Color.DARK_GRAY);
 		IPadd.setText(person.getIP().getHostAddress());
 		add(IPadd);
+		
+		colorbox.setBackground(colors[r.nextInt(8)]);
+		repaint();
+		revalidate();
 	}
 	 
 	 public void setImage()

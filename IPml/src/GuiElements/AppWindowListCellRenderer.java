@@ -18,7 +18,6 @@ public class AppWindowListCellRenderer extends ClickablePanel implements ListCel
 			boolean isSelected, boolean cellHasFocus) {
 
 		setUser(person);
-		
 
         Color background;
         Color foreground;
