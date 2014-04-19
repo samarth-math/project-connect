@@ -6,6 +6,7 @@ import globalfunctions.FileDrop;
 import globalfunctions.JTextFieldLimit;
 
 import java.awt.BorderLayout;
+import java.awt.EventQueue;
 import java.awt.FileDialog;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
@@ -354,32 +355,37 @@ public class AppWindow extends BasicWindow
 		} );
 	}
 
-	public void addnewperson(Contact person) // sorting can call to add more people as they join
-	{	    	
-		model.addElement(person);
-		setTitle("IPtalk ("+MainStart.people.size()+")");
+	public void addnewperson(final Contact person) // sorting can call to add more people as they join
+	{
+			EventQueue.invokeLater(new Runnable() {
+			    public void run() {
+			    	model.addElement(person);
+					setTitle("IPtalk ("+MainStart.people.size()+")");		    	
+			    }
+			} );
 	}
 	private void clearlist()
 	{
-		model.clear();
+		EventQueue.invokeLater(new Runnable() {
+		    public void run() {
+		    	model.clear();		    	
+		    }
+		} );
+		
 		MainStart.people.clear();
 		MainStart.Shout();
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 	
-	public int getListIndex(Contact person)
+
+	public void removeFromList(final Contact person)
 	{
-		return model.indexOf(person);
-	}
-	public void removeFromList(Contact person)
-	{
-		if(person!=null && model.indexOf(person)!=-1)
-		{
-			model.remove(model.indexOf(person));
-		}
+			EventQueue.invokeLater(new Runnable() {
+			    public void run() {
+			    	if(person!=null && model.indexOf(person)!=-1)
+					{
+						model.remove(model.indexOf(person));
+					}		    	
+			    }
+			} );
 	}
 }

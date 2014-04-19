@@ -1,5 +1,6 @@
 package globalfunctions;
 
+import java.awt.EventQueue;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.*;
@@ -9,9 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-
-import javax.swing.SwingUtilities;
-
 import serverclient.MainStart;
 import GUIObjects.ChatWindow;
 import GuiElements.BroadCastFileSend;
@@ -50,7 +48,7 @@ public class Contact {
 		{
 	
 			try {
-				SwingUtilities.invokeAndWait(new Runnable()
+				EventQueue.invokeAndWait(new Runnable()
 				{
 					@Override
 					public void run()
