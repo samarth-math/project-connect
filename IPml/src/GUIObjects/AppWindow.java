@@ -117,6 +117,7 @@ public class AppWindow extends BasicWindow
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
+				if(Contact.chatWindow==0)
 				clearlist();
 			}
 		});
@@ -320,6 +321,7 @@ public class AppWindow extends BasicWindow
 		JMenuItem mntmRefreshf = new JMenuItem("Refresh (F5)");
 		mntmRefreshf.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(Contact.chatWindow==0)
 				clearlist();
 			}
 		});

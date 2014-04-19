@@ -29,6 +29,7 @@ public class Contact {
 	private ChatWindow cw=null;
 	private BlockingQueue<String> bq = null;
 	private int listIndex;
+	public static int chatWindow=0;
 
 	public Contact(String mac, String OS, String Host, String username, InetAddress ip, int port)
 	{
@@ -54,7 +55,7 @@ public class Contact {
 			return cw;
 		else
 		{
-	
+			chatWindow++;
 			try {
 				EventQueue.invokeAndWait(new Runnable()
 				{

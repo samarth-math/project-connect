@@ -65,6 +65,7 @@ public class ChatWindow extends BasicWindow
 		this.addWindowListener(new WindowAdapter() {
 			  @Override
 			  public void windowClosing(WindowEvent e) {
+				Contact.chatWindow--;
 				person.setWindowNull();
 				try {
 					person.getBlockingQ().put("CLOSE");
