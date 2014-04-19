@@ -67,7 +67,7 @@ public class PacketSorterThread implements Runnable {
 	        	//Save Packet
 	        	Contact person = new Contact(packdetails[2], packdetails[3], packdetails[4], packdetails[5], address, port);
 	        	Contact person1 = MainStart.people.get(packdetails[2]);
-	        	if (!person1.checkChatWindow())
+	        	if (person1==null || !person1.checkChatWindow())
 	        	{
 	        		MainStart.people.put(packdetails[2], person);
 		        	if(MainStart.mainWindow!=null)
