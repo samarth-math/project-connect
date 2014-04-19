@@ -190,7 +190,7 @@ public class PacketSorterThread implements Runnable {
 	        	FileTransferPanelS ftps = MainStart.fileSendPanels.get(sendPId);
 	        	ftps.onAcceptance();
 	        	Path filepath = ftps.getFilePath();
-	        	Client obj = new Client(address.getHostAddress(),3333,filepath,ftps);
+	        	Client obj = new Client(address.getHostAddress(),port,filepath,ftps);
 					(new Thread(obj)).start();
 	        	
 	        }
@@ -201,7 +201,7 @@ public class PacketSorterThread implements Runnable {
 	        	int sendPId = Integer.parseInt(packdetails[2]);
 	        	BroadCastFileSend bcfs = MainStart.broadcastfspanels.get(sendPId);
 	        	Path filepath = bcfs.getFilePath();
-	        	Client obj = new Client(address.getHostAddress(),3333,filepath);
+	        	Client obj = new Client(address.getHostAddress(),port,filepath);
 					(new Thread(obj)).start();
 	        	
 	        }

@@ -339,6 +339,23 @@ public class AppWindow extends BasicWindow
 		});
 		mnSettings.add(mntmDetectIp);
 		
+		JMenuItem mntmAboutUs = new JMenuItem("About Us");
+		mntmAboutUs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							@SuppressWarnings("unused")
+							AboutUs frame = new AboutUs();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
+		mnSettings.add(mntmAboutUs);
+		
 		setVisible(true);
 		
 
