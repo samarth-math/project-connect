@@ -7,6 +7,9 @@
  */
 package GUIObjects;
 
+import java.net.URL;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
@@ -15,6 +18,9 @@ public abstract class BasicWindow extends JFrame{
 	private static final long serialVersionUID = 1L;
 	public BasicWindow()
 	{
+		URL icon = getClass( ).getResource("/images/iptalk.png");
+	 	ImageIcon img = new ImageIcon(icon);
+	 	setIconImage(img.getImage());
 		try
 		{
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());// For making it look native in windows

@@ -62,10 +62,6 @@ public class AppWindow extends BasicWindow
 
 	public AppWindow()
 	{
-	 	URL icon = getClass( ).getResource("/images/iptalk.png");
-	 	ImageIcon img = new ImageIcon(icon);
-	 	setIconImage(img.getImage());
-	 	
 		setTitle("IPTalk");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocation(500, 70);
