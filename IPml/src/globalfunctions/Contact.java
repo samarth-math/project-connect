@@ -39,6 +39,14 @@ public class Contact {
 		this.ip=ip;
 		this.port=port;
 	}
+	public boolean checkChatWindow()
+	{
+		if (cw==null)
+			return false;
+		else
+			return true;
+			
+	}
 	public ChatWindow getWindow()
 	{
 		final String id = mac;
