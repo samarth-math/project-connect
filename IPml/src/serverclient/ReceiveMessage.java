@@ -63,7 +63,7 @@ public class ReceiveMessage implements Runnable
 		}
 		else if (packdetails[0].equals("BM"))
 		{//packdetails[2] = message
-			BroadCastReceiver bcr = new BroadCastReceiver(person.getUserName(),packdetails[2], new SimpleDateFormat("HH:mm:ss").format(t));
+			BroadCastReceiver bcr = new BroadCastReceiver(person.getUserName(),packdetails[2], new SimpleDateFormat("HH:mm:ss").format(t), person.getColour());
 			MainStart.mainWindow.broadcastConsole(bcr);
 		}
 		else if (packdetails[0].equals("BS"))

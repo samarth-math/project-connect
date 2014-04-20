@@ -3,6 +3,7 @@ package serverclient;
 import fileSending.Client;
 import globalfunctions.Contact;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -11,6 +12,7 @@ import java.net.UnknownHostException;
 import java.nio.file.Path;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 
 import GuiElements.BroadCastFileSend;
@@ -21,12 +23,15 @@ public class PacketSorterThread implements Runnable {
 	private DatagramSocket socket;
     private String id;
     private byte[] buf;
+    private Color colors[]=new Color[8];
+	private Random r = new Random();
 	
 	PacketSorterThread(BlockingQueue<DatagramPacket> bq)
 	{
 		this.socket=MainStart.socket;
 		this.bq = bq;
-        this.id=MainStart.myID;		
+        this.id=MainStart.myID;
+        defineColors();
 	}
 
 	
@@ -48,6 +53,17 @@ public class PacketSorterThread implements Runnable {
 		}
 		
 	}
+	 private void defineColors()
+	 {
+		 colors[0]= new Color(0,128,255);
+		 colors[1]= new Color(76,0,153);
+		 colors[2]= new Color(204,0,0);
+		 colors[3]= new Color(162,90,126);
+		 colors[4]= new Color(102,0,102);
+		 colors[5]= new Color(0,153,0);
+		 colors[6]= new Color(51,153,255);
+		 colors[7]= new Color(102,255,178);
+	 }
 	public void PacketSort(DatagramPacket packet)
 	{
         try{
@@ -65,7 +81,7 @@ public class PacketSorterThread implements Runnable {
 	             * packdetails[5] - Username*/
 	
 	        	//Save Packet
-	        	Contact person = new Contact(packdetails[2], packdetails[3], packdetails[4], packdetails[5], address, port);
+	        	Contact person = new Contact(packdetails[2], packdetails[3], packdetails[4], packdetails[5], address, port,colors[r.nextInt(8)]);
 	        	Contact person1 = MainStart.people.get(packdetails[2]);
 	        	if (person1==null || !person1.checkChatWindow())
 	        	{

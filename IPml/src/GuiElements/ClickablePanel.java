@@ -14,7 +14,6 @@ import java.awt.Component;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Random;
 
 import javax.swing.border.MatteBorder;
 
@@ -25,13 +24,11 @@ public class ClickablePanel extends JPanel{
 	private JLabel username = new JLabel();	
 	private JLabel IPadd = new JLabel();//this holds the username
 	private BufferedImage image;
-	private Color colors[]=new Color[8];
-	private Random r = new Random();
+	
 	JPanel colorbox = new JPanel();
 	//private String html; //use html in tool tip
 	
 	 public ClickablePanel(){
-		 defineColors();
 		 setBorder(new MatteBorder(3, 0, 0, 0, (Color) new Color(70, 130, 180)));
 		 setMaximumSize(new Dimension(30000,50));
 		 setPreferredSize(new Dimension(265, 56));
@@ -58,17 +55,7 @@ public class ClickablePanel extends JPanel{
 
 	 }
 	 
-	 private void defineColors()
-	 {
-		 colors[0]= new Color(0,128,255);
-		 colors[1]= new Color(76,0,153);
-		 colors[2]= new Color(204,0,0);
-		 colors[3]= new Color(162,90,126);
-		 colors[4]= new Color(102,0,102);
-		 colors[5]= new Color(0,153,0);
-		 colors[6]= new Color(51,153,255);
-		 colors[7]= new Color(102,255,178);
-	 }
+
 	 public void setUser(Contact person)
 	 {
 		username.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -83,7 +70,7 @@ public class ClickablePanel extends JPanel{
 		IPadd.setText(person.getIP().getHostAddress());
 		add(IPadd);
 		
-		colorbox.setBackground(colors[r.nextInt(8)]);
+		colorbox.setBackground(person.getColour());
 		repaint();
 		revalidate();
 	}

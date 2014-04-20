@@ -16,10 +16,10 @@ public class BroadCastReceiver extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 
-	public BroadCastReceiver(String userName, String inputText, String timeStamp) {
+	public BroadCastReceiver(String userName, String inputText, String timeStamp, Color colour) {
 
 		setBackground(Color.WHITE);
-		setBorder(new MatteBorder(0, 3, 0, 0, Color.RED));
+		setBorder(new MatteBorder(0, 3, 0, 0, colour));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{200};
 		gridBagLayout.rowHeights = new int[]{35,10};

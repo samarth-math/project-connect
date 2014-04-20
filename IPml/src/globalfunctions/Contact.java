@@ -1,5 +1,6 @@
 package globalfunctions;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -10,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+
 import serverclient.MainStart;
 import GUIObjects.ChatWindow;
 import GuiElements.BroadCastFileSend;
@@ -28,11 +30,13 @@ public class Contact {
 	private String username;
 	private ChatWindow cw=null;
 	private BlockingQueue<String> bq = null;
+	private Color colour;
 	private int listIndex;
 	public static int chatWindow=0;
 
-	public Contact(String mac, String OS, String Host, String username, InetAddress ip, int port)
+	public Contact(String mac, String OS, String Host, String username, InetAddress ip, int port, Color colour)
 	{
+		this.colour = colour;
 		this.mac = mac;
 		this.Host = Host;
 		this.OS = OS;
@@ -40,6 +44,12 @@ public class Contact {
 		this.ip=ip;
 		this.port=port;
 	}
+	
+	public Color getColour()
+	{
+		return colour;
+	}
+	
 	public boolean checkChatWindow()
 	{
 		if (cw==null)
