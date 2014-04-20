@@ -24,7 +24,7 @@ public class AboutUs extends BasicWindow {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("<html><br><br>IPTalk is a LAN Messenger service, based on a distributed<br> systems model (i.e. you don't need to setup a server)<br><br>This application was designed and developed by<br> Rajat Vyas, Rishabh Baid and Samarth Mathur with some<br> helpful input from Shasak Raina,<br> Students of LNMIIT batch-y10. <br><br> In order to submit a bug report click on the following link <a href =\"https://github.com/samarth-math/project-connect/issues/new\">https://github.com/samarth-math/project-connect/issues/new</a></html>");
+		JLabel lblNewLabel = new JLabel("<html><br><br>IPTalk is a LAN Messenger service, based on a distributed<br> systems model (i.e. you don't need to setup a server)<br><br>This application was designed and developed by<br> Rajat Vyas, Rishabh Baid and Samarth Mathur with some<br> helpful input from Shasak Raina,<br> Students of LNMIIT batch-y10. <br><br> In order to submit a bug report use the following link <a href =\"https://github.com/samarth-math/project-connect/issues/new\">https://github.com/samarth-math/project-connect/issues/new</a></html>");
 		
 		lblNewLabel.setBounds(12, -17, 432, 186);
 		contentPane.add(lblNewLabel);
