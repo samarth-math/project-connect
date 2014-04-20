@@ -22,7 +22,6 @@ import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.FileDialog;
 import java.awt.Font;
-import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -45,11 +44,10 @@ private JLabel lblStatus;
 public FileTransferPanel(Contact person, String filename, String fileSize, int sendPanelId, String timeStamp, boolean all) {
 
 setBackground(Color.WHITE);
-setPreferredSize(new Dimension(400,120));
 setBorder(new MatteBorder(0, 5, 0, 0, (Color) new Color(0, 0, 102)));
 GridBagLayout gridBagLayout = new GridBagLayout();
-gridBagLayout.columnWidths = new int[]{360,70,70};
-gridBagLayout.rowHeights = new int[]{55,25};
+gridBagLayout.columnWidths = new int[]{200};
+gridBagLayout.rowHeights = new int[]{90,25};
 gridBagLayout.columnWeights = new double[]{1.0};
 gridBagLayout.rowWeights = new double[]{1.0, 0.0};
 setLayout(gridBagLayout);
@@ -72,23 +70,12 @@ gbc_panel.gridx = 0;
 gbc_panel.gridy = 0;
 add(panel, gbc_panel);
 GridBagLayout gbl_panel = new GridBagLayout();
-gbl_panel.columnWidths = new int[]{360};
-gbl_panel.rowHeights = new int[]{35,20};
+gbl_panel.columnWidths = new int[]{200};
+gbl_panel.rowHeights = new int[]{70,20};
 gbl_panel.columnWeights = new double[]{1.0};
 gbl_panel.rowWeights = new double[]{1.0};
 panel.setLayout(gbl_panel);
 
-/*//the filename label is here
-JLabel lbl_fileName = new JLabel("<html>"+filename+"</html>");
-//lbl_fileName.setMinimumSize(new Dimension(300, 50));
-GridBagConstraints gbc_lbl_fileName = new GridBagConstraints();
-gbc_lbl_fileName.anchor = GridBagConstraints.WEST;
-gbc_lbl_fileName.insets = new Insets(0, 0, 5, 0);
-gbc_lbl_fileName.gridx = 0;
-gbc_lbl_fileName.gridy = 0;
-lbl_fileName.setBorder(new TitledBorder(null, "<html>Awaiting response</html>",TitledBorder.LEADING, TitledBorder.ABOVE_TOP, null, new Color(128, 128, 128)));
-lbl_fileName.setFont(new Font("Ubuntu", Font.PLAIN, 14));
-panel.add(lbl_fileName, gbc_lbl_fileName);*/
 
 progBar = new TestPane();
 progBar.setVisible(false);
@@ -115,16 +102,53 @@ panel_1.add(lblStatus);
 
 JLabel lblSize = new JLabel("(" + Long.parseLong(fileSize)/(1024*1024) + "Mb)");
 lblSize.setFont(new Font("Dialog", Font.PLAIN, 14));
-lblSize.setBounds(208, 12, 37, 23);
+lblSize.setBounds(169, 16, 66, 23);
 panel_1.add(lblSize);
-GridBagConstraints gbc_progBar = new GridBagConstraints();
-gbc_progBar.anchor= GridBagConstraints.SOUTHWEST;
-gbc_progBar.gridx = 0;
-gbc_progBar.gridy = 1;
-panel.add(progBar, gbc_progBar);
-
-final FileTransferPanel ftp = this;
 btnAccept = new JButton("Accept");
+btnAccept.setBounds(22, 52, 81, 25);
+panel_1.add(btnAccept);
+
+
+
+btnReject = new JButton("Reject");
+btnReject.setBounds(115, 52, 78, 25);
+panel_1.add(btnReject);
+
+btnCancel = new JButton("Cancel");
+btnCancel.setBounds(115, 52, 81, 25);
+panel_1.add(btnCancel);
+btnCancel.setVisible(false);
+btnCancel.addActionListener(new ActionListener() {
+public void actionPerformed(ActionEvent e) {
+//CANCEL FUNCTIONALITY
+serverThread.stop=true;
+btnCancel.setVisible(false);
+progBar.setVisible(false);
+try {
+person.sendRejectFile(sendPanelId);
+} catch (SocketException e1) {
+//e1.printStackTrace();
+} catch (IOException e1) {
+//e1.printStackTrace();
+}
+}
+});
+btnReject.addActionListener(new ActionListener() {
+public void actionPerformed(ActionEvent e) {
+try {
+person.sendRejectFile(sendPanelId);
+onRejectUI();
+} catch (SocketException exc) {
+// Do stuff
+
+} catch (IOException exc) {
+// Do stuff
+}
+
+}
+});
+final FileTransferPanel ftp = this;
+
 btnAccept.addActionListener(new ActionListener() {
 public void actionPerformed(ActionEvent e) {
 JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(ftp);	
@@ -146,58 +170,12 @@ onAcceptUI();
 }
 }
 });
-GridBagConstraints gbc_btnAccept = new GridBagConstraints();
-gbc_btnAccept.insets = new Insets(0, 0, 5, 5);
-gbc_btnAccept.gridx = 1;
-gbc_btnAccept.gridy = 0;
-add(btnAccept, gbc_btnAccept);
 
-
-
-btnReject = new JButton("Reject");
-btnReject.addActionListener(new ActionListener() {
-public void actionPerformed(ActionEvent e) {
-try {
-person.sendRejectFile(sendPanelId);
-onRejectUI();
-} catch (SocketException exc) {
-// Do stuff
-
-} catch (IOException exc) {
-// Do stuff
-}
-
-}
-});
-GridBagConstraints gbc_btnReject = new GridBagConstraints();
-gbc_btnReject.insets = new Insets(0, 5, 5, 0);
-gbc_btnReject.gridx = 2;
-gbc_btnReject.gridy = 0;
-add(btnReject, gbc_btnReject);
-
-btnCancel = new JButton("Cancel");
-btnCancel.setVisible(false);
-btnCancel.addActionListener(new ActionListener() {
-public void actionPerformed(ActionEvent e) {
-//CANCEL FUNCTIONALITY
-serverThread.stop=true;
-btnCancel.setVisible(false);
-progBar.setVisible(false);
-try {
-person.sendRejectFile(sendPanelId);
-} catch (SocketException e1) {
-//e1.printStackTrace();
-} catch (IOException e1) {
-//e1.printStackTrace();
-}
-}
-});
-
-GridBagConstraints gbc_btnCancel = new GridBagConstraints();
-gbc_btnCancel.insets = new Insets(0, 5, 5, 0);
-gbc_btnCancel.gridx = 2;
-gbc_btnCancel.gridy = 0;
-add(btnCancel, gbc_btnCancel);
+GridBagConstraints gbc_progBar = new GridBagConstraints();
+gbc_progBar.anchor= GridBagConstraints.WEST;
+gbc_progBar.gridx = 0;
+gbc_progBar.gridy = 1;
+panel.add(progBar, gbc_progBar);
 
 JLabel lblTimestamp = new JLabel(timeStamp);
 lblTimestamp.setFont(new Font("Ubuntu Light", Font.PLAIN, 10));

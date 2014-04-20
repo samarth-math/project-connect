@@ -175,7 +175,6 @@ public class PacketSorterThread implements Runnable {
 	           packdetails[3]=FileTransferPanelS index
 	           packdetails[4]=fileSize
 	           packdetails[5]=filename*/
-	        	System.out.println("File Size " + packdetails[4]);
 	        	Timestamp t =new Timestamp(new Date().getTime());
 	        	//Send Acknowledgment
 	        	String PString = new String("A|"+packdetails[2]);
@@ -226,7 +225,6 @@ public class PacketSorterThread implements Runnable {
 			   packdetails[2]=sendPanelId 
 	         */
 	        	int sendPId = Integer.parseInt(packdetails[2]);
-	        	System.out.println("Value of senderpanel in the received packet "+sendPId);
 	        	FileTransferPanelS ftps = MainStart.fileSendPanels.remove(sendPId);
 	        	if (ftps!=null)
 	        		ftps.onReject();

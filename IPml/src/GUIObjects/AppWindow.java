@@ -247,7 +247,6 @@ public class AppWindow extends BasicWindow
 
 		        if (returnVal == JFileChooser.APPROVE_OPTION) {
 		        	File directory = folderChooser.getSelectedFile();
-		        	System.out.println("Directory... " + directory.getAbsolutePath());
 		        	Path filepath = directory.toPath();
 		        	Contact.sendToAll(filepath);
 		        }

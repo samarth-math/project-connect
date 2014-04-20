@@ -108,7 +108,6 @@ public class FileTransferPanelS extends JPanel{
 	}
 	public int getIndex()
 	{
-		System.out.println("This is the index " + index);
 		return index;
 	}
 	

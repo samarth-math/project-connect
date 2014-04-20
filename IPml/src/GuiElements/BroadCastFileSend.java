@@ -68,7 +68,6 @@ public class BroadCastFileSend extends JPanel{
 	}
 	public int getIndex()
 	{
-		System.out.println("This is the index " + index);
 		return index;
 	}
 	public Path getFilePath()

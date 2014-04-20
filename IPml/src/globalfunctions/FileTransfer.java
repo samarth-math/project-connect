@@ -8,11 +8,10 @@ import java.nio.file.Path;
 
 public class FileTransfer {
 	public static String getHeader(Path filePath) throws IOException  {
-    	String fileName = filePath.getFileName().toString();
+    	//String fileName = filePath.getFileName().toString();
 		long fSize =  Files.size(filePath);
 		long fileSize= fSize;
 
-		System.out.println("\nFile Size is " + fileSize + " file path " + fileName);
 		
 		boolean flag=false;
 		char pathType= ' ';
@@ -31,7 +30,6 @@ public class FileTransfer {
 				pathType = 'd';
 			}
 		}
-		System.out.println("Path type " + pathType);
 		
 		/* File Header is of the format 
 		 * [f/d]*[file/directory Size]-[file/directory path][newline character]
