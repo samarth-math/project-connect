@@ -16,7 +16,6 @@ import java.awt.Rectangle;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -45,7 +44,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Path;
 
 import javax.swing.JMenuBar;

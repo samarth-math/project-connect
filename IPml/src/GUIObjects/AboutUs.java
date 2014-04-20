@@ -16,7 +16,7 @@ public class AboutUs extends BasicWindow {
 		setLocationRelativeTo(null);
 		setVisible(true);
 		setResizable(false);
-		setTitle("About Us");
+		setTitle("About IPtalk v1.0");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 462, 213);
 		contentPane = new JPanel();
