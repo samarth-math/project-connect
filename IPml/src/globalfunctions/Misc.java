@@ -2,6 +2,7 @@ package globalfunctions;
 
 
 import java.io.InputStream;
+import java.net.URL;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -12,7 +13,7 @@ public class Misc {
 	public static synchronized void playSound( final String soundfile) {
 		  new Thread(new Runnable() {
 			  String soundfilepath = new String("/sounds/"+soundfile);
-			  InputStream bw = getClass( ).getResourceAsStream(soundfilepath);
+			  URL bw = getClass().getResource(soundfilepath);
 		  // The wrapper thread is unnecessary, unless it blocks on the
 		  // Clip finishing; see comments.
 		    public void run() {
