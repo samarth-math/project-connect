@@ -43,9 +43,14 @@ public class GettingChatLogs extends Object{
 				
 					JSONObject oldSessionObject = (JSONObject)logInfo.get("session");
 					JSONArray oldMessageArray;
-					int i=1;
+					
+					long i;
+					if(sessionTraversalCount<=5)
+					i=1;
+					else
+					i= sessionTraversalCount-5;
 					//For now setting to 5 session worth of chats
-					while(i<=sessionTraversalCount && i <=5)
+					while(i<=sessionTraversalCount)
 					{
 						oldMessageArray = (JSONArray)oldSessionObject.get(""+i);
 					
