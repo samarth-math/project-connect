@@ -46,7 +46,7 @@ public class MainStart
 		
 		Q = new ArrayBlockingQueue<DatagramPacket>(30);
 		try {
-			socket = new DatagramSocket(3333);
+			socket = new DatagramSocket(3336);
 		} catch (SocketException e) {
 			JOptionPane.showMessageDialog(null,"Unable to connect : Port maybe in use already!","The Three Musketeers say",JOptionPane.ERROR_MESSAGE);
 			System.exit(0);
