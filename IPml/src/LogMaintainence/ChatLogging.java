@@ -14,8 +14,6 @@ import org.json.simple.JSONObject;
 
 import serverclient.MainStart;
 
-
-
 public class ChatLogging implements Runnable
 {
 	private JSONObject mainObject;
@@ -40,7 +38,7 @@ public class ChatLogging implements Runnable
 	@SuppressWarnings("unchecked")
 	public void run() 
 	{
-		String newPathString = MainStart.rootpath+"/chatlogs";
+		String newPathString = MainStart.rootpath+File.separator+"chatlogs";
 		File newPath = new File(newPathString);
 		newPath.mkdirs();
 		
